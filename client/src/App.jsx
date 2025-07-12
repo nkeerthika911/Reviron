@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login } from './pages/Login/Login'
 import { Products } from './pages/products/Products'
-
+import './app.css'
 function App() {
   const [count, setCount] = useState(0)
 
