@@ -1,8 +1,8 @@
 const User = require('../models/userModel');
 
 //@desc get a userDetails by username
-const getUserbyUsername = async (userName) => {
-    const userData = await User.findOne({ username: { $eq: userName } });
+const getUserbyEmail = async (email) => {
+    const userData = await User.findOne({ email: { $eq: email } });
     return userData;
 }
 //@desc get a userDetails by userId 
@@ -11,4 +11,4 @@ const getUserbyUserId = async (userId) => {
     return userData;
 }
 
-module.exports = { getUserbyUsername, getUserbyUserId }
+module.exports = { getUserbyEmail, getUserbyUserId }

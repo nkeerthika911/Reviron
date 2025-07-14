@@ -5,6 +5,7 @@ import { Products } from './pages/products/Products'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
+import { ProductDetails } from './pages/products/ProductDetails/ProductDetails'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/products" element={<Products />}></Route>
+          <Route path="/products/details" element={<ProductDetails/>}></Route>
           <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>

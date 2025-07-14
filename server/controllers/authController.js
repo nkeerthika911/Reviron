@@ -5,10 +5,11 @@ const userService = require('../services/userService');
 const { generateToken } = require('../utils/generateToken');
 
 
-//@desc get a userDetails by username
+//@desc Login
 //@route /api/auth/login
 const login = asyncHandler(async (req, res) => {
-    const userDetails = await userService.getUserbyUsername(req.body.username);
+    const userDetails = await userService.getUserbyEmail(req.body.email);
+    console.log(userDetails)
     if(!userDetails){
         throw Object.assign(new Error("User doesn't exist"),{statusCode:400});
     }
@@ -28,9 +29,10 @@ const login = asyncHandler(async (req, res) => {
 //@desc get a userDetails by username
 //@route /api/auth/signup
 const signup = asyncHandler(async (req, res) => {
-    const user = await userService.getUserbyUsername(req.body.email);
+    const user = await userService.getUserbyEmail(req.body.email);
+    console.log(req.body);
     if (user) {
-        throw Object.assign(new Error("Username already exists"), { statusCode: 409 });
+        throw Object.assign(new Error("Email already Registered"), { statusCode: 409 });
     }
 
     // HASH PASSWORD HERE
