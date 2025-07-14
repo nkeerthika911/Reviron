@@ -11,42 +11,45 @@ export const Navbar = () => {
         {
             label: 'Products',
             icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                    <line x1="3" y1="6" x2="21" y2="6" />
-                    <path d="M16 10a4 4 0 0 1-8 0" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 48 48">
+                    <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4">
+                        <path d="M6 12.6V41a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2V12.6z" />
+                        <path stroke-linecap="round" d="M42 12.6L36.333 5H11.667L6 12.6v0m25.555 6.6c0 4.198-3.382 7.6-7.555 7.6s-7.556-3.402-7.556-7.6" />
+                    </g>
                 </svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 48 48"><defs><mask id="ipSMallBag0"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M6 12.6V41a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2V12.6z"/><path stroke="#fff" stroke-linecap="round" d="M42 12.6L36.333 5H11.667L6 12.6v0"/><path stroke="#000" stroke-linecap="round" d="M31.555 19.2c0 4.198-3.382 7.6-7.555 7.6s-7.556-3.402-7.556-7.6"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSMallBag0)"/></svg>
             ),
             path: '/products'
         },
         {
             label: 'Sell',
             icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" height="22" width="22" viewBox="0 -960 960 960" fill="currentColor">
-                    <path d="M843-399 562-117q-11 11-24 16t-27 5q-14 0-27-5t-24-16L116.7-460.3Q106-471 101-483.89T96-511v-281q0-29.7 21.15-50.85Q138.3-864 168-864h281q13.91 0 26.96 5 13.04 5 23.77 15.7L843-500q11 11 16 23.5t5 26.5q0 14-5.02 27.09Q853.96-409.83 843-399ZM511-168l281-281-343-343H168v281l343 343ZM264-636q25 0 42.5-17.5T324-696q0-25-17.5-42.5T264-756q-25 0-42.5 17.5T204-696q0 25 17.5 42.5T264-636Z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m21.4 14.25l-7.15 7.15q-.3.3-.675.45t-.75.15t-.75-.15t-.675-.45l-8.825-8.825q-.275-.275-.425-.637T2 11.175V4q0-.825.588-1.412T4 2h7.175q.4 0 .775.163t.65.437l8.8 8.825q.3.3.438.675t.137.75t-.137.738t-.438.662M12.825 20l7.15-7.15L11.15 4H4v7.15zM6.5 8q.625 0 1.063-.437T8 6.5t-.437-1.062T6.5 5t-1.062.438T5 6.5t.438 1.063T6.5 8m5.5 4" /></svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m21.4 14.25l-7.15 7.15q-.3.3-.675.45t-.75.15t-.75-.15t-.675-.45l-8.825-8.825q-.275-.275-.425-.637T2 11.175V4q0-.825.588-1.412T4 2h7.175q.4 0 .775.163t.65.437l8.8 8.825q.3.3.438.675t.137.75t-.137.738t-.438.662M6.5 8q.625 0 1.063-.437T8 6.5t-.437-1.062T6.5 5t-1.062.438T5 6.5t.438 1.063T6.5 8" /></svg>
             ),
             path: '/sell'
         },
         {
             label: 'Community',
             icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h4v-3c0-2.18-3.57-3.47-6.33-3.87M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24m-6 0c2.21 0 4-1.79 4-4s-1.79-4-4-4s-4 1.79-4 4s1.79 4 4 4m0-6c1.1 0 2 .9 2 2s-.9 2-2 2s-2-.9-2-2s.9-2 2-2m0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4m6 5H3v-.99C3.2 16.29 6.3 15 9 15s5.8 1.29 6 2z" /></svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M16.67 13.13C18.04 14.06 19 15.32 19 17v3h3c.55 0 1-.45 1-1v-2c0-2.18-3.57-3.47-6.33-3.87" /><circle cx="9" cy="8" r="4" fill="currentColor" fill-rule="evenodd" /><path fill="currentColor" fill-rule="evenodd" d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4c-.47 0-.91.1-1.33.24a5.98 5.98 0 0 1 0 7.52c.42.14.86.24 1.33.24m-6 1c-2.67 0-8 1.34-8 4v2c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-2c0-2.66-5.33-4-8-4" /></svg>
             ),
             path: '/community'
         },
         {
             label: 'Contact Us',
             icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M3 7V4.37A3.93 3.93 0 0 1 7 .5a3.93 3.93 0 0 1 4 3.87V7M1.5 5.5h1A.5.5 0 0 1 3 6v3a.5.5 0 0 1-.5.5h-1a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1m11 4h-1A.5.5 0 0 1 11 9V6a.5.5 0 0 1 .5-.5h1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1M9 12.25a2 2 0 0 0 2-2V8m-2 4.25a1.25 1.25 0 0 1-1.25 1.25h-1.5a1.25 1.25 0 0 1 0-2.5h1.5A1.25 1.25 0 0 1 9 12.25" stroke-width="1" /></svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14"><path fill="currentColor" fill-rule="evenodd" d="M6.987 1.5A3.18 3.18 0 0 0 3.75 4.628V9a1 1 0 0 1-1 1H1.5A1.5 1.5 0 0 1 0 8.5v-2A1.5 1.5 0 0 1 1.5 5h.75v-.39A4.68 4.68 0 0 1 7 0a4.68 4.68 0 0 1 4.75 4.61V5h.75A1.5 1.5 0 0 1 14 6.5v2a1.5 1.5 0 0 1-1.5 1.5h-.75v.5a2.75 2.75 0 0 1-2.44 2.733A1.5 1.5 0 0 1 8 14H6.5a1.5 1.5 0 0 1 0-3H8c.542 0 1.017.287 1.28.718a1.25 1.25 0 0 0 .97-1.218V4.627A3.18 3.18 0 0 0 6.987 1.5" clip-rule="evenodd" /></svg>
             ),
             path: '/contact'
         }
@@ -56,20 +59,20 @@ export const Navbar = () => {
         {
             label: 'Favorites',
             icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20.325q-.35 0-.712-.125t-.638-.4l-1.725-1.575q-2.65-2.425-4.788-4.812T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.325 0 2.5.562t2 1.538q.825-.975 2-1.537t2.5-.563q2.35 0 3.925 1.575T22 8.15q0 2.875-2.125 5.275T15.05 18.25l-1.7 1.55q-.275.275-.637.4t-.713.125M11.05 6.75q-.725-1.025-1.55-1.563t-2-.537q-1.5 0-2.5 1t-1 2.5q0 1.3.925 2.763t2.213 2.837t2.65 2.575T12 18.3q.85-.775 2.213-1.975t2.65-2.575t2.212-2.837T20 8.15q0-1.5-1-2.5t-2.5-1q-1.175 0-2 .538T12.95 6.75q-.175.25-.425.375T12 7.25t-.525-.125t-.425-.375m.95 4.725" /></svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20.325q-.35 0-.712-.125t-.638-.4l-1.725-1.575q-2.65-2.425-4.788-4.812T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.325 0 2.5.562t2 1.538q.825-.975 2-1.537t2.5-.563q2.35 0 3.925 1.575T22 8.15q0 2.875-2.125 5.275T15.05 18.25l-1.7 1.55q-.275.275-.637.4t-.713.125" /></svg>
             ),
             path: '/favorites'
         },
         {
             label: 'Cart',
             icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="9" cy="21" r="1" />
-                    <circle cx="20" cy="21" r="1" />
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" /></svg>
+            ),
+            selectedIcon: (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2" /></svg>
             ),
             path: '/cart'
         }
@@ -100,63 +103,58 @@ export const Navbar = () => {
                     {/* Navigation and Actions Container */}
                     <div className='flex items-center'>
                         {/* Main Navigation */}
-                        <div className='flex items-center space-x-8 px-4'>
-                            {navItems.map((item) => (
-                                <div
-                                    key={item.label}
-                                    onClick={() => handleNavClick(item.label)}
-                                    className={`
-                                        relative flex items-center space-x-2 px-4 py-2 rounded-full cursor-pointer
-                                        transition-all duration-300 ease-in-out
-                                        ${activePage === item.label
-                                            ? 'bg-white text-[#81AD87] shadow-lg border border-white/30 transform scale-105'
-                                            : 'text-white/90 hover:bg-white/10 hover:text-white'
-                                        }
-                                        hover:scale-105 active:scale-95
-                                    `}
-                                >
-                                    <span className={`transition-all duration-300 ${activePage === item.label ? 'text-[#81AD87]' : ''}`}>
-                                        {item.icon}
-                                    </span>
-                                    <span className={`font-semibold text-sm whitespace-nowrap transition-all duration-300 ${activePage === item.label ? 'text-[#81AD87] font-bold' : ''}`}>
-                                        {item.label}
-                                    </span>
-
-                                    {activePage === item.label && (
-                                        <>
-                                            <div className="absolute inset-0 rounded-full bg-white/20 blur-md"></div>
-                                            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-white rounded-full shadow-md"></div>
-                                            <div className="absolute inset-0 rounded-full bg-white/10 animate-pulse"></div>
-                                        </>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Action Items */}
-                        <div className='flex items-center space-x-6 px-4'>
-                            {actionItems.map((item) => (
-                                <div
-                                    key={item.label}
-                                    className='
-                                        relative p-2 rounded-full cursor-pointer
-                                        text-white/90 hover:text-white hover:bg-white/10
-                                        transition-all duration-300 ease-in-out
-                                        hover:scale-110 active:scale-95
-                                        group
-                                    '
-                                    title={item.label}
-                                >
-                                    <span className="transition-transform duration-300 group-hover:rotate-12">
-                                        {item.icon}
-                                    </span>
-
-                                    <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-                                        {item.label}
+                        {/* Navigation and Actions Container */}
+                        <div className='flex items-center'>
+                            {/* Main Navigation */}
+                            <div className='flex items-center space-x-8 px-4'>
+                                {navItems.map((item) => (
+                                    <div
+                                        key={item.label}
+                                        onClick={() => handleNavClick(item.label)}
+                                        className={`
+                    flex items-center space-x-2 px-4 py-2 rounded-full cursor-pointer
+                    transition-all duration-300 ease-in-out
+                    text-white/90 hover:bg-white/10 hover:text-white
+                    hover:scale-105 active:scale-95
+                `}
+                                    >
+                                        <span className="transition-all duration-300">
+                                            {activePage === item.label ? item.selectedIcon : item.icon}
+                                        </span>
+                                        <span className={`text-sm whitespace-nowrap transition-all duration-300 ${activePage === item.label ? 'font-semibold' : 'font-normal'}`}>
+                                            {item.label}
+                                        </span>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+
+                            {/* Action Items */}
+                            <div className='flex items-center space-x-6 px-4'>
+                                {actionItems.map((item) => (
+                                    <div
+                                        key={item.label}
+                                        onClick={() => handleNavClick(item.label)}
+                                        className='
+                    relative p-2 rounded-full cursor-pointer
+                    text-white/90 hover:text-white hover:bg-white/10
+                    transition-all duration-300 ease-in-out
+                    hover:scale-110 active:scale-95
+                    group
+                '
+                                        title={item.label}
+                                    >
+                                        <span className="transition-transform duration-300 group-hover:rotate-12">
+                                            {activePage === item.label ? item.selectedIcon : item.icon}
+                                        </span>
+
+                                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+                                            {item.label}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
+
 
                         {/* Profile Section */}
                         <div className='flex items-center pr-4 pl-2'>
@@ -222,21 +220,22 @@ export const Navbar = () => {
                         ),
                         // pick these from actionItems
                         ...actionItems // already only Favorites + Cart
-                    ].map(({ label, icon, path }) => (
+                    ].map(({ label, icon, selectedIcon }) => (
                         <div
                             key={label}
                             onClick={() => handleNavClick(label)}
                             className={`
-          flex flex-col items-center space-y-1 cursor-pointer transition-all duration-300
-          ${activePage === label ? 'text-white' : 'text-white/70'}
-        `}
+                    flex flex-col items-center space-y-1 cursor-pointer transition-all duration-300
+                    ${activePage === label ? 'text-white font-semibold' : 'text-white/70'}
+                `}
                         >
-                            {icon}
+                            {activePage === label ? selectedIcon : icon}
                             <span className="text-xs">{label}</span>
                         </div>
                     ))}
                 </div>
             </div>
+
 
         </>
     );
