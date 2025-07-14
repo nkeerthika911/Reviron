@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
     name:{
-        type:String,
+        type: String,
         default: "",
         required: true,
     },
     description:{
-        type:String,
+        type: String,
         default:"",
         required: true,
     },
@@ -16,12 +16,12 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     quantity:{
-        type:Number,
+        type: Number,
         default: 1,
         required: true,
     },
     brand:{
-        type:String,
+        type: String,
         default:"",
         required: true,
     },
@@ -31,3 +31,5 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
 })
+
+module.exports = mongoose.model("Product", productSchema);
