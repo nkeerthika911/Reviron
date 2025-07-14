@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from "../assets/RevironLogo.png";
 import userIcon from "../assets/user-icon.jpg";
 
@@ -8,6 +8,7 @@ export const Navbar = () => {
     const [activePage, setActivePage] = useState('Products');
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
     const navItems = [
         {
@@ -117,20 +118,28 @@ export const Navbar = () => {
                                         key={item.label}
                                         onClick={() => handleNavClick(item.label)}
                                         className={`
-                    flex items-center space-x-2 px-4 py-2 rounded-full cursor-pointer
-                    transition-all duration-300 ease-in-out
-                    text-white/90 hover:bg-white/10 hover:text-white
-                    hover:scale-105 active:scale-95
-                `}
+      flex items-center space-x-2 px-4 py-2 rounded-full cursor-pointer
+      transition-all duration-300 ease-in-out
+      text-white/90 hover:bg-white/10 hover:text-white
+      hover:scale-105 active:scale-95
+    `}
                                     >
                                         <span className="transition-all duration-300">
-                                            {activePage === item.label ? item.selectedIcon : item.icon}
+                                            {activePage === item.label || location.pathname === item.path
+                                                ? item.selectedIcon
+                                                : item.icon}
                                         </span>
-                                        <span className={`text-sm whitespace-nowrap transition-all duration-300 ${activePage === item.label ? 'font-semibold' : 'font-normal'}`}>
+                                        <span
+                                            className={`text-sm whitespace-nowrap transition-all duration-300 ${activePage === item.label || location.pathname === item.path
+                                                    ? 'font-semibold'
+                                                    : 'font-normal'
+                                                }`}
+                                        >
                                             {item.label}
                                         </span>
                                     </div>
                                 ))}
+
                             </div>
 
                             {/* Action Items */}
@@ -170,9 +179,9 @@ export const Navbar = () => {
                                 hover:scale-110 active:scale-95
                                 group
                             '>
-                        <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
-                            <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
-                        </div>
+                                <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
+                                    <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
+                                </div>
 
                                 <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                     Profile
