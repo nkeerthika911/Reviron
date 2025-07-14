@@ -5,7 +5,7 @@ import { Products } from './pages/products/Products'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
-import { ProductDetails } from './pages/products/components/ProductCard'
+import { ProductDetails } from './pages/products/ProductDetails/ProductDetails'
 function App() {
   const [count, setCount] = useState(0)
 
