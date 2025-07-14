@@ -17,7 +17,7 @@ function App() {
           <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
-
+          <Route path="/*" element={<Products/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

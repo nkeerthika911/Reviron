@@ -1,11 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from "../assets/RevironLogo.png";
 import userIcon from "../assets/user-icon.jpg";
 
 export const Navbar = () => {
     const [activePage, setActivePage] = useState('Products');
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     const navItems = [
         {
@@ -19,7 +21,7 @@ export const Navbar = () => {
                 </svg>
             ),
             selectedIcon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 48 48"><defs><mask id="ipSMallBag0"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M6 12.6V41a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2V12.6z"/><path stroke="#fff" stroke-linecap="round" d="M42 12.6L36.333 5H11.667L6 12.6v0"/><path stroke="#000" stroke-linecap="round" d="M31.555 19.2c0 4.198-3.382 7.6-7.555 7.6s-7.556-3.402-7.556-7.6"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSMallBag0)"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 48 48"><defs><mask id="ipSMallBag0"><g fill="none" stroke-linejoin="round" stroke-width="4"><path fill="#fff" stroke="#fff" d="M6 12.6V41a2 2 0 0 0 2 2h32a2 2 0 0 0 2-2V12.6z" /><path stroke="#fff" stroke-linecap="round" d="M42 12.6L36.333 5H11.667L6 12.6v0" /><path stroke="#000" stroke-linecap="round" d="M31.555 19.2c0 4.198-3.382 7.6-7.555 7.6s-7.556-3.402-7.556-7.6" /></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSMallBag0)" /></svg>
             ),
             path: '/products'
         },
@@ -80,6 +82,10 @@ export const Navbar = () => {
 
     const handleNavClick = (label) => {
         setActivePage(label);
+        const item = [...navItems, ...actionItems].find(i => i.label === label);
+        if (item?.path) {
+            navigate(item.path);
+        }
     };
 
     const handleSearchSubmit = (e) => {
@@ -95,7 +101,7 @@ export const Navbar = () => {
                 <div className='bg-[#81AD87] rounded-[50px] h-[9vh] shadow-lg border border-white/20 flex'>
                     {/* Logo Section */}
                     <div className='flex-1 h-full flex items-center pl-4'>
-                        <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
+                        <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center '>
                             <img src={logo} alt='Logo' className='text-[#81AD87] font-bold text-xl' />
                         </div>
                     </div>
@@ -103,7 +109,6 @@ export const Navbar = () => {
                     {/* Navigation and Actions Container */}
                     <div className='flex items-center'>
                         {/* Main Navigation */}
-                        {/* Navigation and Actions Container */}
                         <div className='flex items-center'>
                             {/* Main Navigation */}
                             <div className='flex items-center space-x-8 px-4'>
@@ -165,9 +170,9 @@ export const Navbar = () => {
                                 hover:scale-110 active:scale-95
                                 group
                             '>
-                                <div className='h-10 w-10 bg-white rounded-full flex items-center justify-center'>
-                                    <span className='text-[#81AD87] font-bold text-lg'>U</span>
-                                </div>
+                        <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
+                            <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
+                        </div>
 
                                 <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                                     Profile
