@@ -28,7 +28,7 @@ const login = asyncHandler(async (req, res) => {
 //@desc get a userDetails by username
 //@route /api/auth/signup
 const signup = asyncHandler(async (req, res) => {
-    const user = await userService.getUserbyUsername(req.body.username);
+    const user = await userService.getUserbyUsername(req.body.email);
     if (user) {
         throw Object.assign(new Error("Username already exists"), { statusCode: 409 });
     }
@@ -37,11 +37,11 @@ const signup = asyncHandler(async (req, res) => {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(req.body.password, salt);
     // PROFILE PICTURE - https://avatar-placeholder.iran.liara.run/
-    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${req.body.username}`
-    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${req.body.username}`
+    const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${req.body.fullName}`
+    const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${req.body.fullName}`
     const newUser = await authService.signup({
         fullName: req.body.fullName,
-        username: req.body.username,
+        email: req.body.email,
         password: hashedPassword,
         gender: req.body.gender,
         profilePic: req.body.gender == "m" ? boyProfilePic : girlProfilePic,
@@ -67,4 +67,4 @@ const logout = asyncHandler(async (req, res) => {
     })
 })
 
-module.exports = { login, signup, logout };
+module.exports = { login, signup, logout }
