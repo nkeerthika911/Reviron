@@ -1,7 +1,12 @@
 import React from 'react'
+import { SellProductForm } from './components/SellProductForm'
 
 export const Sell = () => {
   return (
-    <div>Sell</div>
+    <>
+      <Navbar />
+      <div>Sell</div>
+      <SellProductForm />
+    </>
   )
 }
