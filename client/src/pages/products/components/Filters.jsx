@@ -11,46 +11,9 @@ export const Filters = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
-  const categories = [
-    "Electronics",
-    "Clothing",
-    "Home & Garden",
-    "Sports",
-    "Books",
-    "Automotive",
-    "Health & Beauty",
-    "Toys & Games"
-  ];
-
-  const conditions = [
-    "New",
-    "Like New",
-    "Good",
-    "Fair",
-    "Poor"
-  ];
-
-  const brands = [
-    "Apple",
-    "Samsung",
-    "Sony",
-    "Nike",
-    "Adidas",
-    "Canon",
-    "Dell",
-    "HP"
-  ];
-
-  const locations = [
-    "Mumbai",
-    "Delhi",
-    "Bangalore",
-    "Chennai",
-    "Kolkata",
-    "Hyderabad",
-    "Pune",
-    "Ahmedabad"
-  ];
+  const categories = ["Electronics", "Clothing", "Home & Garden", "Sports", "Books", "Automotive", "Health & Beauty", "Toys & Games"];
+  const conditions = ["Working", "Not Working"];
+  const brands = ["Apple", "Samsung", "Sony", "Nike", "Adidas", "Canon", "Dell", "HP"];
 
   const handleMinChange = (e) => {
     const value = Math.min(Number(e.target.value), max - 100);
@@ -88,63 +51,9 @@ export const Filters = () => {
     transform: "translateY(-50%)",
   };
 
-  const FilterSection = ({ title, children }) => (
-    <div className="mb-6">
-      <div className="flex justify-between items-center mb-2">
-        <label className="text-sm font-medium text-green-700">{title}</label>
-      </div>
-      {children}
-    </div>
-  );
-
   return (
     <>
-      <style>
-        {`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
-        input[type="range"] {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 36px;
-          position: absolute;
-          background: none;
-          margin: 0;
-          pointer-events: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          height: 20px;
-          width: 20px;
-          background: #fff;
-          border: 2px solid #6F9674;
-          border-radius: 50%;
-          cursor: pointer;
-          pointer-events: auto;
-          margin-top: -5px;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-          height: 20px;
-          width: 20px;
-          background: #fff;
-          border: 2px solid #6F9674;
-          border-radius: 50%;
-          cursor: pointer;
-          pointer-events: auto;
-        }
-
-        input[type="range"]::-moz-range-track {
-          height: 10px;
-          background: transparent;
-        }
-      `}
-      </style>
-
-      <div className="bg-white rounded-md p-5 font-['Poppins'] shadow-sm border border-gray-200 w-full h-full overflow-y-auto">
+      <div className="bg-white rounded-md p-5 font-['Poppins'] shadow-sm border border-gray-200 w-[20vw] h-full overflow-y-auto">
         <div className="px-5 py-6 -mx-5 border-b border-gray-200 mb-5">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-semibold text-green-700">Filters</h2>
@@ -157,35 +66,21 @@ export const Filters = () => {
           </div>
         </div>
 
-        {/* Price Filter */}
-        <FilterSection title="PRICE">
+        {/* PRICE */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-green-700">PRICE</label>
+          </div>
           <div className="relative w-full h-9 mb-2 px-1 flex items-center">
             <div className="absolute top-1/2 left-0 right-0 h-2.5 bg-gray-300 rounded-md z-10 -translate-y-1/2"></div>
             <div style={rangeStyle}></div>
-
-            <input
-              type="range"
-              min={minLimit}
-              max={maxLimit}
-              value={min}
-              onChange={handleMinChange}
-              className="z-30"
-            />
-            <input
-              type="range"
-              min={minLimit}
-              max={maxLimit}
-              value={max}
-              onChange={handleMaxChange}
-              className="z-40"
-            />
+            <input type="range" min={minLimit} max={maxLimit} value={min} onChange={handleMinChange} className="z-30" />
+            <input type="range" min={minLimit} max={maxLimit} value={max} onChange={handleMaxChange} className="z-40" />
           </div>
-
           <div className="flex justify-between mt-3 text-sm font-medium text-green-700">
             <span>{formatAmount(minLimit)}</span>
             <span>{formatAmount(maxLimit)}</span>
           </div>
-
           <div className="flex justify-between items-center gap-2 mt-4">
             <input
               type="text"
@@ -201,10 +96,13 @@ export const Filters = () => {
               className="w-2/5 px-2.5 py-1.5 text-sm rounded-md border border-green-700 text-center text-green-700 font-semibold bg-gray-50"
             />
           </div>
-        </FilterSection>
+        </div>
 
-        {/* Category Filter */}
-        <FilterSection title="CATEGORY">
+        {/* CATEGORY */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-green-700">CATEGORY</label>
+          </div>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -212,15 +110,31 @@ export const Filters = () => {
           >
             <option value="">All Categories</option>
             {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
+              <option key={category} value={category}>{category}</option>
             ))}
           </select>
-        </FilterSection>
-
-        {/* Condition Filter */}
-        <FilterSection title="CONDITION">
+        </div>
+        {/* BRAND */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-green-700">BRAND</label>
+          </div>
+          <select
+            value={selectedBrand}
+            onChange={(e) => setSelectedBrand(e.target.value)}
+            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">All Brands</option>
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>{brand}</option>
+            ))}
+          </select>
+        </div>
+        {/* CONDITION */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center mb-2">
+            <label className="text-sm font-medium text-green-700">CONDITION</label>
+          </div>
           <div className="space-y-2">
             {conditions.map((condition) => (
               <label key={condition} className="flex items-center space-x-2 cursor-pointer">
@@ -236,40 +150,49 @@ export const Filters = () => {
               </label>
             ))}
           </div>
-        </FilterSection>
-
-        {/* Brand Filter */}
-        <FilterSection title="BRAND">
-          <select
-            value={selectedBrand}
-            onChange={(e) => setSelectedBrand(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="">All Brands</option>
-            {brands.map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
-            ))}
-          </select>
-        </FilterSection>
-
-        {/* Location Filter */}
-        <FilterSection title="LOCATION">
-          <select
-            value={selectedLocation}
-            onChange={(e) => setSelectedLocation(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="">All Locations</option>
-            {locations.map((location) => (
-              <option key={location} value={location}>
-                {location}
-              </option>
-            ))}
-          </select>
-        </FilterSection>
+        </div>
       </div>
+
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+          input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 36px;
+            position: absolute;
+            background: none;
+            margin: 0;
+            pointer-events: none;
+          }
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 20px;
+            width: 20px;
+            background: #fff;
+            border: 2px solid #6F9674;
+            border-radius: 50%;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-top: -5px;
+          }
+          input[type="range"]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            background: #fff;
+            border: 2px solid #6F9674;
+            border-radius: 50%;
+            cursor: pointer;
+            pointer-events: auto;
+          }
+          input[type="range"]::-moz-range-track {
+            height: 10px;
+            background: transparent;
+          }
+        `}
+      </style>
     </>
   );
 };
