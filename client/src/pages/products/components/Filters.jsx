@@ -6,6 +6,51 @@ export const Filters = () => {
 
   const [min, setMin] = useState(minLimit);
   const [max, setMax] = useState(6000);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCondition, setSelectedCondition] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  const categories = [
+    "Electronics",
+    "Clothing",
+    "Home & Garden",
+    "Sports",
+    "Books",
+    "Automotive",
+    "Health & Beauty",
+    "Toys & Games"
+  ];
+
+  const conditions = [
+    "New",
+    "Like New",
+    "Good",
+    "Fair",
+    "Poor"
+  ];
+
+  const brands = [
+    "Apple",
+    "Samsung",
+    "Sony",
+    "Nike",
+    "Adidas",
+    "Canon",
+    "Dell",
+    "HP"
+  ];
+
+  const locations = [
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Kolkata",
+    "Hyderabad",
+    "Pune",
+    "Ahmedabad"
+  ];
 
   const handleMinChange = (e) => {
     const value = Math.min(Number(e.target.value), max - 100);
@@ -20,110 +65,16 @@ export const Filters = () => {
   const handleClear = () => {
     setMin(minLimit);
     setMax(maxLimit);
+    setSelectedCategory("");
+    setSelectedCondition("");
+    setSelectedBrand("");
+    setSelectedLocation("");
   };
 
   const minPercent = ((min - minLimit) / (maxLimit - minLimit)) * 100;
   const maxPercent = ((max - minLimit) / (maxLimit - minLimit)) * 100;
 
   const formatAmount = (amount) => `₹${amount.toLocaleString("en-IN")}`;
-
-  const styles = {
-    container: {
-      background: "#ffffff",
-      borderRadius: "6px",
-      padding: "0px 20px 20px 20px",
-      fontFamily: "'Poppins', sans-serif",
-      boxShadow: "0 0 0 1px #dcdcdc",
-      maxWidth: "380px",
-      width: "100%",
-      boxSizing: "border-box",
-      marginLeft: "70px",
-      marginTop: "60px",
-      minHeight: "720px",
-    },
-    headerBox: {
-      padding: "24px 20px 16px 20px",
-      marginLeft: "-20px",
-      marginRight: "-20px",
-      borderBottom: "1px solid #dcdcdc",
-      marginBottom: "20px",
-    },
-    heading: {
-      fontSize: "25px",
-      fontWeight: "600",
-      color: "#6F9674",
-    },
-    clearBtn: {
-      fontSize: "12px",
-      background: "none",
-      border: "none",
-      color: "#999",
-      cursor: "pointer",
-      fontWeight: "500",
-    },
-    priceHeaderRow: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "8px",
-    },
-    label: {
-      fontSize: "14px",
-      fontWeight: "500",
-      color: "#6F9674",
-    },
-    sliderWrapper: {
-      position: "relative",
-      width: "100%",
-      height: "36px",
-      marginBottom: "8px",
-      padding: "0 5px",
-      display: "flex",
-      alignItems: "center",
-    },
-    track: {
-      position: "absolute",
-      top: "50%",
-      left: 0,
-      right: 0,
-      height: "10px",
-      background: "#ddd",
-      borderRadius: "6px",
-      zIndex: 1,
-      transform: "translateY(-50%)",
-    },
-    selectedValues: {
-      display: "flex",
-      justifyContent: "space-between",
-      marginTop: "12px",
-      fontSize: "14px",
-      fontWeight: "500",
-      color: "#6F9674",
-    },
-    priceInputs: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      gap: "8px",
-      marginTop: "16px",
-    },
-    inputBox: {
-      width: "45%",
-      padding: "6px 10px",
-      fontSize: "14px",
-      borderRadius: "6px",
-      border: "1px solid #6F9674",
-      textAlign: "center",
-      color: "#6F9674",
-      fontWeight: "600",
-      background: "#f8f8f8",
-    },
-    toText: {
-      fontSize: "14px",
-      fontWeight: "500",
-      color: "#949494",
-    },
-  };
 
   const rangeStyle = {
     position: "absolute",
@@ -136,6 +87,15 @@ export const Filters = () => {
     zIndex: 2,
     transform: "translateY(-50%)",
   };
+
+  const FilterSection = ({ title, children }) => (
+    <div className="mb-6">
+      <div className="flex justify-between items-center mb-2">
+        <label className="text-sm font-medium text-green-700">{title}</label>
+      </div>
+      {children}
+    </div>
+  );
 
   return (
     <>
@@ -184,50 +144,131 @@ export const Filters = () => {
       `}
       </style>
 
-      <div style={styles.container}>
-        <div style={styles.headerBox}>
-          <div style={styles.heading}>Filters</div>
+      <div className="bg-white rounded-md p-5 font-['Poppins'] shadow-sm border border-gray-200 w-full h-full overflow-y-auto">
+        <div className="px-5 py-6 -mx-5 border-b border-gray-200 mb-5">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-green-700">Filters</h2>
+            <button
+              className="text-xs bg-none border-none text-gray-400 cursor-pointer font-medium hover:text-gray-600"
+              onClick={handleClear}
+            >
+              X CLEAR ALL
+            </button>
+          </div>
         </div>
 
-        <div style={styles.priceHeaderRow}>
-          <div style={styles.label}>PRICE</div>
-          <button style={styles.clearBtn} onClick={handleClear}>
-            X CLEAR
-          </button>
-        </div>
+        {/* Price Filter */}
+        <FilterSection title="PRICE">
+          <div className="relative w-full h-9 mb-2 px-1 flex items-center">
+            <div className="absolute top-1/2 left-0 right-0 h-2.5 bg-gray-300 rounded-md z-10 -translate-y-1/2"></div>
+            <div style={rangeStyle}></div>
 
-        <div style={styles.sliderWrapper}>
-          <div style={styles.track}></div>
-          <div style={rangeStyle}></div>
+            <input
+              type="range"
+              min={minLimit}
+              max={maxLimit}
+              value={min}
+              onChange={handleMinChange}
+              className="z-30"
+            />
+            <input
+              type="range"
+              min={minLimit}
+              max={maxLimit}
+              value={max}
+              onChange={handleMaxChange}
+              className="z-40"
+            />
+          </div>
 
-          <input
-            type="range"
-            min={minLimit}
-            max={maxLimit}
-            value={min}
-            onChange={handleMinChange}
-            style={{ zIndex: 3 }}
-          />
-          <input
-            type="range"
-            min={minLimit}
-            max={maxLimit}
-            value={max}
-            onChange={handleMaxChange}
-            style={{ zIndex: 4 }}
-          />
-        </div>
+          <div className="flex justify-between mt-3 text-sm font-medium text-green-700">
+            <span>{formatAmount(minLimit)}</span>
+            <span>{formatAmount(maxLimit)}</span>
+          </div>
 
-        <div style={styles.selectedValues}>
-          <span>{formatAmount(minLimit)}</span>
-          <span>{formatAmount(maxLimit)}</span>
-        </div>
+          <div className="flex justify-between items-center gap-2 mt-4">
+            <input
+              type="text"
+              value={formatAmount(min)}
+              readOnly
+              className="w-2/5 px-2.5 py-1.5 text-sm rounded-md border border-green-700 text-center text-green-700 font-semibold bg-gray-50"
+            />
+            <span className="text-sm font-medium text-gray-500">to</span>
+            <input
+              type="text"
+              value={formatAmount(max)}
+              readOnly
+              className="w-2/5 px-2.5 py-1.5 text-sm rounded-md border border-green-700 text-center text-green-700 font-semibold bg-gray-50"
+            />
+          </div>
+        </FilterSection>
 
-        <div style={styles.priceInputs}>
-          <input type="text" value={formatAmount(min)} readOnly style={styles.inputBox} />
-          <span style={styles.toText}>to</span>
-          <input type="text" value={formatAmount(max)} readOnly style={styles.inputBox} />
-        </div>
+        {/* Category Filter */}
+        <FilterSection title="CATEGORY">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </FilterSection>
+
+        {/* Condition Filter */}
+        <FilterSection title="CONDITION">
+          <div className="space-y-2">
+            {conditions.map((condition) => (
+              <label key={condition} className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="condition"
+                  value={condition}
+                  checked={selectedCondition === condition}
+                  onChange={(e) => setSelectedCondition(e.target.value)}
+                  className="w-4 h-4 text-green-600 border-green-300 focus:ring-green-500"
+                />
+                <span className="text-sm font-medium text-green-700">{condition}</span>
+              </label>
+            ))}
+          </div>
+        </FilterSection>
+
+        {/* Brand Filter */}
+        <FilterSection title="BRAND">
+          <select
+            value={selectedBrand}
+            onChange={(e) => setSelectedBrand(e.target.value)}
+            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">All Brands</option>
+            {brands.map((brand) => (
+              <option key={brand} value={brand}>
+                {brand}
+              </option>
+            ))}
+          </select>
+        </FilterSection>
+
+        {/* Location Filter */}
+        <FilterSection title="LOCATION">
+          <select
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            className="w-full px-3 py-2 text-sm border border-green-700 rounded-md bg-gray-50 text-green-700 font-medium focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="">All Locations</option>
+            {locations.map((location) => (
+              <option key={location} value={location}>
+                {location}
+              </option>
+            ))}
+          </select>
+        </FilterSection>
       </div>
     </>
   );
