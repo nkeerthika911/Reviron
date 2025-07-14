@@ -25,7 +25,7 @@ export const Login = () => {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
       console.log(response);
       setToast({ message: response.data.data.message, color: 'bg-green-500' });
-      navigate('/product');
+      navigate('/products');
     } catch (err) {
       console.log(err);
       const errorData = err?.response?.data?.data;
@@ -45,7 +45,7 @@ export const Login = () => {
       });
 
       setToast({ message: response.data.data.message, color: 'bg-green-500' });
-      navigate('/product');
+      navigate('/products');
       // Optionally switch to login screen after successful signup
       // setTimeout(() => {
       //   setIsLogin(true);
