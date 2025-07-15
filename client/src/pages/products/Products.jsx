@@ -48,16 +48,17 @@ export const Products = () => {
         <Filters />
         <div className="flex flex-1">
           <div className="flex-1 flex flex-col">
-            <div className="flex-shrink-0 p-6 pb-4">
-              <div className="mb-3">
-                <h2 className="text-xl font-semibold text-[#81AD87]">POPULAR PRODUCTS</h2>
-              </div>
+            {/* Search Bar - Fixed */}
+            <div className="flex-shrink-0 p-6 pb-4 pt-2">
+                <div className="mb-3">
+                  <h2 className="text-xl font-semibold text-[#81AD87]">POPULAR PRODUCTS</h2>
+                </div>
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#81AD87] w-5 h-5" />
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2 border border-[#81AD87] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81AD87] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81AD87] focus:border-transparent"
                 />
               </div>
             </div>
