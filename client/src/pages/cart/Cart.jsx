@@ -6,9 +6,13 @@ import { OrderSummary } from './components/OrderSummary'
 export const Cart = () => {
     return (
         <>
-            <Navbar/>
-            <CartProduct/>
-            <OrderSummary/>
+            <div className="h-screen w-screen bg-gray-50 flex flex-col">
+                <Navbar />
+                <div className="flex p-4 overflow-hidden">
+                    <CartProduct />
+                    <OrderSummary />
+                </div>
+            </div>
         </>
     )
 }
