@@ -103,7 +103,7 @@ export const Products = () => {
           {/* Right side - Search and Products */}
           <div className="flex-1 flex flex-col">
             {/* Search Bar - Fixed */}
-            <div className="flex-shrink-0 p-6 pb-4">
+            <div className="flex-shrink-0 p-6 pb-4 pt-2">
                 <div className="mb-3">
                   <h2 className="text-xl font-semibold text-[#81AD87]">POPULAR PRODUCTS</h2>
                 </div>
@@ -112,7 +112,7 @@ export const Products = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2 border border-[#81AD87] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81AD87] focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81AD87] focus:border-transparent"
                 />
               </div>
             </div>

@@ -5,7 +5,7 @@ import logo from "../assets/RevironLogo.png";
 import userIcon from "../assets/user-icon.jpg";
 
 export const Navbar = () => {
-    const [activePage, setActivePage] = useState('Products');
+    const [activePage, setActivePage] = useState();
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
@@ -102,7 +102,7 @@ export const Navbar = () => {
                 <div className='bg-[#81AD87] h-[9vh] shadow-lg border border-white/20 flex'>
                     {/* Logo Section */}
                     <div className='flex-1 h-full flex items-center pl-4'>
-                        <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center '>
+                        <div className='h-15 w-15 rounded-full flex items-center justify-center '>
                             <img src={logo} alt='Logo' className='text-[#81AD87] font-bold text-xl' />
                         </div>
                     </div>
@@ -176,8 +176,6 @@ export const Navbar = () => {
                                 relative rounded-full cursor-pointer
                                 bg-white/10 hover:bg-white/20
                                 transition-all duration-300 ease-in-out
-                                hover:scale-110 active:scale-95
-                                group
                             '>
                                 <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
                                     <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
