@@ -2,7 +2,7 @@ import React from 'react';
 
 export const ProdDetails = () => {
   return (
-    <div className="p-4 border rounded shadow flex flex-row max-w-4xl">
+    <div className="p-4 border shadow flex flex-row max-w-4xl">
       {/* Image */}
       <div className="flex-1">
         <img
@@ -39,11 +39,11 @@ export const ProdDetails = () => {
           <p className="text-green-600 font-medium">Free shipping</p>
         </div>
         <div className="flex flex-col gap-2 w-full max-w-[10rem]">
-          <button className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            DETAILS
+          <button className="bg-[#6F9674] text-white py-2 rounded hover:bg-[#6F9674">
+            BUY NOW
           </button>
-          <button className="border border-blue-600 text-blue-600 py-2 rounded hover:bg-blue-50">
-            ADD TO WISHLIST
+          <button className="border border-[#6F9674] text-[#6F9674] py-2 rounded">
+            ADD TO CART
           </button>
         </div>
       </div>
