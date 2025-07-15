@@ -9,7 +9,6 @@ const { generateToken } = require('../utils/generateToken');
 //@route /api/auth/login
 const login = asyncHandler(async (req, res) => {
     const userDetails = await userService.getUserbyEmail(req.body.email);
-    console.log(userDetails)
     if(!userDetails){
         throw Object.assign(new Error("User doesn't exist"),{statusCode:400});
     }
