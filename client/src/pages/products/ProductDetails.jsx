@@ -9,7 +9,7 @@ export const ProductDetails = () => {
         <Navbar />
       </div>
       <div className="pl-70">
-        <ProdDetails/>
+    
       </div>
 
     </div>
