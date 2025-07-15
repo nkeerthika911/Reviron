@@ -5,7 +5,8 @@ import { Products } from './pages/products/Products'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
-import { ProductDetails } from './pages/products/components/ProductCard'
+import { ProductDetails } from './pages/products/ProductDetails'
+import { AdminOrders } from './pages/products/AdminOrders'
 function App() {
   const [count, setCount] = useState(0)
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
+          <Route path="/admin/order" element={<AdminOrders/>}></Route>
 
         </Routes>
       </BrowserRouter>

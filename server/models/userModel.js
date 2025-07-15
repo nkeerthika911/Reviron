@@ -22,7 +22,12 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         type: String,
         default: "",
-    }
+    },
+    role:{
+        type: String,
+        default: "user",
+    },
+
     // createdAt, updatedAt field will be added due to timestamps
 }, {timestamps: true});
 
