@@ -98,8 +98,8 @@ export const Navbar = () => {
     return (
         <>
             {/* Desktop Layout */}
-            <div className='hidden lg:block sticky top-[1rem] mx-auto w-[calc(100vw-2rem)] lg:w-[calc(100vw-4rem)] mb-5'>
-                <div className='bg-[#81AD87] rounded-[50px] h-[9vh] shadow-lg border border-white/20 flex'>
+            <div className='hidden lg:block  w-[100vw]'>
+                <div className='bg-[#81AD87] h-[9vh] shadow-lg border border-white/20 flex'>
                     {/* Logo Section */}
                     <div className='flex-1 h-full flex items-center pl-4'>
                         <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center '>
