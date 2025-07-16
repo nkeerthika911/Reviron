@@ -11,7 +11,7 @@ export const Filters = () => {
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
-  const categories = ["Electronics", "Clothing", "Home & Garden", "Sports", "Books", "Automotive", "Health & Beauty", "Toys & Games"];
+  const categories = ["Battery", "Metal", "PCB", "Chip", "Appliance"];
   const conditions = ["Working", "Not Working"];
   const brands = ["Apple", "Samsung", "Sony", "Nike", "Adidas", "Canon", "Dell", "HP"];
 
@@ -43,7 +43,7 @@ export const Filters = () => {
     position: "absolute",
     top: "50%",
     height: "10px",
-    background: "#6F9674",
+    background: "#00ca1bff",
     borderRadius: "6px",
     left: `${minPercent}%`,
     width: `${maxPercent - minPercent}%`,
@@ -53,10 +53,10 @@ export const Filters = () => {
 
   return (
     <>
-      <div className="bg-white rounded-md p-5 font-['Poppins'] shadow-sm border border-gray-200 w-[20vw] h-full overflow-y-auto">
-        <div className="px-5 py-6 -mx-5 border-b border-gray-200 mb-5">
+      <div className="bg-white rounded-md p-5 pt-0 font-['Poppins'] shadow-sm border border-gray-200 w-[20vw] h-full overflow-y-auto">
+        <div className="px-5 py-3 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold text-green-700">Filters</h2>
+            <h2 className="text-2xl font-semibold text-[#6F9674]">Filters</h2>
             <button
               className="text-xs bg-none border-none text-gray-400 cursor-pointer font-medium hover:text-gray-600"
               onClick={handleClear}
@@ -67,9 +67,9 @@ export const Filters = () => {
         </div>
 
         {/* PRICE */}
-        <div className="mb-6">
+        <div className="px-5 py-3.5 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
-            <label className="text-sm font-medium text-green-700">PRICE</label>
+            <label className="text-sm font-medium text--[#81AD87]">PRICE</label>
           </div>
           <div className="relative w-full h-9 mb-2 px-1 flex items-center">
             <div className="absolute top-1/2 left-0 right-0 h-2.5 bg-gray-300 rounded-md z-10 -translate-y-1/2"></div>
@@ -99,7 +99,7 @@ export const Filters = () => {
         </div>
 
         {/* CATEGORY */}
-        <div className="mb-6">
+        <div className="px-5 py-3.5 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <label className="text-sm font-medium text-green-700">CATEGORY</label>
           </div>
@@ -115,7 +115,7 @@ export const Filters = () => {
           </select>
         </div>
         {/* BRAND */}
-        <div className="mb-6">
+        <div className="px-5 py-3.5 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <label className="text-sm font-medium text-green-700">BRAND</label>
           </div>
@@ -131,7 +131,7 @@ export const Filters = () => {
           </select>
         </div>
         {/* CONDITION */}
-        <div className="mb-6">
+        <div className="px-5 py-3.5 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
             <label className="text-sm font-medium text-green-700">CONDITION</label>
           </div>

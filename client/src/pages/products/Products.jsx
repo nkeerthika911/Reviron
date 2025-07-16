@@ -51,7 +51,7 @@ export const Products = () => {
             {/* Search Bar - Fixed */}
             <div className="flex-shrink-0 p-6 pb-4 pt-2">
                 <div className="mb-3">
-                  <h2 className="text-xl font-semibold text-[#81AD87]">POPULAR PRODUCTS</h2>
+                  <h2 className="text-xl font-semibold text-[#6F9674]">POPULAR PRODUCTS</h2>
                 </div>
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#81AD87] w-5 h-5" />
