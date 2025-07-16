@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from '../Navbar'
-import { ProdDetails } from './components/ProdDetailsCard'
+import { ProductDetailsCard } from './components/ProductDetailsCard'
 
 export const ProductDetails = () => {
   return (
@@ -8,8 +8,8 @@ export const ProductDetails = () => {
       <div className="pt-3">
         <Navbar />
       </div>
-      <div className="pl-70">
-        <ProdDetails/>
+      <div className="pt-7 pl-70">
+        <ProductDetailsCard/>
       </div>
 
     </div>

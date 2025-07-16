@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-export const ProductCard = () => {
+export const ProductCard = ({ product }) => {
   const [liked, setLiked] = useState(false);
 
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg font-poppins flex flex-col">
       <img
-        src="https://static.wixstatic.com/media/42a32f_404a78c6517b4affb11f491ede019675~mv2.jpg/v1/fill/w_480,h_466,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/42a32f_404a78c6517b4affb11f491ede019675~mv2.jpg"
-        alt="Fan Motor"
+        src={product.image || "https://via.placeholder.com/300x200?text=No+Image"}
+        alt={product.name}
         className="w-full h-[170px] object-cover"
       />
       <div className="flex flex-col p-4 flex-1">
         <div className="flex justify-between items-center">
           <h3 className="text-[16px] font-semibold text-[#6F9674] m-0">
-            Fan motor - Working
+            {product.name}
           </h3>
           <div
             onClick={() => setLiked(!liked)}
@@ -35,7 +35,7 @@ export const ProductCard = () => {
         </div>
 
         <p className="text-[14px] font-semibold text-[#333] mt-2 mb-1">
-          ₹150.00 <span className="text-[11px] font-normal text-[#777]">(incl. of GST)</span>
+          ₹{product.price.toFixed(2)} <span className="text-[11px] font-normal text-[#777]">(incl. of GST)</span>
         </p>
 
         <div className="flex gap-1.5 mt-2 justify-between flex-nowrap">
@@ -49,7 +49,7 @@ export const ProductCard = () => {
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="bi bi-box-seam" viewBox="0 0 16 16">
               <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
             </svg>
-            In stock: 5
+            In stock: {product.quantity}
           </div>
         </div>
 
