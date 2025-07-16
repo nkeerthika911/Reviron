@@ -35,7 +35,7 @@ export const ProductCard = ({ product }) => {
         </div>
 
         <p className="text-[14px] font-semibold text-[#333] mt-2 mb-1">
-          ₹{product.price.toFixed(2)} <span className="text-[11px] font-normal text-[#777]">(incl. of GST)</span>
+          ₹10,000 <span className="text-[11px] font-normal text-[#777]">(incl. of GST)</span>
         </p>
 
         <div className="flex gap-1.5 mt-2 justify-between flex-nowrap">
