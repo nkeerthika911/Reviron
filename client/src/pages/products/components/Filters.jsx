@@ -69,7 +69,7 @@ export const Filters = () => {
         {/* PRICE */}
         <div className="px-5 py-3.5 -mx-5 border-b border-gray-200">
           <div className="flex justify-between items-center mb-2">
-            <label className="text-sm font-medium text--[#81AD87]">PRICE</label>
+            <label className="text-sm font-medium text-green-700">PRICE</label>
           </div>
           <div className="relative w-full h-9 mb-2 px-1 flex items-center">
             <div className="absolute top-1/2 left-0 right-0 h-2.5 bg-gray-300 rounded-md z-10 -translate-y-1/2"></div>
