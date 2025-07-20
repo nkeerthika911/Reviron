@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Navbar } from '../Navbar';
 import { ProductCard } from './components/ProductCard';
@@ -115,12 +115,13 @@ export const Products = () => {
     console.log('Applied filters:', filters);
     console.log('Filtered products count:', filtered.length);
     setFilteredProducts(filtered);
-  }, [products, filters, searchTerm]);
+  }, [products, filters, searchTerm]); // Removed onFiltersChange dependency
 
-  const handleFiltersChange = (newFilters) => {
+  // Use useCallback to memoize the handler function
+  const handleFiltersChange = useCallback((newFilters) => {
     console.log('Filters changed:', newFilters);
     setFilters(newFilters);
-  };
+  }, []);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -129,6 +130,22 @@ export const Products = () => {
   const handleClearSearch = () => {
     setSearchTerm('');
   };
+
+  const handleClearAll = useCallback(() => {
+    handleClearSearch();
+    // Reset filters by calling with default values
+    const prices = products.map(p => p.price || 0).filter(p => p > 0);
+    const minLimit = prices.length > 0 ? Math.min(...prices) : 0;
+    const maxLimit = prices.length > 0 ? Math.max(...prices) : 10000;
+    setFilters({
+      priceMin: minLimit,
+      priceMax: maxLimit,
+      category: '',
+      condition: '',
+      brand: '',
+      location: ''
+    });
+  }, [products]);
 
   return (
     <div className="h-screen w-screen bg-gray-50 flex flex-col">
@@ -150,21 +167,7 @@ export const Products = () => {
                 <span>Showing {filteredProducts.length} of {products.length} products</span>
                 {(searchTerm || Object.values(filters).some(f => f && f !== 0 && f !== 10000)) && (
                   <button
-                    onClick={() => {
-                      handleClearSearch();
-                      // Reset filters by calling with default values
-                      const prices = products.map(p => p.price || 0).filter(p => p > 0);
-                      const minLimit = prices.length > 0 ? Math.min(...prices) : 0;
-                      const maxLimit = prices.length > 0 ? Math.max(...prices) : 10000;
-                      setFilters({
-                        priceMin: minLimit,
-                        priceMax: maxLimit,
-                        category: '',
-                        condition: '',
-                        brand: '',
-                        location: ''
-                      });
-                    }}
+                    onClick={handleClearAll}
                     className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600"
                   >
                     Clear All
