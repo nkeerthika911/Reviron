@@ -1,49 +1,62 @@
 import React from "react";
 
-export const OrderSummary = () => {
+export default function OrderSummary() {
   return (
-    <div className="bg-white shadow rounded-lg p-6 w-full max-w-md">
-      <h2 className="text-xl font-semibold mb-4 text-center">Order Summary</h2>
-      <table className="w-full mb-4">
-        <thead>
-          <tr className="text-left border-b">
-            <th className="py-2">Item Name</th>
-            <th className="py-2">Quantity</th>
-            <th className="py-2">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-b">
-            <td className="py-2">Fan motor</td>
-            <td className="py-2">100 Items</td>
-            <td className="py-2">₹15000.00</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div className="text-sm mb-4">
-        <div className="flex justify-between">
-          <span>Subtotal</span>
-          <span>₹13559.32</span>
-        </div>
-        <div className="flex justify-between">
-          <span>GST (10%)</span>
-          <span>₹10440.68</span>
-        </div>
-        <div className="flex justify-between font-semibold text-lg border-t pt-2 mt-2">
-          <span>Total</span>
-          <span>₹15000.00</span>
+    <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-md space-y-6">
+      {/* Calculated Shipping */}
+      <div>
+        <h2 className="text-lg font-semibold mb-4">Calculated Shipping</h2>
+        <div className="space-y-4">
+          <input
+  type="text"
+  placeholder="Address"
+  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+        />
+          <div className="flex space-x-2">
+            <input
+          type="text"
+          placeholder="City/State"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+            <input
+              type="text"
+              placeholder="ZIP Code"
+              className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <button className="w-full py-2 rounded-full bg-[#81AD87] text-white font-semibold hover:bg-[#6C9973]">
+  Update
+</button>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-        <span className="material-icons">local_shipping</span>
-        <span>Estimated Delivery: 3–5 days</span>
-      </div>
+      <hr className="border-gray-200" />
 
-      <button className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700 transition">
-        Check out
-      </button>
+      {/* Cart Total */}
+      <div className="bg-[#e1ebe2] p-4 rounded-xl">
+        <h2 className="text-lg font-semibold mb-4">Cart Total</h2>
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span>Cart Subtotal</span>
+            <span>₹150.00</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Delivery Charges</span>
+            <span>₹0</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Discount</span>
+            <span className="text-red-600">- ₹10.00</span>
+          </div>
+          <div className="flex justify-between font-semibold text-base">
+            <span>Cart Total</span>
+            <span>₹140.00</span>
+          </div>
+        </div>
+        <button className="w-full mt-4 py-2 rounded-full bg-white text-black font-semibold shadow hover:bg-[#6C9973] hover:text-white">
+          Apply
+        </button>
+      </div>
     </div>
   );
-};
+}
