@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login } from './pages/Login/Login'
+import { Profile } from './profile/Profile'
 import { Products } from './pages/products/Products'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
 import { ProductDetails } from './pages/products/ProductDetails'
 import { AdminOrders } from './pages/products/AdminOrders'
+import { ProductDes } from './pages/products/ProductDes'
 function App() {
   const [count, setCount] = useState(0)
 

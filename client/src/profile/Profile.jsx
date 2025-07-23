@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar } from '../Navbar';
+import { Navbar } from '../pages/Navbar';
 import { Eye, Layers, Settings, Pencil } from 'lucide-react';
 
 export const Profile = () => {
