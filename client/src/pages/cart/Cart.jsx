@@ -2,43 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Navbar } from "../Navbar";
 import { CartProduct } from "./components/CartProduct";
 import OrderSummary from "./components/OrderSummary";
+import { useCart } from "../../context/CartContext";
 
 export const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      image:"https://static.wixstatic.com/media/42a32f_404a78c6517b4affb11f491ede019675~mv2.jpg",
-      title: "Fan motor",
-      seller: "Usha",
-      quantity: 1,
-      price: 150.0,
-      stock: 500,
-      returnDays: 14,
-    },
-    {
-      id: 2,
-      image:
-        "https://static.wixstatic.com/media/42a32f_404a78c6517b4affb11f491ede019675~mv2.jpg",
-      title: "Mini Fan",
-      seller: "Bajaj",
-      quantity: 2,
-      price: 100.0,
-      stock: 100,
-      returnDays: 10,
-    },
-  ]);
-
-  const handleQuantityChange = (id, newQty) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQty } : item
-      )
-    );
-  };
-
-  const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
+  const { cartItems, handleQuantityChange, handleRemove } = useCart();
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,

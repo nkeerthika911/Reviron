@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
+import { useCart } from '../../../context/CartContext';
+import { ToastPopup } from '../../utils/ToastPopup';
 
 // ProductCard component
 export const ProductCard = ({ product }) => {
   const [liked, setLiked] = useState(false);
+  const { addToCart } = useCart();
+  const [showToast, setShowToast] = useState(false);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowToast(true);
+  };
 
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col">
@@ -62,7 +71,11 @@ export const ProductCard = ({ product }) => {
           <button className="flex-1 bg-[#6F9674] text-white text-[12px] font-medium rounded-full">
             Buy now
           </button>
-          <button className="w-[35px] h-[35px] bg-[#6F9674] text-white rounded-full flex items-center justify-center">
+          <button
+            className="w-[35px] h-[35px] bg-[#6F9674] text-white rounded-full flex items-center justify-center transition-colors duration-200 hover:bg-[#4e6e54] focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
+            onClick={handleAddToCart}
+            title="Add to Cart"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="#ffffff"
@@ -73,6 +86,9 @@ export const ProductCard = ({ product }) => {
               <path d="M10 20c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm8-1c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM7.16 14.26l.01.01c.26.26.61.4.98.4h7.72c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.3.12-.47 0-.55-.45-1-1-1H6.21l-.94-2H1v2h2l3.6 7.59-.94 1.72C5.23 17.37 6.15 19 7.5 19H19v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.96-1.75z" />
             </svg>
           </button>
+          {showToast && (
+            <ToastPopup message="Added to cart!" color="bg-green-600" duration={1500} clearToast={() => setShowToast(false)} position="bottom-center" />
+          )}
         </div>
       </div>
     </div>

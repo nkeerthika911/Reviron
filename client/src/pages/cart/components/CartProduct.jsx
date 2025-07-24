@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
+  const [removing, setRemoving] = useState(false);
+
+  const handleRemove = () => {
+    setRemoving(true);
+    setTimeout(() => onRemove(product.id || product._id), 250); // match animation duration
+  };
+
   return (
-    <div className="bg-white rounded-lg p-6 flex w-[95%] max-w-6xl shadow-md transition hover:shadow-lg items-center gap-6">
+    <div
+      className={`bg-white rounded-lg p-6 flex w-[95%] max-w-6xl shadow-md transition hover:shadow-lg items-center gap-6 transition-opacity duration-250 ${removing ? 'opacity-0' : 'opacity-100'}`}
+    >
       <div className="w-60 h-60 flex-shrink-0 border border-gray-200 rounded overflow-hidden">
         <img
           src={product.image}
-          alt={product.title}
+          alt={product.title || product.name}
           className="w-full h-full object-cover"
           onError={(e) => {
             e.target.onerror = null;
@@ -17,7 +26,7 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
 
       <div className="flex flex-row justify-between items-start w-full">
         <div className="flex flex-col space-y-5 w-2/3">
-          <h3 className="text-xl font-semibold text-gray-900">{product.title}</h3>
+          <h3 className="text-xl font-semibold text-gray-900">{product.title || product.name}</h3>
           <p className="text-sm text-gray-500">Sold by: {product.seller}</p>
 
           <div className="flex items-center gap-4">
@@ -25,7 +34,7 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
             <select
               className="border px-3 py-2 rounded text-base hover:border-gray-500 focus:outline-none focus:ring focus:ring-green-200"
               value={product.quantity}
-              onChange={(e) => onQuantityChange(product.id, parseInt(e.target.value))}
+              onChange={(e) => onQuantityChange(product.id || product._id, parseInt(e.target.value))}
             >
               {[...Array(10)].map((_, i) => (
                 <option key={i + 1} value={i + 1}>
@@ -50,8 +59,9 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
             <div className="text-base text-gray-500 font-normal">(incl. of GST)</div>
           </div>
           <button
-            onClick={() => onRemove(product.id)}
+            onClick={handleRemove}
             className="text-red-500 text-base font-medium hover:underline mt-6"
+            disabled={removing}
           >
             Delete
           </button>
