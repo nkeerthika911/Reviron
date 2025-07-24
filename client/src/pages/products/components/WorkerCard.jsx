@@ -58,10 +58,14 @@ export const WorkerCard = () => {
 
             {/* Buttons */}
             <div className="flex justify-center gap-3 mt-5">
-              <button className="bg-[#81AD87] text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-200">
+              <button className="bg-[#81AD87] text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-200"
+                      onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
+                      onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}>
                 View
               </button>
-              <button className="bg-[#81AD87] text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-200">
+              <button className="bg-[#81AD87] text-white font-bold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-200"
+                      onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
+                      onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}>
                 Assign
               </button>
             </div>
