@@ -11,6 +11,8 @@ import { AdminOrders } from './pages/products/AdminOrders'
 import { ProductDes } from './pages/products/ProductDes'
 import { WorkerPage } from './pages/products/WorkerPage'
 import { CartProvider } from "./context/CartContext";
+import { BuyPage } from './pages/products/BuyPage';
+import { Payment } from './pages/products/components/payment';
 function App() {
   const [count, setCount] = useState(0)
 
@@ -29,6 +31,8 @@ function App() {
             <Route path="/admin/order" element={<AdminOrders/>}></Route>
             <Route path="/productDes" element={<ProductDes/>}></Route>
             <Route path="/WorkerPage" element={<WorkerPage/>}></Route>
+            <Route path="/buypage" element={<BuyPage/>}></Route>
+            <Route path="/payment" element={<Payment/>}></Route>
             <Route path="/*" element={<Products/>}></Route>
           </Routes>
         </BrowserRouter>
