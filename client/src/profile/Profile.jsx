@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Navbar } from '../pages/Navbar';
+import React, { useState } from "react";
+import { Navbar } from '../pages/Navbar'
 import { Eye, Layers, Settings, Pencil } from 'lucide-react';
 
 export const Profile = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: 'Ashwin',
-    gender: 'Male',
-    email: 'ashwin12@gmail.com',
+    name: 'Emily',
+    gender: 'Female',
+    email: 'emaaa12@gmail.com',
     contact: '9342566775',
-    address: '',
+    address: 'OMR,chennai',
   });
 
   const handleEditToggle = () => setIsEditing(!isEditing);
