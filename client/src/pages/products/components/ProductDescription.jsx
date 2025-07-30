@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const ProductDescription = () => {
   const [quantity, setQuantity] = useState(1)
+  const navigate = useNavigate()
 
   const handleQuantityChange = (e) => {
     const val = parseInt(e.target.value)
@@ -9,6 +11,21 @@ export const ProductDescription = () => {
       setQuantity(val)
     }
   }
+
+  const handleBuyNow = () => {
+    // Create product object with current data
+    const product = {
+      name: "Laptop Motherboard – Multi-Compatible, DDR4 Support, Micro-ATX Form Factor (Intel/AMD, 1 Unit)",
+      price: 1400,
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Computer-motherboard.jpg/640px-Computer-motherboard.jpg",
+      quantity: quantity
+    }
+    navigate('/buypage', { state: { product } })
+  }
+
+  const handleAddToCart = () => {
+    navigate('/cart');
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -62,24 +79,25 @@ export const ProductDescription = () => {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-  <button
-    className="text-black font-semibold px-6 py-2 rounded-lg transition-colors"
-    style={{ backgroundColor: '#81AD87' }}
-    onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
-    onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}
-  >
-    🛒 Add to Cart
-  </button>
-  <button
-    className="text-white font-semibold px-6 py-2 rounded-lg transition-colors"
-    style={{ backgroundColor: '#81AD87' }}
-    onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
-    onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}
-  >
-    ⚡ Buy Now
-  </button>
-</div>
-
+            <button
+              className="text-black font-semibold px-6 py-2 rounded-lg transition-colors"
+              style={{ backgroundColor: '#81AD87' }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}
+              onClick={handleAddToCart}
+            >
+              🛒 Add to Cart
+            </button>
+            <button
+              className="text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+              style={{ backgroundColor: '#81AD87' }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = '#6E9673')}
+              onMouseOut={(e) => (e.target.style.backgroundColor = '#81AD87')}
+              onClick={handleBuyNow}
+            >
+              ⚡ Buy Now
+            </button>
+          </div>
 
           {/* Highlights */}
           <ul className="mt-6 space-y-1 text-sm list-disc pl-5 text-gray-700">

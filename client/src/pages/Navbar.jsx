@@ -172,11 +172,15 @@ export const Navbar = () => {
 
                         {/* Profile Section */}
                         <div className='flex items-center pr-4 pl-2'>
-                            <div className='
+                            <div
+                                className='
                                 relative rounded-full cursor-pointer
                                 bg-white/10 hover:bg-white/20
                                 transition-all duration-300 ease-in-out
-                            '>
+                            '
+                                onClick={() => navigate('/Profile')}
+                                title="Profile"
+                            >
                                 <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
                                     <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
                                 </div>
@@ -216,7 +220,11 @@ export const Navbar = () => {
                     </div>
 
                     {/* Profile */}
-                    <div className='h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0'>
+                    <div
+                        className='h-10 w-10 rounded-full flex items-center justify-center flex-shrink-0'
+                        onClick={() => navigate('/Profile')}
+                        title="Profile"
+                    >
                         <img src={userIcon} alt='User Icon' className='rounded-full w-10 h-10 object-cover' />
                     </div>
                 </div>
