@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import { useCart } from '../../../context/CartContext';
 import { ToastPopup } from '../../utils/ToastPopup';
+import { useNavigate } from 'react-router-dom';
 
 // ProductCard component
 export const ProductCard = ({ product }) => {
   const [liked, setLiked] = useState(false);
   const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCardClick = (e) => {
+    // Prevent navigation if a button inside the card is clicked
+    if (
+      e.target.closest('button')
+    ) return;
+    navigate('/productDes', { state: { product } });
+  };
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -14,7 +24,7 @@ export const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col">
+    <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer" onClick={handleCardClick}>
       <img
         src={product.image || "https://via.placeholder.com/300x200?text=No+Image"}
         alt={product.name}
@@ -68,7 +78,10 @@ export const ProductCard = ({ product }) => {
         </div>
 
         <div className="w-full h-[35px] flex gap-2.5 mt-4">
-          <button className="flex-1 bg-[#6F9674] text-white text-[12px] font-medium rounded-full">
+          <button
+            className="flex-1 bg-[#6F9674] text-white text-[12px] font-medium rounded-full"
+            onClick={() => navigate('/buypage', { state: { product } })}
+          >
             Buy now
           </button>
           <button

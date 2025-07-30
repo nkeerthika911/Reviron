@@ -1,7 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 
 export default function OrderSummary({ subtotal, discount, total }) {
   const deliveryCharge = 0;
+  const navigate = useNavigate();
+  const { cartItems } = useCart();
+
+  const handleBuyNow = () => {
+    // Pass all cart items to the Buynow page
+    navigate('/buypage', { state: { cartItems } });
+  };
 
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-lg space-y-6">
@@ -27,7 +36,10 @@ export default function OrderSummary({ subtotal, discount, total }) {
           </div>
         </div>
 
-        <button className="w-full mt-6 py-3 rounded-full bg-[#81AD87] text-white text-base font-semibold hover:bg-[#6C9973] transition">
+        <button 
+          className="w-full mt-6 py-3 rounded-full bg-[#81AD87] text-white text-base font-semibold hover:bg-[#6C9973] transition"
+          onClick={handleBuyNow}
+        >
           Buy Now
         </button>
       </div>

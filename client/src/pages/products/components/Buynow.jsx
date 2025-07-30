@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const Buynow = () => {
+  const location = useLocation();
+  const productFromState = location.state && location.state.product;
   const [addresses, setAddresses] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ name: '', type: '', address: '', mobile: '' });
   const [editIndex, setEditIndex] = useState(null);
 
-  // Sample cart data
-  const [cart] = useState({
+  // Use product from navigation state or fallback to sample
+  const [cart] = useState(productFromState ? {
+    name: productFromState.name,
+    price: Number(productFromState.price) || 0,
+    discount: productFromState.discount ? Number(productFromState.discount) : 0,
+    fee: productFromState.fee ? Number(productFromState.fee) : 0,
+    image: productFromState.image,
+  } : {
     name: 'Sample Product',
     price: 1899,
     discount: 1178,
@@ -34,6 +42,11 @@ export const Buynow = () => {
 
   // Add or update address
   const handleAddOrEditAddress = () => {
+    // Check if any field is empty
+    if (!form.name.trim() || !form.type.trim() || !form.address.trim() || !form.mobile.trim()) {
+      alert('Please fill in all address details.');
+      return;
+    }
     if (editIndex !== null) {
       const updated = addresses.map((addr, i) => (i === editIndex ? form : addr));
       setAddresses(updated);
@@ -47,7 +60,7 @@ export const Buynow = () => {
 
   // Navigate to payment page
   const handleContinue = () => {
-    navigate('/payment');
+    navigate('/payment', { state: { cart } });
   };
 
   return (

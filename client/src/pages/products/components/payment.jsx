@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const Payment = () => {
+  const location = useLocation();
+  const cart = location.state && location.state.cart ? location.state.cart : {
+    name: 'Sample Product',
+    price: 1899,
+    discount: 1178,
+    fee: 20,
+    image: 'https://cdn-icons-png.flaticon.com/512/263/263142.png',
+  };
+
   const [selectedMode, setSelectedMode] = useState('Recommended');
   const [selectedOption, setSelectedOption] = useState('');
 
   // Theme colors
-  const primaryColor = '#92e092';
-  const accentColor = '#92e092';
-  const backgroundColor = '#f5f7fa';
-  const greenBg = '#f0fdf4';
-  const greenText = '#15803d';
+  const primaryColor = '#81AD87'; // updated to match Buynow.jsx
+  const accentColor = '#81AD87'; // updated to match Buynow.jsx
+  const backgroundColor = '#e1ebe2'; // updated to match Buynow.jsx
+  const greenBg = '#e1ebe2'; // updated to match Buynow.jsx
+  const greenText = '#2d4739'; // updated to match Buynow.jsx
   const borderColor = `${primaryColor}22`;
   const lightPrimary = `${primaryColor}11`;
 
@@ -25,9 +35,9 @@ export const Payment = () => {
   ];
 
   const priceDetails = {
-    totalMRP: 1899,
-    discount: 1178,
-    fee: 20,
+    totalMRP: cart.price,
+    discount: cart.discount,
+    fee: cart.fee,
   };
   const totalAmount = priceDetails.totalMRP - priceDetails.discount + priceDetails.fee;
 
@@ -67,7 +77,7 @@ export const Payment = () => {
           boxShadow: '0 2px 8px #e0fbe6'
         }}>
           <strong style={{ color: greenText, fontSize: '1.1rem' }}>Bank Offer</strong>
-          <div style={{ fontSize: '15px', marginTop: '6px', color: '#166534' }}>
+          <div style={{ fontSize: '15px', marginTop: '6px', color: greenText }}>
             10% Instant Discount on Canara Bank Credit Card on a min spend of ₹3,500. TCA
           </div>
           <button style={{
@@ -175,7 +185,7 @@ export const Payment = () => {
                 cursor: selectedOption ? 'pointer' : 'not-allowed',
                 fontWeight: 'bold',
                 fontSize: '1.1rem',
-                boxShadow: selectedOption ? '0 2px 8px #e0fbe6' : 'none',
+                boxShadow: selectedOption ? '0 2px 8px #81AD87' : 'none',
                 transition: 'background 0.2s'
               }}
               disabled={!selectedOption}
