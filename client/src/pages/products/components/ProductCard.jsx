@@ -15,7 +15,7 @@ export const ProductCard = ({ product }) => {
     if (
       e.target.closest('button')
     ) return;
-    navigate('/product/123');
+    navigate(`/product/${product._id}`);
   };
 
   const handleAddToCart = () => {
