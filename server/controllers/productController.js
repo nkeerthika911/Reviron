@@ -39,7 +39,27 @@ const getProductByIdController = asyncHandler(async (req, res) => {
     })
 });
 
+//@desc Admin's Post a product
+//@route /products/post
+
+const postProductController = asyncHandler(async (req, res) => {
+    const newProduct = await productService.postProduct(req.body);
+
+    if (!newProduct) {
+        throw Object.assign(new Error("Failed to create product!"), { statusCode: 400 });
+    }
+
+    res.status(201).json({
+        success: true,
+        data: {
+            message: "Product created successfully",
+            data: newProduct
+        }
+    });
+});
+
 module.exports = {
     getAllProductsController,
     getProductByIdController,
+    postProductController,
 }

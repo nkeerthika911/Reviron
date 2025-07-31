@@ -12,7 +12,14 @@ const getProductById = async(productId)=>{
     return product;
 }
 
+//@desc Post a product 
+const postProduct = async(productData)=>{
+    const newProduct = await Product.create(productData);
+    return newProduct;
+}
+
 module.exports = {
     getAllProducts,
     getProductById,
+    postProduct,
 }
