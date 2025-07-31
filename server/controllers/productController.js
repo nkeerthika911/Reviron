@@ -8,7 +8,7 @@ const getAllProductsController = asyncHandler(async (req, res) => {
     const products = await productService.getAllProducts();
 
     if (!products || products.length === 0) {
-        throw Object.assign(new Error("No products fiund!"),{statusCode:404});
+        throw Object.assign(new Error("No products found!"),{statusCode:404});
     }
 
      res.status(200).json({
@@ -20,6 +20,26 @@ const getAllProductsController = asyncHandler(async (req, res) => {
     })
 });
 
+//@desc Get a product by productId
+//@route /products/:productId
+
+const getProductByIdController = asyncHandler(async (req, res) => {
+    const product = await productService.getProductById(req.params.productId);
+
+    if (!product || product.length === 0) {
+        throw Object.assign(new Error("Product not found!"),{statusCode:404});
+    }
+
+     res.status(200).json({
+        success: true,
+        data:{
+            message: "Product data fetched",
+            data: product
+        }
+    })
+});
+
 module.exports = {
     getAllProductsController,
+    getProductByIdController,
 }
