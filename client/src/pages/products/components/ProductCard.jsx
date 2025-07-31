@@ -15,7 +15,7 @@ export const ProductCard = ({ product }) => {
     if (
       e.target.closest('button')
     ) return;
-    navigate('/productDes', { state: { product } });
+    navigate('/product/123');
   };
 
   const handleAddToCart = () => {
