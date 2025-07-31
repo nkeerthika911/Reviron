@@ -1,60 +1,46 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 
-export default function OrderSummary() {
+export default function OrderSummary({ subtotal, discount, total }) {
+  const deliveryCharge = 0;
+  const navigate = useNavigate();
+  const { cartItems } = useCart();
+
+  const handleBuyNow = () => {
+    // Pass all cart items to the Buynow page
+    navigate('/buypage', { state: { cartItems } });
+  };
+
   return (
-    <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-md space-y-6">
-      {/* Calculated Shipping */}
-      <div>
-        <h2 className="text-lg font-semibold mb-4">Calculated Shipping</h2>
-        <div className="space-y-4">
-          <input
-  type="text"
-  placeholder="Address"
-  className="w-full px-4 py-2 border border-gray-300 rounded-md"
-        />
-          <div className="flex space-x-2">
-            <input
-          type="text"
-          placeholder="City/State"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-          />
-            <input
-              type="text"
-              placeholder="ZIP Code"
-              className="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <button className="w-full py-2 rounded-full bg-[#81AD87] text-white font-semibold hover:bg-[#6C9973]">
-  Update
-</button>
-        </div>
-      </div>
-
-      <hr className="border-gray-200" />
-
-      {/* Cart Total */}
-      <div className="bg-[#e1ebe2] p-4 rounded-xl">
-        <h2 className="text-lg font-semibold mb-4">Cart Total</h2>
-        <div className="space-y-2 text-sm">
+    <div className="w-full max-w-md p-8 bg-white rounded-2xl shadow-lg space-y-6">
+      {/* Cart Total Section */}
+      <div className="bg-[#e1ebe2] p-6 rounded-2xl">
+        <h2 className="text-xl font-semibold mb-6">Cart Summary</h2>
+        <div className="space-y-4 text-base">
           <div className="flex justify-between">
             <span>Cart Subtotal</span>
-            <span>₹150.00</span>
+            <span>₹{subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span>Delivery Charges</span>
-            <span>₹0</span>
+            <span>{deliveryCharge === 0 ? "Free" : `₹${deliveryCharge}`}</span>
           </div>
           <div className="flex justify-between">
             <span>Discount</span>
-            <span className="text-red-600">- ₹10.00</span>
+            <span className="text-red-600">- ₹{discount.toFixed(2)}</span>
           </div>
-          <div className="flex justify-between font-semibold text-base">
-            <span>Cart Total</span>
-            <span>₹140.00</span>
+          <div className="flex justify-between font-semibold text-lg">
+            <span>Total Amount</span>
+            <span>₹{total.toFixed(2)}</span>
           </div>
         </div>
-        <button className="w-full mt-4 py-2 rounded-full bg-white text-black font-semibold shadow hover:bg-[#6C9973] hover:text-white">
-          Apply
+
+        <button 
+          className="w-full mt-6 py-3 rounded-full bg-[#81AD87] text-white text-base font-semibold hover:bg-[#6C9973] transition"
+          onClick={handleBuyNow}
+        >
+          Buy Now
         </button>
       </div>
     </div>
