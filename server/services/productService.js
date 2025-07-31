@@ -6,6 +6,13 @@ const getAllProducts = async()=>{
     return allProducts;
 }
 
+//@desc Get a product by productId
+const getProductById = async(productId)=>{
+    const product = await Product.findById(productId);
+    return product;
+}
+
 module.exports = {
-    getAllProducts
+    getAllProducts,
+    getProductById,
 }
