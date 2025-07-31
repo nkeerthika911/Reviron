@@ -15,7 +15,7 @@ export const ProductCard = ({ product }) => {
     if (
       e.target.closest('button')
     ) return;
-    navigate('/product/123');
+    navigate(`/product/${product._id}`);
   };
 
   const handleAddToCart = () => {
@@ -26,7 +26,7 @@ export const ProductCard = ({ product }) => {
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer" onClick={handleCardClick}>
       <img
-        src={product.image || "https://via.placeholder.com/300x200?text=No+Image"}
+        src={product.images[0]}
         alt={product.name}
         className="w-full h-[170px] object-cover"
       />
