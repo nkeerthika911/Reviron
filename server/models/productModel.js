@@ -1,33 +1,38 @@
 const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
-    name:{
+    name: {
         type: String,
         default: "",
         required: true,
     },
-    description:{
+    description: {
         type: String,
-        default:"",
+        default: "",
         required: true,
     },
-    price:{
+    brand: {
+        type: String,
+        default: "",
+        required: true,
+    },
+    condition: {
+        type: String,
+        enum: ["Working", "Not Working"],
+        required: true,
+    },
+    price: {
         type: Number,
         default: 0,
         required: true,
     },
-    quantity:{
+    quantity: {
         type: Number,
         default: 1,
         required: true,
     },
-    brand:{
-        type: String,
-        default:"",
-        required: true,
-    },
-    category:{
+    category: {
         type: [String],
-        default:[],
+        default: [],
         required: true,
     },
 })
