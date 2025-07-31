@@ -5,7 +5,7 @@ import { Products } from './pages/products/Products'
 import { ProductDetails } from './pages/products/ProductDetails'
 
 
-import { Profile } from './profile/Profile'
+import { Profile } from './pages/profile/Profile'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
