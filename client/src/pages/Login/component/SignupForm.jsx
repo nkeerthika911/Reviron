@@ -114,7 +114,7 @@ export const SignupForm = ({ onSignup }) => {
 
     return (
         <div className="w-full h-fit p-8 bg-white border border-gray-200 rounded-2xl">
-            <h1 className="text-2xl font-semibold text-center mb-6 text-gray-700">Signup</h1>
+            <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">Signup</h1>
 
             {/* Full Name */}
             <div className="mb-4">
