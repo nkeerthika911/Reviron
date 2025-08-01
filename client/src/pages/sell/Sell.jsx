@@ -71,36 +71,6 @@ export const Sell = () => {
       <div className="flex p-4 w-full h-full overflow-hidden">
         <div className="w-full h-full flex-1 overflow-y-auto">
           <div className="p-6">
-
-            {/* Range Button + Dropdown */}
-            <div className="flex justify-end mb-4">
-              <div className="relative">
-                <button
-                  title="Estimate amount for a product"
-                  onClick={() => setShowRangePopup(!showRangePopup)}
-                  className="bg-[#73B87C] text-white px-4 py-2 rounded-xl shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
-                >
-                  Range ▼
-                </button>
-                {showRangePopup && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] z-50 p-4 space-y-2">
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Laptop:</span>
-                      <span className="ml-2">500K – 1000K</span>
-                    </div>
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Refrigerator:</span>
-                      <span className="ml-2">800K – 1000K</span>
-                    </div>
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Air Conditioner:</span>
-                      <span className="ml-2">500K – 800K</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* Product Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {products.map((product, index) => (
@@ -151,7 +121,6 @@ export const Sell = () => {
           </div>
         </div>
 
-        {/* Add Product Form */}
         {showForm && (
           <div className="bg-white border-l border-gray-300 w-[40vw] h-full p-6 overflow-y-auto relative transition-all duration-500 ease-out">
             <button
@@ -162,25 +131,82 @@ export const Sell = () => {
             </button>
             <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-              <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Enter product name" required className="p-3 rounded-[10px] bg-white shadow focus:outline-none" />
-              <input type="text" name="location" value={form.location} onChange={handleChange} placeholder="Enter your location" required className="p-3 rounded-[10px] bg-white shadow focus:outline-none" />
-              <input type="text" name="category" value={form.category} onChange={handleChange} placeholder="Category" required className="p-3 rounded-[10px] bg-white shadow focus:outline-none" />
-              <select name="condition" value={form.condition} onChange={handleChange} required className="p-3 rounded-[10px] bg-white shadow focus:outline-none">
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter product name"
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              />
+              <input
+                type="text"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                placeholder="Enter your location"
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              />
+              <input
+                type="text"
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                placeholder="Category"
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              />
+              <select
+                name="condition"
+                value={form.condition}
+                onChange={handleChange}
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              >
                 <option value="" disabled>Select condition</option>
                 <option value="new">New</option>
                 <option value="second">Second</option>
               </select>
-              <select name="working" value={form.working} onChange={handleChange} required className="p-3 rounded-[10px] bg-white shadow focus:outline-none">
+              <select
+                name="working"
+                value={form.working}
+                onChange={handleChange}
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              >
                 <option value="" disabled>Select working status</option>
                 <option value="Working">Working</option>
                 <option value="Not Working">Not Working</option>
               </select>
-              <textarea name="description" value={form.description} onChange={handleChange} placeholder="Description" required className="p-3 rounded-[10px] bg-white shadow focus:outline-none" />
-              <input type="file" name="image" accept="image/*" onChange={handleChange} required className="border p-2 rounded" />
+              <textarea
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+                className="p-3 rounded-[10px] bg-white shadow focus:outline-none"
+              />
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                required
+                className="border p-2 rounded"
+              />
               {form.imageUrl && (
-                <img src={form.imageUrl} alt="Preview" className="w-full h-32 object-cover rounded mb-2" />
+                <img
+                  src={form.imageUrl}
+                  alt="Preview"
+                  className="w-full h-32 object-cover rounded mb-2"
+                />
               )}
-              <button type="submit" className="bg-[#6F9674] text-white py-2 rounded hover:bg-[#73B87C] transition-all duration-300 transform hover:scale-[1.02]">
+              <button
+                type="submit"
+                className="bg-[#6F9674] text-white py-2 rounded hover:bg-[#73B87C] transition-all duration-300 transform hover:scale-[1.02]"
+              >
                 Add Product
               </button>
             </form>
@@ -188,22 +214,13 @@ export const Sell = () => {
         )}
       </div>
 
-      {/* Floating Buttons */}
       {!showForm && (
-        <>
-          <button
-            onClick={toggleForm}
-            className="fixed bottom-6 right-6 bg-[#73B87C] text-white rounded-full w-14 h-14 text-3xl shadow-lg transition-all duration-300 hover:bg-[#6F9674] transform hover:scale-110 hover:rotate-90"
-          >
-            +
-          </button>
-          <button
-            onClick={() => alert("Start Selling button clicked!")}
-            className="fixed bottom-6 right-[110px] bg-[#73B87C] text-white rounded-full px-6 py-3 shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
-          >
-            Start Selling
-          </button>
-        </>
+        <button
+          onClick={toggleForm}
+          className="fixed bottom-6 right-[110px] bg-[#73B87C] text-white rounded-full px-6 py-3 shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
+        >
+          Start Selling
+        </button>
       )}
 
       <style jsx>{`
@@ -217,7 +234,6 @@ export const Sell = () => {
             transform: translateY(0);
           }
         }
-
         .filter-red {
           filter: invert(16%) sepia(97%) saturate(6380%) hue-rotate(356deg) brightness(91%) contrast(112%);
         }
