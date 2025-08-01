@@ -7,7 +7,7 @@ const getUserbyEmail = async (email) => {
 }
 //@desc get a userDetails by userId 
 const getUserbyUserId = async (userId) => {
-    const userData = await User.findById(userId,{password: 0, createdAt: 0, updatedAt: 0, gender: 0, __v: 0});
+    const userData = await User.findById(userId,{password: 0, createdAt: 0, updatedAt: 0, __v: 0});
     return userData;
 }
 

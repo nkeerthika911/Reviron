@@ -5,9 +5,37 @@ const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
 
-const getUserByIdController = async(req,res) =>{
+const asyncHandler = require("express-async-handler");
+const path = require("path");
+const fs = require("fs");
+const { getUserbyUserId } = require("../services/userService");
+const { BASE_URL } = require("../config");
 
-}
+const getUserByIdController = asyncHandler(async (req, res) => {
+    const userId = req.user;
+
+    const user = await getUserbyUserId(userId);
+
+    if (!user) {
+        throw Object.assign(new Error("User not found!"), { statusCode: 404 });
+    }
+
+    const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
+    const profilePhoto = fs.existsSync(photoPath)
+        ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
+        : null;
+
+    res.status(200).json({
+        success: true,
+        data: {
+            message: "User data fetched",
+            data: {
+                ...user.toObject?.() || user,
+                profilePhoto,
+            },
+        },
+    });
+});
 
 const uploadProfileController = async (req, res, next) => {
   try {

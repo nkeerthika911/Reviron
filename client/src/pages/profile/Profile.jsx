@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Navbar } from "../Navbar";
 import { Info, Wallet, Settings, Pencil, ShoppingBag } from "lucide-react";
-import userIcon from "../../assets/user-icon.jpg"
+import userIcon from "../../assets/user-icon.jpg";
+import axios from 'axios';
 
 export const Profile = ({ user }) => {
   const [activeSection, setActiveSection] = useState("basic");
@@ -176,7 +177,7 @@ export const Profile = ({ user }) => {
 
                 {/* Email */}
                 <div className="flex items-center">
-                  <div className="w-24 text-gray-700 font-medium">E-mail</div>
+                  <div className="w-24 text-gray-700 font-medium">Email</div>
                   {isEditing ? (
                     <input
                       type="email"
@@ -192,7 +193,7 @@ export const Profile = ({ user }) => {
 
                 {/* Contact */}
                 <div className="flex items-center">
-                  <div className="w-24 text-gray-700 font-medium">Contact</div>
+                  <div className="w-24 text-gray-700 font-medium">Phone</div>
                   {isEditing ? (
                     <input
                       type="tel"
