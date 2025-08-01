@@ -15,6 +15,7 @@ import { CartProvider } from "./context/CartContext";
 import { BuyPage } from './pages/products/BuyPage';
 import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/buypage" element={<BuyPage/>}></Route>
             <Route path="/payment" element={<Payment/>}></Route>
             <Route path="/ItemView" element={<ItemView/>}></Route>
+           
             <Route path="/*" element={<Products/>}></Route>
           </Routes>
         </BrowserRouter>
