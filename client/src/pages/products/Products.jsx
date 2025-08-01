@@ -21,6 +21,9 @@ export const Products = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [favourite, setFavourite] = useState(false); // Fixed prop name to match Navbar
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  
   const [filters, setFilters] = useState({
     priceMin: 0,
     priceMax: 10000,
@@ -51,13 +54,24 @@ export const Products = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [favourite]);
 
-  // Apply filters whenever filters or searchTerm changes
+  // Watch for changes in favourite state from Navbar
+  useEffect(() => {
+    setShowFavoritesOnly(favourite);
+  }, [favourite]);
+
+  // Apply filters whenever filters, searchTerm, or showFavoritesOnly changes
   useEffect(() => {
     let filtered = [...products]; // Create a copy to avoid mutating original array
 
-    // Apply search filter first
+    // Apply favorites filter first if enabled
+    if (showFavoritesOnly) {
+      // Filter products based on product.favorite property
+      filtered = filtered.filter(product => product.favorite === true);
+    }
+
+    // Apply search filter
     if (searchTerm.trim()) {
       const searchLower = searchTerm.toLowerCase();
       filtered = filtered.filter(product => {
@@ -113,9 +127,10 @@ export const Products = () => {
     }
 
     console.log('Applied filters:', filters);
+    console.log('Show favorites only:', showFavoritesOnly);
     console.log('Filtered products count:', filtered.length);
     setFilteredProducts(filtered);
-  }, [products, filters, searchTerm]); // Removed onFiltersChange dependency
+  }, [products, filters, searchTerm, showFavoritesOnly]);
 
   // Use useCallback to memoize the handler function
   const handleFiltersChange = useCallback((newFilters) => {
@@ -145,11 +160,13 @@ export const Products = () => {
       brand: '',
       location: ''
     });
+    // Also reset favorites filter
+    setFavourite(false);
   }, [products]);
 
   return (
     <div className="h-screen w-screen bg-gray-50 flex flex-col">
-      <Navbar />
+      <Navbar favourite={favourite} setFavourite={setFavourite} />
 
       <div className="flex flex-1 p-4 gap-4 overflow-hidden">
         {/* Filters Sidebar */}
@@ -162,10 +179,12 @@ export const Products = () => {
           {/* Search Bar - Fixed Header */}
           <div className="flex-shrink-0 p-6 pb-4 border-b border-gray-200">
             <div className="mb-4 flex justify-between items-center">
-              <h2 className="text-2xl font-semibold text-[#6F9674]">POPULAR PRODUCTS</h2>
+              <h2 className="text-2xl font-semibold text-[#6F9674]">
+                {showFavoritesOnly ? 'FAVORITE PRODUCTS' : 'POPULAR PRODUCTS'}
+              </h2>
               <div className="text-sm text-gray-500 flex items-center gap-2">
                 <span>Showing {filteredProducts.length} of {products.length} products</span>
-                {(searchTerm || Object.values(filters).some(f => f && f !== 0 && f !== 10000)) && (
+                {(searchTerm || showFavoritesOnly || Object.values(filters).some(f => f && f !== 0 && f !== 10000)) && (
                   <button
                     onClick={handleClearAll}
                     className="text-xs px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-600"
@@ -196,7 +215,7 @@ export const Products = () => {
             </div>
             
             {/* Active Filters Display */}
-            {(searchTerm || Object.entries(filters).some(([key, value]) => 
+            {(searchTerm || showFavoritesOnly || Object.entries(filters).some(([key, value]) => 
               value && value !== '' && !(key === 'priceMin' && value === 0) && !(key === 'priceMax' && value === 10000)
             )) && (
               <div className="mt-3 flex flex-wrap gap-2">
@@ -204,6 +223,12 @@ export const Products = () => {
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-[#EDF4ED] text-[#6F9674]">
                     Search: "{searchTerm}"
                     <button onClick={handleClearSearch} className="ml-1 hover:text-red-600">✕</button>
+                  </span>
+                )}
+                {showFavoritesOnly && (
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-[#FFF0F0] text-[#DC2626]">
+                    ❤️ Favorites Only
+                    <button onClick={() => setFavourite(false)} className="ml-1 hover:text-red-600">✕</button>
                   </span>
                 )}
                 {filters.category && (
@@ -258,21 +283,36 @@ export const Products = () => {
                 </div>
               ) : filteredProducts.length === 0 ? (
                 <div className="text-center py-12">
-                  <div className="text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-semibold text-gray-700 mb-2">No products found</h3>
+                  <div className="text-6xl mb-4">
+                    {showFavoritesOnly ? '💔' : '🔍'}
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                    {showFavoritesOnly ? 'No favorite products found' : 'No products found'}
+                  </h3>
                   <p className="text-gray-500 mb-4">
-                    {searchTerm ? 
-                      `No products match "${searchTerm}" with current filters` : 
-                      'No products match your current filters'
+                    {showFavoritesOnly ? 
+                      'You haven\'t added any products to your favorites yet' :
+                      searchTerm ? 
+                        `No products match "${searchTerm}" with current filters` : 
+                        'No products match your current filters'
                     }
                   </p>
                   <div className="text-gray-400 text-sm">
                     <p>Try:</p>
                     <ul className="mt-2 space-y-1">
-                      <li>• Adjusting your price range</li>
-                      <li>• Selecting different categories or brands</li>
-                      <li>• Using different search terms</li>
-                      <li>• Clearing all filters</li>
+                      {showFavoritesOnly ? (
+                        <>
+                          <li>• Browse products and add some to favorites</li>
+                          <li>• Check out our popular products</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>• Adjusting your price range</li>
+                          <li>• Selecting different categories or brands</li>
+                          <li>• Using different search terms</li>
+                          <li>• Clearing all filters</li>
+                        </>
+                      )}
                     </ul>
                   </div>
                 </div>
