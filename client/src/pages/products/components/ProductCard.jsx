@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 // ProductCard component
 export const ProductCard = ({ product }) => {
+  console.log(product);
   const [liked, setLiked] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
   const handleCardClick = (e) => {
-    // Prevent navigation if a button inside the card is clicked
     if (
       e.target.closest('button')
     ) return;
@@ -23,7 +23,7 @@ export const ProductCard = ({ product }) => {
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer" onClick={handleCardClick}>
       <img
-        src={product.images[0]}
+        src={product.image}
         alt={product.name}
         className="w-full h-[170px] object-cover"
       />
