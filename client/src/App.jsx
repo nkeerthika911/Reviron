@@ -4,7 +4,7 @@ import { Login } from './pages/Login/Login'
 import { Products } from './pages/products/Products'
 import { ProductDetails } from './pages/products/ProductDetails'
 
-
+import Contactus from './pages/contactus/Contact'
 import { Profile } from './pages/profile/Profile'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
@@ -27,7 +27,7 @@ function App() {
             <Route path="/product/:productId" element={<ProductDetails/>}></Route>
             <Route path="/admin/product/add" element={<addProduct/>}></Route>
 
-
+            <Route path="/contactus" element={<Contactus />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>
             <Route path="/sell" element={<Sell/>}></Route>
             <Route path="/community" element={<Community/>}></Route>
