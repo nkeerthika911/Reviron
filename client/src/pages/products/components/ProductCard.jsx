@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 // ProductCard component
 export const ProductCard = ({ product }) => {
   const [liked, setLiked] = useState(false);
-  const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 

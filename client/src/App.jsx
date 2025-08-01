@@ -12,7 +12,6 @@ import { Community } from './pages/community/Community'
 import { Cart } from './pages/cart/Cart'
 import { AdminOrders } from './pages/products/AdminOrders'
 import { WorkerPage } from './pages/products/WorkerPage'
-import { CartProvider } from "./context/CartContext";
 import { BuyPage } from './pages/products/BuyPage';
 import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
@@ -22,29 +21,27 @@ function App() {
 
   return (
     <>
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />}></Route>
-            <Route path="/products" element={<Products />}></Route>
-            <Route path="/product/:productId" element={<ProductDetails/>}></Route>
-            <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/products" element={<Products />}></Route>
+          <Route path="/product/:productId" element={<ProductDetails/>}></Route>
+          <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
 
-            <Route path="/contactus" element={<Contactus />}></Route>
-            <Route path="/Profile" element={<Profile />}></Route>
-            <Route path="/sell" element={<Sell/>}></Route>
-            <Route path="/community" element={<Community/>}></Route>
-            <Route path="/cart" element={<Cart/>}></Route>
-            <Route path="/admin/order" element={<AdminOrders/>}></Route>
-            <Route path="/WorkerPage" element={<WorkerPage/>}></Route>
-            <Route path="/buypage" element={<BuyPage/>}></Route>
-            <Route path="/payment" element={<Payment/>}></Route>
-            <Route path="/ItemView" element={<ItemView/>}></Route>
-           
-            <Route path="/*" element={<Products/>}></Route>
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
+          <Route path="/contactus" element={<Contactus />}></Route>
+          <Route path="/Profile" element={<Profile />}></Route>
+          <Route path="/sell" element={<Sell/>}></Route>
+          <Route path="/community" element={<Community/>}></Route>
+          <Route path="/cart" element={<Cart/>}></Route>
+          <Route path="/admin/order" element={<AdminOrders/>}></Route>
+          <Route path="/WorkerPage" element={<WorkerPage/>}></Route>
+          <Route path="/buypage" element={<BuyPage/>}></Route>
+          <Route path="/payment" element={<Payment/>}></Route>
+          <Route path="/ItemView" element={<ItemView/>}></Route>
+          
+          <Route path="/*" element={<Products/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

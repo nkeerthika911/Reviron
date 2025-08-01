@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Navbar } from "../Navbar";
 import { CartProduct } from "./components/CartProduct";
 import OrderSummary from "./components/OrderSummary";
-import { useCart } from "../../context/CartContext";
 
 export const Cart = () => {
   const { cartItems, handleQuantityChange, handleRemove } = useCart();

@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../../context/CartContext";
 
 export default function OrderSummary({ subtotal, discount, total }) {
   const deliveryCharge = 0;
