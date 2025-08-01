@@ -4,7 +4,6 @@ import { Navbar } from '../Navbar';
 export const Sell = () => {
   const [showForm, setShowForm] = useState(false);
   const [products, setProducts] = useState([]);
-  const [showRangePopup, setShowRangePopup] = useState(false);
 
   const [form, setForm] = useState({
     name: '',
@@ -63,70 +62,84 @@ export const Sell = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-gray-50 flex flex-col relative">
+    <div className="min-h-screen w-full bg-gray-50 flex flex-col">
       <Navbar />
 
-      <div className="flex p-4 w-full h-full overflow-hidden">
-        <div className="w-full h-full flex-1 overflow-y-auto">
-          <div className="p-6">
+      <div className="flex p-4 w-full h-full overflow-x-hidden overflow-y-auto">
+        <div className="w-full flex-1 pr-4">
+          <div className="p-4">
 
-            {/* Range Button + Dropdown */}
-            <div className="flex justify-end mb-4">
-              <div className="relative">
-               
-                {showRangePopup && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white border rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] z-50 p-4 space-y-2">
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Laptop:</span>
-                      <span className="ml-2">500K – 1000K</span>
-                    </div>
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Refrigerator:</span>
-                      <span className="ml-2">800K – 1000K</span>
-                    </div>
-                    <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
-                      <span className="font-medium">Air Conditioner:</span>
-                      <span className="ml-2">500K – 800K</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            {/* Static Sold Product Preview */}
+            {!showForm && (
+              <div className="min-h-screen flex flex-col items-start px-8 py-10">
 
-            {/* Product Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product, index) => (
+      <h2 className="text-xl font-semibold text-gray-800 mb-4 ml-2">Sold product</h2>
+
+      <div className="bg-white w-full max-w-7xl rounded-xl shadow-md flex flex-row p-4 gap-6 items-center">
+        {/* Product Image */}
+        <div className="w-[200px] h-[150px] rounded-lg overflow-hidden border-2 border-blue-400">
+          <img
+            src="https://via.placeholder.com/411x298"
+            alt="Sold Product"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        {/* Product Details */}
+        <div className="grid grid-cols-2 gap-x-30 gap-y-6 text-sm text-gray-700">
+          <div>
+            <span className="font-semibold">Request ID:</span> GGA6758
+          </div>
+          <div>
+            <span className="font-semibold">Date:</span> 01/08/25
+          </div>
+          <div>
+            <span className="font-semibold">Status:</span> Collection Initiated
+          </div>
+          <div>
+            <span className="font-semibold">Employee:</span> Harshana
+          </div>
+          <div>
+            <span className="font-semibold">Product Count:</span> 10
+          </div>
+        </div>
+      </div>
+    </div>
+            )}
+
+            {/* Dynamic Product Cards */}
+            <div className="grid grid-cols-1 gap-4 mt-6">
+              {products.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl flex flex-col overflow-hidden transform transition-all duration-700 ease-out hover:scale-105 hover:shadow-2xl group"
-                  style={{
-                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-                    animation: `slideInUp 0.6s ease-out ${index * 0.1}s both`
-                  }}
+                  className="bg-white rounded-xl shadow-md px-4 py-3 w-full flex flex-col md:flex-row gap-4 items-center md:items-start"
                 >
-                  {product.imageUrl && (
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                  )}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="font-bold text-lg text-[#6F9674] mb-1 group-hover:text-[#73B87C] transition-colors duration-300">
-                      {product.name}
-                    </div>
-                    <div className="text-gray-600 text-sm mb-1">
-                      <b>Location:</b> {product.location}
-                    </div>
-                    <div className="text-gray-700 text-sm mb-2 max-h-20 overflow-auto">
-                      {product.description}
-                    </div>
+                  {/* Left: Image */}
+                  <div className="w-[250px] h-[180px] flex-shrink-0 overflow-hidden rounded-md border border-gray-300">
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Right: Details */}
+                  <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2 text-sm text-gray-800">
+                    <div><b>Request ID:</b> #{product.id}</div>
+                    <div><b>Date:</b> {new Date().toLocaleDateString('en-IN')}</div>
+                    <div><b>Product Name:</b> {product.name}</div>
+                    <div><b>Category:</b> {product.category}</div>
+                    <div><b>Status:</b> Collection Initiated</div>
+                    <div><b>Condition:</b> {product.condition}</div>
+                    <div><b>Description:</b> {product.description}</div>
+                    <div><b>Pick-up Location:</b> {product.location}</div>
+                  </div>
+
+                  {/* Remove Button */}
+                  <div className="mt-4 w-full flex justify-end md:justify-start">
                     <button
                       onClick={() => handleRemove(product.id)}
-                      className="text-red-500 text-sm flex items-center gap-2 hover:text-red-700 transition-all duration-300 hover:bg-red-50 p-2 rounded-lg -ml-2"
+                      className="text-red-500 text-sm flex items-center gap-2 hover:text-red-700 transition-all duration-300 hover:bg-red-50 p-2 rounded-lg"
                     >
                       <img
                         src="https://www.iconpacks.net/icons/1/free-trash-icon-347-thumb.png"
@@ -142,121 +155,108 @@ export const Sell = () => {
           </div>
         </div>
 
-        {/* Add Product Form */}
+        {/* Form Sidebar */}
         {showForm && (
-            <div className="bg-white border border-gray-300 w-[40vw] h-full p-6 overflow-y-auto relative transition-all duration-500 ease-out">
-              <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <div className="z-10 bg-white border-l border-gray-300 w-[40vw] h-full p-6 overflow-y-auto transition-all duration-500 ease-out">
+            <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Product name"
+                required
+                className="p-3 rounded border border-gray-300"
+              />
+              <div className="flex space-x-4">
                 <input
                   type="text"
-                  name="name"
-                  value={form.name}
+                  name="category"
+                  value={form.category}
                   onChange={handleChange}
-                  placeholder="Product name"
+                  placeholder="Category"
                   required
-                  className="p-3 rounded border border-gray-300"
+                  className="p-3 rounded border border-gray-300 w-1/2"
                 />
-                <div className="flex space-x-4">
-                  <input
-                    type="text"
-                    name="category"
-                    value={form.category}
-                    onChange={handleChange}
-                    placeholder="Category"
-                    required
-                    className="p-3 rounded border border-gray-300 w-1/2"
-                  />
-                  <select
-                    name="condition"
-                    value={form.condition}
-                    onChange={handleChange}
-                    required
-                    className="p-3 rounded border border-gray-300 w-1/2"
-                  >
-                    <option value="" disabled>Condition</option>
-                    <option value="new">New</option>
-                    <option value="second">Second</option>
-                  </select>
-                </div>
+                <select
+                  name="condition"
+                  value={form.condition}
+                  onChange={handleChange}
+                  required
+                  className="p-3 rounded border border-gray-300 w-1/2"
+                >
+                  <option value="" disabled>Condition</option>
+                  <option value="new">New</option>
+                  <option value="second">Second</option>
+                </select>
+              </div>
 
-                <textarea
-                  name="description"
-                  value={form.description}
-                  onChange={handleChange}
-                  placeholder="Description"
-                  required
-                  className="p-3 rounded border border-gray-300 h-32 resize-none overflow-auto"
-                />
+              <textarea
+                name="description"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="Description"
+                required
+                className="p-3 rounded border border-gray-300 h-28 resize-none overflow-auto"
+              />
 
-                <textarea
-                  name="location"
-                  value={form.location}
-                  onChange={handleChange}
-                  placeholder="Pick up Location"
-                  required
-                  className="p-3 rounded border border-gray-300 h-20 resize-none overflow-auto"
-                />
+              <textarea
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                placeholder="Pick up Location"
+                required
+                className="p-3 rounded border border-gray-300 h-20 resize-none overflow-auto"
+              />
 
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleChange}
-                  required
-                  className="p-3 rounded border border-gray-300"
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleChange}
+                required
+                className="p-3 rounded border border-gray-300"
+              />
+              {form.imageUrl && (
+                <img
+                  src={form.imageUrl}
+                  alt="Preview"
+                  className="w-full h-32 object-cover rounded mb-2"
                 />
-                {form.imageUrl && (
-                  <img
-                    src={form.imageUrl}
-                    alt="Preview"
-                    className="w-full h-32 object-cover rounded mb-2"
-                  />
-                )}
-                <div className="flex justify-center gap-4 mt-6">
-                  <button
-                    type="button"
-                    onClick={toggleForm}
-                    className="bg-[#9E9B9B] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#B0ADAD] shadow-sm transition"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-[#81AD87] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
-                  >
-                    Sell
-                  </button>
-                </div>
-              </form>
-            </div>
+              )}
+              <div className="flex justify-center gap-4 mt-6">
+                <button
+                  type="button"
+                  onClick={toggleForm}
+                  className="bg-[#9E9B9B] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#B0ADAD] shadow-sm transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-[#81AD87] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
         )}
       </div>
 
-      {/* Floating Buttons */}
+      {/* Floating + Button */}
       {!showForm && (
-        <>
-          <button
-            onClick={toggleForm}
-            className="fixed bottom-6 right-6 bg-[#73B87C] text-white rounded-full w-14 h-14 text-3xl shadow-lg transition-all duration-300 hover:bg-[#6F9674] transform hover:scale-110 hover:rotate-90"
-          >
-            +
-          </button>
-        
-        </>
+        <button
+          onClick={toggleForm}
+          className="fixed bottom-6 right-6 bg-[#73B87C] text-white rounded-full w-14 h-14 text-3xl shadow-lg transition-all duration-300 hover:bg-[#6F9674] transform hover:scale-110 hover:rotate-90"
+        >
+          +
+        </button>
       )}
 
+      {/* Red Icon Styling */}
       <style jsx>{`
-        @keyframes slideInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         .filter-red {
           filter: invert(16%) sepia(97%) saturate(6380%) hue-rotate(356deg) brightness(91%) contrast(112%);
         }
