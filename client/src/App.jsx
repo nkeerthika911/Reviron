@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login } from './pages/Login/Login'
 import { Products } from './pages/products/Products'
 import { ProductDetails } from './pages/products/ProductDetails'
+import { AdminAddProduct } from './pages/products/AdminAddProducts'
 
 import Contactus from './pages/contactus/Contact'
 import { Profile } from './pages/profile/Profile'
@@ -27,7 +28,7 @@ function App() {
             <Route path="/" element={<Login />}></Route>
             <Route path="/products" element={<Products />}></Route>
             <Route path="/product/:productId" element={<ProductDetails/>}></Route>
-            <Route path="/admin/product/add" element={<addProduct/>}></Route>
+            <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
 
             <Route path="/contactus" element={<Contactus />}></Route>
             <Route path="/Profile" element={<Profile />}></Route>
