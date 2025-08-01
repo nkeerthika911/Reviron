@@ -1,8 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const productService = require('../services/productService');
+require("dotenv").config();
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const BASE_URL = process.env.BASE_URL;
 
 //@desc Get all Products
 //@route /products
@@ -27,20 +29,35 @@ const getAllProductsController = asyncHandler(async (req, res) => {
 //@route /products/:productId
 
 const getProductByIdController = asyncHandler(async (req, res) => {
-    const product = await productService.getProductById(req.params.productId);
+  const productid = req.params.productId;
+  const product = await productService.getProductById(productid);
 
-    if (!product) {
-        throw Object.assign(new Error("Product not found!"), {statusCode:404});
+  if (!product) {
+    throw Object.assign(new Error("Product not found!"), { statusCode: 404 });
+  }
+
+  const imageDir = path.join(__dirname, "..", "uploads", "productPhotos", productid);
+  let imageUrls = [];
+
+  if (fs.existsSync(imageDir)) {
+    const files = fs.readdirSync(imageDir);
+    imageUrls = files.map((file) => {
+      return `${BASE_URL}/uploads/productPhotos/${productid}/${file}`;
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: {
+      message: "Product data fetched",
+      data: {
+        ...product.toObject?.() || product, // In case it's a Mongoose doc
+        images: imageUrls
+      }
     }
-
-     res.status(200).json({
-        success: true,
-        data:{
-            message: "Product data fetched",
-            data: product
-        }
-    })
+  });
 });
+
 
 //@desc Admin's Post a product
 //@route /products/post
