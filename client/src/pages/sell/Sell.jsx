@@ -9,7 +9,6 @@ export const Sell = () => {
     location: '',
     category: '',
     condition: '',
-    working: '',
     description: '',
     image: null,
     imageUrl: ''
@@ -35,8 +34,8 @@ export const Sell = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, location, category, condition, working, description, imageUrl } = form;
-    if (!name || !location || !category || !condition || !working || !description || !imageUrl) {
+    const { name, location, category, condition, description, imageUrl } = form;
+    if (!name || !location || !category || !condition || !description || !imageUrl) {
       alert("Please fill out all fields.");
       return;
     }
@@ -50,7 +49,6 @@ export const Sell = () => {
       location: '',
       category: '',
       condition: '',
-      working: '',
       description: '',
       image: null,
       imageUrl: ''
@@ -95,9 +93,8 @@ export const Sell = () => {
                     <div className="text-gray-600 text-sm mb-1">
                       <b>Location:</b> {product.location}
                     </div>
-                    <div className="text-gray-700 text-sm mb-2">{product.description}</div>
-                    <div className="text-gray-500 text-xs mb-2">
-                      <b>Working Condition:</b> {product.working || "Not specified"}
+                    <div className="text-gray-700 text-sm mb-2 max-h-20 overflow-auto">
+                      {product.description}
                     </div>
                     <button
                       onClick={() => handleRemove(product.id)}
@@ -153,32 +150,25 @@ export const Sell = () => {
                     <option value="second">Second</option>
                   </select>
                 </div>
-                <input
-                  type="text"
-                  name="location"
-                  value={form.location}
-                  onChange={handleChange}
-                  placeholder="Pick up Location"
-                  required
-                  className="p-3 rounded border border-gray-300"
-                />
-                <input
-                  type="text"
-                  name="working"
-                  value={form.working}
-                  onChange={handleChange}
-                  placeholder="Working Condition"
-                  required
-                  className="p-3 rounded border border-gray-300"
-                />
+
                 <textarea
                   name="description"
                   value={form.description}
                   onChange={handleChange}
                   placeholder="Description"
                   required
-                  className="p-3 rounded border border-gray-300"
+                  className="p-3 rounded border border-gray-300 h-32 resize-none overflow-auto"
                 />
+
+                <textarea
+                  name="location"
+                  value={form.location}
+                  onChange={handleChange}
+                  placeholder="Pick up Location"
+                  required
+                  className="p-3 rounded border border-gray-300 h-20 resize-none overflow-auto"
+                />
+
                 <input
                   type="file"
                   name="image"
@@ -198,13 +188,13 @@ export const Sell = () => {
                   <button
                     type="button"
                     onClick={toggleForm}
-                    className="bg-white border border-red-400 text-red-600 font-semibold py-2 px-6 rounded-lg hover:bg-red-100 shadow-sm transition"
+                    className="bg-[#9E9B9B] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#B0ADAD] shadow-sm transition"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="bg-white border border-green-400 text-green-600 font-semibold py-2 px-6 rounded-lg hover:bg-green-100 shadow-sm transition"
+                    className="bg-[#81AD87] text-white font-semibold py-2 px-6 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
                   >
                     Sell
                   </button>
