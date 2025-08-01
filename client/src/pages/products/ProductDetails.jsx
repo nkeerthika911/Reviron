@@ -101,7 +101,7 @@ export const ProductDetails = () => {
 
         {/* Right: Product Info */}
         <div className="w-1/2 flex flex-col gap-4">
-          <h1 className="text-3xl font-semibold text-[#2f4734]">{product.name}</h1>
+          <h1 className="text-4xl font-semibold text-[#2f4734]">{product.name}</h1>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
@@ -129,7 +129,7 @@ export const ProductDetails = () => {
           <p className="text-gray-700">{product.description}</p>
 
           {/* Price */}
-          <div className="text-xl font-bold text-[#81ad87]">₹{product.price}</div>
+          <div className="text-3xl font-bold text-[#81ad87]">₹{product.price}</div>
 
           {/* Stock & Quantity */}
           <div className="flex flex-col gap-2 text-sm">
