@@ -4,6 +4,8 @@ import { Navbar } from '../Navbar';
 export const Sell = () => {
   const [showForm, setShowForm] = useState(false);
   const [products, setProducts] = useState([]);
+  const [showRangePopup, setShowRangePopup] = useState(false);
+
   const [form, setForm] = useState({
     name: '',
     location: '',
@@ -65,6 +67,7 @@ export const Sell = () => {
   return (
     <div className="h-screen w-screen bg-gray-50 flex flex-col relative">
       <Navbar />
+
       <div className="flex p-4 w-full h-full overflow-hidden">
         <div className="w-full h-full flex-1 overflow-y-auto">
           <div className="p-6">
@@ -73,9 +76,9 @@ export const Sell = () => {
               {products.map((product, index) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl shadow-lg flex flex-col overflow-hidden transform transition-all duration-700 ease-out hover:scale-105 hover:shadow-xl group"
+                  className="bg-white rounded-2xl flex flex-col overflow-hidden transform transition-all duration-700 ease-out hover:scale-105 hover:shadow-2xl group"
                   style={{
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
                     animation: `slideInUp 0.6s ease-out ${index * 0.1}s both`
                   }}
                 >
@@ -118,7 +121,6 @@ export const Sell = () => {
           </div>
         </div>
 
-        {/* Add Product Form */}
         {showForm && (
           <div className="bg-white border-l border-gray-300 w-[40vw] h-full p-6 overflow-y-auto relative transition-all duration-500 ease-out">
             <button
@@ -212,22 +214,13 @@ export const Sell = () => {
         )}
       </div>
 
-      {/* Floating Buttons */}
       {!showForm && (
-        <>
-          <button
-            onClick={toggleForm}
-            className="fixed bottom-6 right-6 bg-[#73B87C] text-white rounded-full w-14 h-14 text-3xl shadow-lg transition-all duration-300 hover:bg-[#6F9674] transform hover:scale-110 hover:rotate-90"
-          >
-            +
-          </button>
-          <button
-            onClick={() => alert("Start Selling button clicked!")}
-            className="fixed bottom-6 right-[110px] bg-[#73B87C] text-white rounded-full px-6 py-3 shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
-          >
-            Start Selling
-          </button>
-        </>
+        <button
+          onClick={toggleForm}
+          className="fixed bottom-6 right-[110px] bg-[#73B87C] text-white rounded-full px-6 py-3 shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
+        >
+          Start Selling
+        </button>
       )}
 
       <style jsx>{`
@@ -241,7 +234,6 @@ export const Sell = () => {
             transform: translateY(0);
           }
         }
-
         .filter-red {
           filter: invert(16%) sepia(97%) saturate(6380%) hue-rotate(356deg) brightness(91%) contrast(112%);
         }
@@ -249,3 +241,4 @@ export const Sell = () => {
     </div>
   );
 };
+                
