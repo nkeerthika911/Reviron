@@ -13,6 +13,19 @@ export const Profile = () => {
     address: "OMR,chennai",
   });
 
+  const activities = [
+  { points: 20, text: "Purchase: Wireless Headphones", date: "Friday, Aug 1, 2025, 10:41 AM" },
+  { points: 5, text: "Product review: Bluetooth Speaker", date: "Thursday, Jul 31, 2025, 06:27 PM" },
+  { points: 10, text: "Referral: Invited a friend", date: "Wednesday, Jul 30, 2025, 09:30 PM" },
+  { points: 15, text: "Purchase: Smartwatch", date: "Wednesday, Jul 30, 2025, 02:46 PM" },
+  { points: 3, text: "Daily login", date: "Sunday, Jul 27, 2025, 08:33 AM" },
+  { points: 5, text: "Product review: Laptop Stand", date: "Sunday, Jul 27, 2025, 08:17 AM" },
+  { points: 10, text: "First order completed", date: "Saturday, Jul 26, 2025, 08:27 AM" },
+  { points: 5, text: "Used points for discount", date: "Friday, Jul 25, 2025, 01:59 PM" },
+  { points: 2, text: "Wishlist item bought", date: "Friday, Jul 25, 2025, 08:46 AM" },
+  { points: 4, text: "Shared product on social", date: "Thursday, Jul 24, 2025, 09:03 AM" },
+];
+
   const handleEditToggle = () => setIsEditing(!isEditing);
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,14 +37,12 @@ export const Profile = () => {
 
   return (
     <div className="h-screen w-screen bg-[#e5f0db] overflow-hidden relative">
-      {/* Navbar */}
       <div className="flex flex-col w-full">
         <Navbar />
       </div>
 
-      {/* Left Sidebar with Profile Photo */}
+      {/* Sidebar */}
       <div className="absolute top-32 left-10 flex flex-col items-start gap-8 text-xl text-gray-800 z-10">
-        {/* Profile Info */}
         <div className="flex flex-col items-center">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY_UP9cSEjFLqwEVNDqWPhu9lUPLkzzaVpJw&s"
@@ -42,7 +53,6 @@ export const Profile = () => {
           <p className="text-gray-600 text-sm">{formData.email}</p>
         </div>
 
-        {/* Menu Items */}
         <div className="flex flex-col gap-6">
           <div
             className={`flex items-center gap-3 cursor-pointer hover:text-green-600 ${
@@ -74,10 +84,9 @@ export const Profile = () => {
         </div>
       </div>
 
-      {/* Fixed Centered Card */}
+      {/* Main Card */}
       <div className="fixed inset-0 flex items-center justify-center z-20 pointer-events-none">
-        <div className="w-[600px] h-[500px] bg-white rounded-2xl shadow-2xl p-8 relative pointer-events-auto">
-          {/* Content inside the card */}
+        <div className="w-[600px] h-[500px] bg-white rounded-2xl shadow-2xl p-8 overflow-auto relative pointer-events-auto">
           {activeSection === "basic" && (
             <>
               <div className="flex justify-between items-center mb-6">
@@ -93,7 +102,13 @@ export const Profile = () => {
                 )}
               </div>
               <div className="space-y-5 text-base">
-                {["name", "gender", "email", "contact", "address"].map((field) => (
+                {[
+                  "name",
+                  "gender",
+                  "email",
+                  "contact",
+                  "address",
+                ].map((field) => (
                   <div key={field}>
                     <p className="text-gray-500 capitalize font-semibold mb-1">{field}</p>
                     {isEditing ? (
@@ -128,8 +143,25 @@ export const Profile = () => {
 
           {activeSection === "points" && (
             <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-4">Points</h2>
-              <p className="text-gray-600">You currently have 120 points 🎉</p>
+              <div className="text-center mb-6">
+                <p className="text-green-600 text-2xl font-semibold">You currently have 120 points 🎉</p>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">My Point Activity</h2>
+              <ul className="divide-y divide-gray-200">
+  {activities.map((activity, index) => (
+    <li key={index} className="flex justify-between items-start py-4">
+      <div className="flex items-start gap-2">
+        <span className="text-yellow-500 text-lg">🌕</span>
+        <span>
+          <span className="font-medium text-green-600">+{activity.points}</span>{" "}
+          {activity.text}
+        </span>
+      </div>
+      <span className="text-sm text-gray-500 whitespace-nowrap">{activity.date}</span>
+    </li>
+  ))}
+</ul>
+
             </div>
           )}
 
