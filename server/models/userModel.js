@@ -19,15 +19,18 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum:["m","f"]
     },
-    profilePic:{
+    phone:{
         type: String,
-        default: "",
+        required: true,    
     },
     role:{
         type: String,
         default: "user",
     },
-    
+    points:{
+        type: Number,
+        default: 0,
+    },
 }, {timestamps: true});
 
 module.exports = mongoose.model("User", userSchema);

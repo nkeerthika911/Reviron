@@ -5,6 +5,10 @@ const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
 
+const getUserByIdController = async(req,res) =>{
+
+}
+
 const uploadProfileController = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -32,4 +36,4 @@ const uploadProfileController = async (req, res, next) => {
   }
 };
 
-module.exports = {uploadProfileController}
+module.exports = {getUserByIdController, uploadProfileController}
