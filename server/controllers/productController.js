@@ -71,6 +71,28 @@ const getProductByIdController = asyncHandler(async (req, res) => {
 });
 
 
+//@desc Toggle favorite status of a product
+//@route PATCH /products/favourite/:productid
+
+const toggleFavoriteController = asyncHandler(async (req, res) => {
+    const productId = req.params.productid;
+
+    const updatedProduct = await productService.toggleFavorite(productId);
+
+    if (!updatedProduct) {
+        throw Object.assign(new Error("Product not found!"), { statusCode: 404 });
+    }
+
+    res.status(200).json({
+        success: true,
+        data: {
+            message: "Product favorite status toggled",
+            favorite: updatedProduct.favorite,
+        }
+    });
+});
+
+
 //@desc Admin's Post a product
 //@route /products/post
 
@@ -138,4 +160,5 @@ module.exports = {
     getProductByIdController,
     postProductController,
     uploadProductPhotosController,
+    toggleFavoriteController,
 }

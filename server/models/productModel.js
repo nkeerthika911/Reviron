@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -35,6 +36,11 @@ const productSchema = new mongoose.Schema({
         default: [],
         required: true,
     },
-})
+    favorite: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
+});
 
 module.exports = mongoose.model("Product", productSchema);
