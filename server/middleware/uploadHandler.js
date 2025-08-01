@@ -2,7 +2,6 @@ const multer = require("multer")
 const path = require("path");
 
 // profilePicture
-
 const profileFileFilter=(req,file,cb) => {
     const allowedTypes= /jpeg|jpg|png|gif/;
     const isAllowed  = allowedTypes.test(file.mimetype);

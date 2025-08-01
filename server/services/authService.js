@@ -6,5 +6,4 @@ const signup = async(userData)=>{
     return newUser;
 }
 
-
 module.exports={signup,}

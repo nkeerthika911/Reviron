@@ -65,9 +65,9 @@ export const ProductDetails = () => {
       <Navbar />
       <div className="flex flex-1 p-6 gap-6 overflow-hidden">
         {/* Left: Image and Thumbnails */}
-        <div className="w-1/2 flex flex-col rounded shadow-sm p-4">
+        <div className="flex-[1] flex flex-col rounded shadow-sm p-4">
           {/* Selected Image Container */}
-          <div className="flex justify-center items-center mb-4 h-[400px]">
+          <div className="flex justify-center items-center mb-4 flex-[10]">
             {selectedImage ? (
               <img
                 src={selectedImage}
@@ -80,7 +80,7 @@ export const ProductDetails = () => {
           </div>
 
           {/* Thumbnails */}
-          <div className="flex gap-3 justify-center pt-2 border-t border-gray-300">
+          <div className="flex gap-3 justify-center pt-2 border-t border-gray-300 flex-[1]">
             {product.images.length > 0 ? (
               product.images.map((img, index) => (
                 <img
@@ -100,7 +100,7 @@ export const ProductDetails = () => {
         </div>
 
         {/* Right: Product Info */}
-        <div className="w-1/2 flex flex-col gap-4">
+        <div className="flex-[1] flex flex-col gap-4">
           <h1 className="text-4xl font-semibold text-[#2f4734]">{product.name}</h1>
 
           {/* Tags */}

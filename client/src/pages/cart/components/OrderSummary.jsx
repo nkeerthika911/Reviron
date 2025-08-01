@@ -1,11 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../../context/CartContext";
 
 export default function OrderSummary({ subtotal, discount, total }) {
   const deliveryCharge = 0;
   const navigate = useNavigate();
-  const { cartItems } = useCart();
 
   const handleBuyNow = () => {
     // Pass all cart items to the Buynow page

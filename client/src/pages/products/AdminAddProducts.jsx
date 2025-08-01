@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const AddProduct = () => {
+export const AdminAddProduct = () => {
   const [product, setProduct] = useState({
     name: '',
     description: '',

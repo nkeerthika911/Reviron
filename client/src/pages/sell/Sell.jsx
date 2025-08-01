@@ -144,7 +144,6 @@ export const Sell = () => {
 
         {/* Add Product Form */}
         {showForm && (
-          <div className="flex justify-center w-full">
             <div className="bg-white border border-gray-300 w-[40vw] h-full p-6 overflow-y-auto relative transition-all duration-500 ease-out">
               <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
               <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -230,7 +229,6 @@ export const Sell = () => {
                 </div>
               </form>
             </div>
-          </div>
         )}
       </div>
 
