@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Navbar } from "../Navbar";
 import { CartProduct } from "./components/CartProduct";
 import OrderSummary from "./components/OrderSummary";
 
 export const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      price: 150,
-      quantity: 2,
-      image: "/images/headphones.jpg",
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      price: 300,
-      quantity: 1,
-      image: "/images/watch.jpg",
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const userId = "64cxxxxxxxxxx"; // Replace with actual user ID
+
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/cart/${userId}`);
+        const formatted = res.data.map((item) => ({
+          id: item.productId._id,
+          name: item.productId.name,
+          price: item.productId.price,
+          quantity: item.quantity,
+          image: item.productId.images?.[0] || "/images/default.jpg",
+        }));
+        setCartItems(formatted);
+      } catch (err) {
+        console.error("Failed to fetch cart:", err);
+      }
+    };
+
+    fetchCart();
+  }, [userId]);
 
   const handleQuantityChange = (id, newQuantity) => {
     setCartItems((prevItems) =>
@@ -29,8 +36,13 @@ export const Cart = () => {
     );
   };
 
-  const handleRemove = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemove = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/cart/${userId}/${id}`);
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error("Error removing item:", err);
+    }
   };
 
   const subtotal = cartItems.reduce(
@@ -41,23 +53,14 @@ export const Cart = () => {
   const discount = subtotal > 500 ? 50 : 10;
   const total = subtotal + deliveryCharge - discount;
 
-  useEffect(() => {
-    document.body.style.overflowX = "hidden";
-    return () => {
-      document.body.style.overflowX = "auto";
-    };
-  }, []);
-
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Navbar />
-
       <div className="flex flex-col items-center p-6 flex-grow">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Shopping Bag</h2>
         <p className="mb-4 text-sm text-gray-600">
           {cartItems.length} item{cartItems.length !== 1 && "s"} in your bag.
         </p>
-
         <div className="flex w-full max-w-7xl justify-between items-start gap-6">
           <div className="flex flex-col gap-4 w-[65%]">
             {cartItems.length > 0 ? (
@@ -73,14 +76,12 @@ export const Cart = () => {
               <p className="text-gray-500 text-sm">Your cart is empty.</p>
             )}
           </div>
-
           <OrderSummary
             subtotal={subtotal}
             discount={discount}
             total={total}
             cartItems={cartItems}
           />
-
         </div>
       </div>
     </div>
