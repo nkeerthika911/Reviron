@@ -23,7 +23,10 @@ export const Login = () => {
   const handleLogin = async (formData) => {
     try {
       const response = await axios.post('http://localhost:5000/api/auth/login', formData);
-      console.log(response);
+      console.log("hello",response);
+      if(response){
+        localStorage.setItem("jwt", response.data.data.token);
+      }
       setToast({ message: response.data.data.message, color: 'bg-green-500' });
       navigate('/products');
     } catch (err) {
