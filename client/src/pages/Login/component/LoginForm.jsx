@@ -56,7 +56,7 @@ export const LoginForm = ({ onLogin }) => {
     <div className="h-3/4">
       <div className="bg-white rounded-2xl border-2 border-gray-200 p-8">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-normal text-gray-600">Login</h1>
+          <h1 className="text-2xl font-bold text-gray-600">Login</h1>
         </div>
 
         <div className="mb-4">
