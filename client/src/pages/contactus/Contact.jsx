@@ -49,7 +49,7 @@ const ContactPage = () => {
           </div>
 
           {/* Info Section */}
-          <div className="w-1/2 bg-[#8FCC8F] text-white p-8 flex flex-col justify-center">
+          <div className="w-1/2 bg-[#7BAE89] text-white p-8 flex flex-col justify-center">
             <div className="flex items-center mb-6 space-x-4">
               <Phone className="w-6 h-6" />
               <div>
