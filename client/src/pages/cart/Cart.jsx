@@ -4,7 +4,34 @@ import { CartProduct } from "./components/CartProduct";
 import OrderSummary from "./components/OrderSummary";
 
 export const Cart = () => {
-  const { cartItems, handleQuantityChange, handleRemove } = useCart();
+  const [cartItems, setCartItems] = useState([
+    {
+      id: 1,
+      name: "Wireless Headphones",
+      price: 150,
+      quantity: 2,
+      image: "/images/headphones.jpg",
+    },
+    {
+      id: 2,
+      name: "Smart Watch",
+      price: 300,
+      quantity: 1,
+      image: "/images/watch.jpg",
+    },
+  ]);
+
+  const handleQuantityChange = (id, newQuantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleRemove = (id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -51,29 +78,9 @@ export const Cart = () => {
             subtotal={subtotal}
             discount={discount}
             total={total}
+            cartItems={cartItems}
           />
-        </div>
-      </div>
 
-      {/* Bottom Info Cards */}
-      <div className="mt-auto w-full bg-gray-50 flex justify-center">
-        <div className="flex justify-between gap-4 mt-10 w-full max-w-7xl px-6 pb-10">
-          <div className="flex-1 bg-white-50 p-4 rounded shadow text-center">
-            <p className="font-semibold text-sm">Free Shipping</p>
-            <p className="text-xs text-gray-500">When you spend ₹500+</p>
-          </div>
-          <div className="flex-1 bg-red-50 p-4 rounded shadow text-center">
-            <p className="font-semibold text-sm">Call Us Anytime</p>
-            <p className="text-xs text-gray-500">+91 99999 99999</p>
-          </div>
-          <div className="flex-1 bg-blue-50 p-4 rounded shadow text-center">
-            <p className="font-semibold text-sm">Chat With Us</p>
-            <p className="text-xs text-gray-500">We offer 24-hour chat support</p>
-          </div>
-          <div className="flex-1 bg-green-50 p-4 rounded shadow text-center">
-            <p className="font-semibold text-sm">Gift Cards</p>
-            <p className="text-xs text-gray-500">For your loved ones, in any amount</p>
-          </div>
         </div>
       </div>
     </div>
