@@ -53,9 +53,9 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
               ))}
             </select>
 
-            {product.stock ? (
+            {product.quantity>0 ? (
               <span className="bg-green-100 text-green-700 px-3 py-1 text-sm rounded border border-green-300">
-                ✅ In stock: {product.stock}
+                ✅ In stock: {product.quantity}
               </span>
             ) : (
               <span className="bg-red-100 text-red-700 px-3 py-1 text-sm rounded border border-red-300">

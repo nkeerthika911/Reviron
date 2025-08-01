@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ToastPopup } from '../../utils/ToastPopup';
 import { useNavigate } from 'react-router-dom';
-
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 // ProductCard component
 export const ProductCard = ({ product }) => {
   console.log(product);
@@ -16,9 +17,36 @@ export const ProductCard = ({ product }) => {
     navigate(`/product/${product._id}`);
   };
 
-  const handleAddToCart = () => {
-    setShowToast(true);
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.userId || null;
+    } catch (err) {
+      console.error("Invalid JWT token", err);
+      return null;
+    }
   };
+
+  const handleAddToCart = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/api/cart/add", {
+        userId: getUserIdFromToken(), // Replace with actual function
+        productId: product._id,
+        quantity: 1, // Or allow dynamic selection
+      });
+      console.log(product._id);
+      if (res.status === 201) {
+        setShowToast(true);
+      }
+    } catch (err) {
+      console.error("Error adding to cart:", err);
+      alert("Error",err)
+    }
+  };
+
 
   return (
     <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer" onClick={handleCardClick}>
