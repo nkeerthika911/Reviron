@@ -16,11 +16,13 @@ const login = asyncHandler(async (req, res) => {
         throw Object.assign(new Error("Wrong Password"),{statusCode:400});
     }
     //GENERATE JWT TOKEN
-    await generateToken(userDetails._id,res);
+    const token = await generateToken(userDetails._id,res);
+    console.log(token);
     res.status(200).json({
         success: true,
         data:{
             message:"Login Successful",
+            token: token,
         }
     })
 })
