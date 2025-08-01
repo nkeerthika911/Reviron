@@ -18,6 +18,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", require('./routes/authRoutes'));
 app.use("/api/products", require('./routes/productRoutes'));
+app.use("/api/user", require('./routes/userRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(errorHandler);

@@ -1,5 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const productService = require('../services/productService');
+const sharp = require("sharp");
+const path = require("path");
+const fs = require("fs");
 
 //@desc Get all Products
 //@route /products
@@ -58,8 +61,52 @@ const postProductController = asyncHandler(async (req, res) => {
     });
 });
 
+//@desc Admin's Post a product picture
+//@route /products/uploadphotos/:productid
+
+const uploadProductPhotosController = async (req, res, next) => {
+  try {
+    const productid = req.params.productid;
+    const files = req.files;
+
+    if (!files || files.length === 0) {
+      return res.status(400).json({ success: false, message: "No files uploaded" });
+    }
+
+    const outputDir = path.join(__dirname, "..", "uploads", "productPhotos", productid);
+
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const savedImagePaths = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const outputPath = path.join(outputDir, `${productid}-${i + 1}.png`);
+
+      await sharp(file.buffer)
+        .png()
+        .toFile(outputPath);
+
+      savedImagePaths.push(`uploads/productPhotos/${productid}/${productid}-${i + 1}.png`);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product photos uploaded and converted to PNG",
+      data: {
+        images: savedImagePaths,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
     getAllProductsController,
     getProductByIdController,
     postProductController,
+    uploadProductPhotosController,
 }
