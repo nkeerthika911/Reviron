@@ -168,7 +168,33 @@ export const Profile = () => {
           {activeSection === "settings" && (
             <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4">Settings</h2>
-              <p className="text-gray-600">Settings panel coming soon...</p>
+              <ul className="text-base text-gray-700 divide-y divide-gray-200">
+      
+  {[
+    "Permissions",
+    "Privacy Policy",
+    "Security & Access",
+    "Notifications",
+    "History",
+    "Change Password",
+    "App Appearance",
+    "Delete Account",
+    "Log Out",
+  ].map((item, idx) => (
+    <li
+      key={item}
+      className={`py-2 px-1 cursor-pointer hover:text-green-700 transition ${
+        item === "Delete Account" || item === "Log Out"
+          ? "text-red-600 font-semibold hover:text-red-700"
+          : ""
+      }`}
+    >
+      {item}
+    </li>
+  ))}
+</ul>
+
+
             </div>
           )}
         </div>

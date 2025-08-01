@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from '../Navbar'
-import { OrderCard } from './components/orderCard'
+import  OrderCard  from './components/orderCard'
 export const AdminOrders = () => {
   return (
     <>

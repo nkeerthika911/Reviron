@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const dbConnect = require('./db/dbConnect');
 const errorHandler = require('./middleware/errorHandler');
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -17,6 +18,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", require('./routes/authRoutes'));
 app.use("/api/products", require('./routes/productRoutes'));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(errorHandler);
 
