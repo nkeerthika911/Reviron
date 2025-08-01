@@ -38,7 +38,7 @@ function App() {
           <Route path="/buypage" element={<BuyPage/>}></Route>
           <Route path="/payment" element={<Payment/>}></Route>
           <Route path="/ItemView" element={<ItemView/>}></Route>
-          
+
           <Route path="/*" element={<Products/>}></Route>
         </Routes>
       </BrowserRouter>
