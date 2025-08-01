@@ -1,15 +1,7 @@
-const asyncHandler = require('express-async-handler');
-const bcryptjs = require('bcryptjs');
-const userService = require('../services/userService');
-const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
-
 const asyncHandler = require("express-async-handler");
 const path = require("path");
 const fs = require("fs");
 const { getUserbyUserId } = require("../services/userService");
-const { BASE_URL } = require("../config");
 
 const getUserByIdController = asyncHandler(async (req, res) => {
     const userId = req.user;
@@ -22,7 +14,7 @@ const getUserByIdController = asyncHandler(async (req, res) => {
 
     const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
     const profilePhoto = fs.existsSync(photoPath)
-        ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
+        ? `${process.env.BASE_URL}/uploads/userPhotos/${userId}.png`
         : null;
 
     res.status(200).json({
