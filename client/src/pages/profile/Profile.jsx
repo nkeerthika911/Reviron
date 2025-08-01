@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Navbar } from "../Navbar";
-import { Eye, Wallet, Settings, Pencil, ShoppingBag } from "lucide-react";
+import { Info, Wallet, Settings, Pencil, ShoppingBag } from "lucide-react";
 import userIcon from "../../assets/user-icon.jpg"
 
 export const Profile = ({ user }) => {
   const [activeSection, setActiveSection] = useState("basic");
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: "Ashwin",
+    name: "user",
     gender: "Male",
     email: "ashwin12@gmail.com",
     contact: "9342566775",
@@ -87,7 +87,7 @@ export const Profile = ({ user }) => {
                 : "text-gray-700 hover:bg-gray-100"
                 }`}
             >
-              <Eye size={18} />
+              <Info size={18} />
               <span>Basic Info</span>
             </div>
             <div
