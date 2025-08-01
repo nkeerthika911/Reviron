@@ -73,13 +73,7 @@ export const Sell = () => {
             {/* Range Button + Dropdown */}
             <div className="flex justify-end mb-4">
               <div className="relative">
-                <button
-                  title="Estimate amount for a product"
-                  onClick={() => setShowRangePopup(!showRangePopup)}
-                  className="bg-[#73B87C] text-white px-4 py-2 rounded-xl shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
-                >
-                  Range ▼
-                </button>
+               
                 {showRangePopup && (
                   <div className="absolute right-0 mt-2 w-64 bg-white border rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] z-50 p-4 space-y-2">
                     <div className="text-gray-800 hover:bg-gray-100 p-2 rounded-lg flex justify-between">
@@ -249,12 +243,7 @@ export const Sell = () => {
           >
             +
           </button>
-          <button
-            onClick={() => alert("Start Selling button clicked!")}
-            className="fixed bottom-6 right-[110px] bg-[#73B87C] text-white rounded-full px-6 py-3 shadow-lg hover:bg-[#6F9674] transition-all duration-300 transform hover:scale-105"
-          >
-            Start Selling
-          </button>
+        
         </>
       )}
 
