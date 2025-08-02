@@ -9,7 +9,6 @@ export const AdminAddProduct = () => {
     quantity: '',
     brand: '',
     condition: 'Working',
-    categories: '',
     images: []
   });
 
@@ -22,7 +21,6 @@ export const AdminAddProduct = () => {
   };
 
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
     setProduct((prev) => ({
       ...prev,
       images: files
