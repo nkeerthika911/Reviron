@@ -20,12 +20,13 @@ export const Seller = () => {
   };
 
   return (
-    <>
+    <div className="h-screen bg-gray-100 flex flex-col">
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+
+      <div className="flex-1 overflow-y-auto pt-8 pb-8 flex justify-center items-start">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-2xl pb-7"
+          className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-2xl"
         >
           <h2 className="text-2xl font-bold mb-6 text-green-700">
             Seller - Upload Refurbished Product
@@ -77,12 +78,12 @@ export const Seller = () => {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300"
+            className="w-full bg-[#81AD87] text-white py-3 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
           >
             Submit
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };

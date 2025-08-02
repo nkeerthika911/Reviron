@@ -62,13 +62,15 @@ export const Sell = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 flex flex-col">
-      <Navbar />
+    <div className="h-screen w-full bg-gray-50 flex flex-col">
 
-      <div className="flex p-4 w-full h-full overflow-x-hidden overflow-y-auto transition-all duration-500">
+      <Navbar /> 
+      <div className="flex-1 flex p-4 overflow-y-auto transition-all duration-500 max-h-[calc(100vh-64px)]">
+
+
         
         {/* Left Section (Sold Preview + Cards) */}
-        <div className={`${showForm ? 'w-[60vw]' : 'w-full'} flex flex-col pr-4 transition-all duration-500`}>
+        <div className={`${showForm ? 'w-[60vw]' : 'w-full'} flex flex-col pr-4 transition-all duration-500 `}>
           <div className="p-4">
             {/* Always Visible Sold Product UI */}
             <div className="min-h-screen flex flex-col items-start px-8 py-10">
@@ -100,7 +102,7 @@ export const Sell = () => {
                   key={product.id}
                   className="bg-white rounded-xl shadow-md px-4 py-3 w-full flex flex-col md:flex-row gap-4 items-center md:items-start"
                 >
-                  <div className="w-[250px] h-[180px] flex-shrink-0 overflow-hidden rounded-md border border-gray-300">
+                  <div className="w-[250px] h-[180px] flex-shrink-0 overflow-auto rounded-md border border-gray-300">
                     <img
                       src={product.imageUrl}
                       alt={product.name}
