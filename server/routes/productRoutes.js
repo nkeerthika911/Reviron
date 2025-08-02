@@ -8,5 +8,6 @@ router.get('/:productId',productController.getProductByIdController);
 
 router.post('/post',productController.postProductController);
 router.post("/uploadphotos/:productid", uploadProductPhotos.array("productPhotos",10), productController.uploadProductPhotosController);  
+router.patch("/favourite/:productid", productController.toggleFavoriteController);
 
 module.exports = router;

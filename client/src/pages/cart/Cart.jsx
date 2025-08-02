@@ -3,11 +3,25 @@ import axios from "axios";
 import { Navbar } from "../Navbar";
 import { CartProduct } from "./components/CartProduct";
 import OrderSummary from "./components/OrderSummary";
+import { jwtDecode } from "jwt-decode";
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const userId = "64cxxxxxxxxxx"; // Replace with actual user ID
+  const [ isRemoved, setIsRemoved] = useState(false);
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) return null;
 
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.userId || null;
+    } catch (err) {
+      console.error("Invalid JWT token", err);
+      return null;
+    }
+  };
+  const userId = getUserIdFromToken();; // Replace with actual user ID
+  console.log(userId);
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -26,7 +40,9 @@ export const Cart = () => {
     };
 
     fetchCart();
-  }, [userId]);
+  }, [userId, isRemoved]);
+
+
 
   const handleQuantityChange = (id, newQuantity) => {
     setCartItems((prevItems) =>
@@ -38,10 +54,16 @@ export const Cart = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/cart/${userId}/${id}`);
-      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      await axios.delete(`http://localhost:5000/api/cart/delete/${userId}/${id}`);
+      console.log(userId, id);
     } catch (err) {
       console.error("Error removing item:", err);
+    }
+    if(isRemoved){
+      setIsRemoved(false);
+    }
+    else{
+      setIsRemoved(true);
     }
   };
 

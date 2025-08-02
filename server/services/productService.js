@@ -18,8 +18,19 @@ const postProduct = async(productData)=>{
     return newProduct;
 }
 
+// @desc Toggle favorite status
+const toggleFavorite = async (productId) => {
+    const product = await Product.findById(productId);
+    if (!product) return null;
+
+    product.favorite = !product.favorite;
+    await product.save();
+    return product;
+};
+
 module.exports = {
     getAllProducts,
     getProductById,
     postProduct,
-}
+    toggleFavorite,
+};
