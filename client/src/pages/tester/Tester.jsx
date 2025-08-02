@@ -11,7 +11,6 @@ export const Tester = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handle form submit logic
     console.log({
       collectorName,
       productName,
@@ -23,9 +22,11 @@ export const Tester = () => {
   };
 
   return (
-    <>
+    <div className="h-screen bg-gray-100 flex flex-col">
       <Navbar />
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-8 pb-8">
+
+      {/* Scrollable content starts here */}
+      <div className="flex-1 overflow-y-auto pt-8 pb-8 flex justify-center items-start">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl"
@@ -91,12 +92,12 @@ export const Tester = () => {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300"
+            className="w-full bg-[#81AD87] text-white py-3 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
           >
             Submit
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };

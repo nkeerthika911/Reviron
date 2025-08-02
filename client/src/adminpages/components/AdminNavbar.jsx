@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from "../assets/RevironLogo.png";
-import userIcon from "../assets/user-icon.jpg";
+import logo from "../../assets/RevironLogo.png";
+import userIcon from "../../assets/user-icon.jpg";
+
 
 export const AdminNavbar = () => {
     const [activePage, setActivePage] = useState();
@@ -22,7 +23,7 @@ export const AdminNavbar = () => {
                     <path d="M12 4v16m8-8H4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
             ),
-            path: '/add-product'
+            path: '/admin/product/add'
         },
         {
             label: 'Requests',
