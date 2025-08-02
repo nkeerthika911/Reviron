@@ -15,7 +15,6 @@ import { WorkerPage } from './pages/products/WorkerPage'
 import { BuyPage } from './pages/products/BuyPage';
 import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
-import { Adminpage } from './adminpages/Adminpage'
 import { Tester } from './pages/tester/Tester'
 import { Seller } from './pages/seller/Seller'
 
@@ -32,7 +31,7 @@ function App() {
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
 
-          <Route path="/adminpages/Adminpage" element={<Adminpage/>}></Route>
+          {/* <Route path="/adminpages/Adminpage" element={<Adminpage/>}></Route> */}
           <Route path="/tester" element={<Tester/>}></Route>
           <Route path="/seller" element={<Seller/>}></Route>
 
