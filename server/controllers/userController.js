@@ -8,8 +8,8 @@ require("dotenv").config();
 const BASE_URL = process.env.BASE_URL;
 
 const getUserByIdController = asyncHandler(async (req, res) => {
-  const userId = req.user;
-  console.log(req.user);
+  const userId = req.params.userId;
+  console.log(userId);
 
   if (!userId) {
     throw Object.assign(new Error("Unauthorized: No user ID found"), { statusCode: 401 });
