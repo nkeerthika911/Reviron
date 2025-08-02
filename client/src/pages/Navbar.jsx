@@ -1,14 +1,19 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from "../assets/RevironLogo.png";
 import userIcon from "../assets/user-icon.jpg";
+import axios from 'axios';
 
-export const Navbar = ({ favourite, setFavourite }) => {
+export const Navbar = ({ favourite = false, setFavourite = () => {} }) => {
     const [activePage, setActivePage] = useState();
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
 
     const navItems = [
         {
@@ -84,15 +89,74 @@ export const Navbar = ({ favourite, setFavourite }) => {
         }
     ];
 
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get("http://localhost:5000/api/user/details", {
+                    withCredentials: true,
+                });
+
+                if (response.data.success) {
+                    const userData = response.data.data.data;
+                    console.log("User data: ", response.data.data.data);
+                    setUser(userData);
+                    console.log("Fetched user:", userData);
+                } else {
+                    setError("Failed to fetch user details");
+                }
+            } catch (err) {
+                console.error("Error fetching user details:", err);
+                setError("Something went wrong while fetching user details");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+
+
     const handleNavClick = (label) => {
         if (label === 'Favorites') {
-            setFavourite(prev => !prev); // Toggle favorites
-            return; // Don't navigate or set active page
+            console.log('Favorites clicked! Current path:', location.pathname);
+            console.log('Current favourite state:', favourite);
+            
+            // Check if we're currently on the products page
+            if (location.pathname === '/products') {
+                // If on products page, just toggle favorites
+                console.log('On products page - toggling favorites');
+                setFavourite(prev => {
+                    console.log('Toggling from', prev, 'to', !prev);
+                    return !prev;
+                });
+            } else {
+                // If not on products page (community, sell, contact, cart, etc.), 
+                // navigate to products page and apply favorites filter
+                console.log('Not on products page - navigating to products with favorites ON');
+                console.log('Navigating from:', location.pathname, 'to: /products');
+                
+                // First set favorites to true
+                setFavourite(true);
+                console.log('Set favourite to true');
+                
+                // Then navigate to products page
+                navigate('/products');
+                console.log('Navigated to /products');
+                
+                // Set active page to Products
+                setActivePage('Products');
+                console.log('Set active page to Products');
+            }
+            return; // Don't continue with regular navigation logic
         }
 
+        // Handle other navigation items
+        console.log('Navigating to:', label);
         setActivePage(label);
         const item = [...navItems, ...actionItems].find(i => i.label === label);
         if (item?.path) {
+            console.log('Navigating to path:', item.path);
             navigate(item.path);
         }
     };
@@ -180,9 +244,14 @@ export const Navbar = ({ favourite, setFavourite }) => {
                                 onClick={() => navigate('/Profile')}
                                 title="Profile"
                             >
-                                <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
-                                    <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
+                                <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center overflow-hidden">
+                                    <img
+                                        src={user?.profilePhoto || userIcon}
+                                        alt="User"
+                                        className="h-full w-full object-cover rounded-full"
+                                    />
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -235,14 +304,16 @@ export const Navbar = ({ favourite, setFavourite }) => {
                             className={`
                                 flex flex-col items-center space-y-1 cursor-pointer transition-all duration-300
                                 ${(label === 'Favorites' && favourite) || 
-                                  (label !== 'Favorites' && activePage === label)
+                                  (label !== 'Favorites' && (activePage === label || 
+                                   (label === 'Products' && location.pathname === '/products')))
                                     ? 'text-white font-semibold'
                                     : 'text-white/70'
                                 }
                             `}
                         >
                             {(label === 'Favorites' && favourite) || 
-                             (label !== 'Favorites' && activePage === label)
+                             (label !== 'Favorites' && (activePage === label || 
+                              (label === 'Products' && location.pathname === '/products')))
                                 ? selectedIcon
                                 : icon}
                             <span className="text-xs">{label}</span>

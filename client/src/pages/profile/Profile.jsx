@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Navbar } from "../Navbar";
 import { Info, Wallet, Settings, Pencil, ShoppingBag } from "lucide-react";
 import userIcon from "../../assets/user-icon.jpg";
-import axios from 'axios';
 
 export const Profile = ({ user }) => {
   const [activeSection, setActiveSection] = useState("basic");
