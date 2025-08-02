@@ -8,28 +8,33 @@ require("dotenv").config();
 const BASE_URL = process.env.BASE_URL;
 
 const getUserByIdController = asyncHandler(async (req, res) => {
-    const userId = req.user._id;
+  const userId = req.user;
+  console.log(req.user);
 
-    const user = await userService.getUserbyUserId(userId);
+  if (!userId) {
+    throw Object.assign(new Error("Unauthorized: No user ID found"), { statusCode: 401 });
+  }
 
-    if (!user) {
-        throw Object.assign(new Error("User not found!"), { statusCode: 404 });
-    }
+  const user = await userService.getUserbyUserId(userId);
 
-    const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
-    const profilePhoto = fs.existsSync(photoPath)
-        ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
-        : null;
-    res.status(200).json({
-        success: true,
-        data: {
-            message: "User data fetched",
-            data: {
-                ...user.toObject?.() || user,
-                profilePhoto,
-            },
-        },
-    });
+  if (!user) {
+    throw Object.assign(new Error("User not found!"), { statusCode: 404 });
+  }
+
+  const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
+  const profilePhoto = fs.existsSync(photoPath)
+    ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
+    : null;
+  res.status(200).json({
+    success: true,
+    data: {
+      message: "User data fetched",
+      data: {
+        ...user.toObject?.() || user,
+        profilePhoto,
+      },
+    },
+  });
 });
 
 const uploadProfileController = async (req, res, next) => {
@@ -59,4 +64,4 @@ const uploadProfileController = async (req, res, next) => {
   }
 };
 
-module.exports = {getUserByIdController, uploadProfileController}
+module.exports = { getUserByIdController, uploadProfileController }

@@ -96,6 +96,7 @@ export const Navbar = () => {
 
                 if (response.data.success) {
                     const userData = response.data.data.data;
+                    console.log("User data: ", response.data.data.data);
                     setUser(userData);
                     console.log("Fetched user:", userData);
                 } else {
