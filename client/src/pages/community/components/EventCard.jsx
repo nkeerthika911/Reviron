@@ -42,9 +42,10 @@ export const EventCard = () => {
     <div className="flex flex-col items-center gap-6 bg-gray-100 py-10 px-4">
       {events.map((event) => (
         <div
-          key={event.id}
-          className="relative bg-white rounded-xl shadow-lg flex w-[1000px] min-h-[220px] p-6"
-        >
+        key={event.id}
+        className="relative bg-white rounded-xl shadow-lg flex w-full min-h-[220px] p-6"
+>
+
           {/* Left Image */}
           <img
             src={event.image}
