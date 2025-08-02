@@ -4,17 +4,13 @@ const userService = require('../services/userService');
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
-
-const asyncHandler = require("express-async-handler");
-const path = require("path");
-const fs = require("fs");
-const { getUserbyUserId } = require("../services/userService");
-const { BASE_URL } = require("../config");
+require("dotenv").config();
+const BASE_URL = process.env.BASE_URL;
 
 const getUserByIdController = asyncHandler(async (req, res) => {
-    const userId = req.user;
+    const userId = req.user._id;
 
-    const user = await getUserbyUserId(userId);
+    const user = await userService.getUserbyUserId(userId);
 
     if (!user) {
         throw Object.assign(new Error("User not found!"), { statusCode: 404 });
@@ -24,7 +20,6 @@ const getUserByIdController = asyncHandler(async (req, res) => {
     const profilePhoto = fs.existsSync(photoPath)
         ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
         : null;
-
     res.status(200).json({
         success: true,
         data: {
