@@ -1,14 +1,19 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from "../assets/RevironLogo.png";
 import userIcon from "../assets/user-icon.jpg";
+import axios from 'axios';
 
 export const Navbar = ({ favourite = false, setFavourite = () => {} }) => {
     const [activePage, setActivePage] = useState();
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
 
     const navItems = [
         {
@@ -83,6 +88,34 @@ export const Navbar = ({ favourite = false, setFavourite = () => {} }) => {
             path: '/cart'
         }
     ];
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get("http://localhost:5000/api/user/details", {
+                    withCredentials: true,
+                });
+
+                if (response.data.success) {
+                    const userData = response.data.data.data;
+                    console.log("User data: ", response.data.data.data);
+                    setUser(userData);
+                    console.log("Fetched user:", userData);
+                } else {
+                    setError("Failed to fetch user details");
+                }
+            } catch (err) {
+                console.error("Error fetching user details:", err);
+                setError("Something went wrong while fetching user details");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+
 
     const handleNavClick = (label) => {
         if (label === 'Favorites') {
@@ -211,9 +244,14 @@ export const Navbar = ({ favourite = false, setFavourite = () => {} }) => {
                                 onClick={() => navigate('/Profile')}
                                 title="Profile"
                             >
-                                <div className='h-12 w-12 bg-white rounded-full flex items-center justify-center'>
-                                    <img src={userIcon} alt='Logo' className='text-[#81AD87] font-bold text-xl rounded-full' />
+                                <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center overflow-hidden">
+                                    <img
+                                        src={user?.profilePhoto || userIcon}
+                                        alt="User"
+                                        className="h-full w-full object-cover rounded-full"
+                                    />
                                 </div>
+
                             </div>
                         </div>
                     </div>
