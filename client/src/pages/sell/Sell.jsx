@@ -65,47 +65,33 @@ export const Sell = () => {
     <div className="min-h-screen w-full bg-gray-50 flex flex-col">
       <Navbar />
 
-      <div className="flex p-4 w-full h-full overflow-x-hidden overflow-y-auto">
-        <div className="w-full flex-1 pr-4">
+      <div className="flex p-4 w-full h-full overflow-x-hidden overflow-y-auto transition-all duration-500">
+        
+        {/* Left Section (Sold Preview + Cards) */}
+        <div className={`${showForm ? 'w-[60vw]' : 'w-full'} flex flex-col pr-4 transition-all duration-500`}>
           <div className="p-4">
+            {/* Always Visible Sold Product UI */}
+            <div className="min-h-screen flex flex-col items-start px-8 py-10">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4 ml-2">Sold product</h2>
 
-            {/* Static Sold Product Preview */}
-            {!showForm && (
-              <div className="min-h-screen flex flex-col items-start px-8 py-10">
+              <div className="bg-white w-full max-w-7xl rounded-xl shadow-md flex flex-row p-4 gap-6 items-center">
+                <div className="w-[200px] h-[150px] rounded-lg overflow-hidden border-2 border-blue-400">
+                  <img
+                    src="https://via.placeholder.com/411x298"
+                    alt="Sold Product"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 ml-2">Sold product</h2>
-
-      <div className="bg-white w-full max-w-7xl rounded-xl shadow-md flex flex-row p-4 gap-6 items-center">
-        {/* Product Image */}
-        <div className="w-[200px] h-[150px] rounded-lg overflow-hidden border-2 border-blue-400">
-          <img
-            src="https://via.placeholder.com/411x298"
-            alt="Sold Product"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        {/* Product Details */}
-        <div className="grid grid-cols-2 gap-x-30 gap-y-6 text-sm text-gray-700">
-          <div>
-            <span className="font-semibold">Request ID:</span> GGA6758
-          </div>
-          <div>
-            <span className="font-semibold">Date:</span> 01/08/25
-          </div>
-          <div>
-            <span className="font-semibold">Status:</span> Collection Initiated
-          </div>
-          <div>
-            <span className="font-semibold">Employee:</span> Harshana
-          </div>
-          <div>
-            <span className="font-semibold">Product Count:</span> 10
-          </div>
-        </div>
-      </div>
-    </div>
-            )}
+                <div className="grid grid-cols-2 gap-x-30 gap-y-6 text-sm text-gray-700">
+                  <div><span className="font-semibold">Request ID:</span> GGA6758</div>
+                  <div><span className="font-semibold">Date:</span> 01/08/25</div>
+                  <div><span className="font-semibold">Status:</span> Collection Initiated</div>
+                  <div><span className="font-semibold">Employee:</span> Harshana</div>
+                  <div><span className="font-semibold">Product Count:</span> 10</div>
+                </div>
+              </div>
+            </div>
 
             {/* Dynamic Product Cards */}
             <div className="grid grid-cols-1 gap-4 mt-6">
@@ -114,7 +100,6 @@ export const Sell = () => {
                   key={product.id}
                   className="bg-white rounded-xl shadow-md px-4 py-3 w-full flex flex-col md:flex-row gap-4 items-center md:items-start"
                 >
-                  {/* Left: Image */}
                   <div className="w-[250px] h-[180px] flex-shrink-0 overflow-hidden rounded-md border border-gray-300">
                     <img
                       src={product.imageUrl}
@@ -123,7 +108,6 @@ export const Sell = () => {
                     />
                   </div>
 
-                  {/* Right: Details */}
                   <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-2 text-sm text-gray-800">
                     <div><b>Request ID:</b> #{product.id}</div>
                     <div><b>Date:</b> {new Date().toLocaleDateString('en-IN')}</div>
@@ -135,7 +119,6 @@ export const Sell = () => {
                     <div><b>Pick-up Location:</b> {product.location}</div>
                   </div>
 
-                  {/* Remove Button */}
                   <div className="mt-4 w-full flex justify-end md:justify-start">
                     <button
                       onClick={() => handleRemove(product.id)}
@@ -155,7 +138,7 @@ export const Sell = () => {
           </div>
         </div>
 
-        {/* Form Sidebar */}
+        {/* Right Sidebar Form */}
         {showForm && (
           <div className="z-10 bg-white border-l border-gray-300 w-[40vw] h-full p-6 overflow-y-auto transition-all duration-500 ease-out">
             <h2 className="text-lg font-semibold mb-4">Add New Product</h2>
