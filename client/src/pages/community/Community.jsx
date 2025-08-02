@@ -1,19 +1,21 @@
-import React from 'react'
-import { Navbar } from '../Navbar'
-import { EventForm } from './components/EventForm'
-import { EventCard } from './components/EventCard'
-import { Sidebar } from './components/Sidebar'
+import React from 'react';
+import { Navbar } from '../Navbar';
+import { EventForm } from './components/EventForm';
+import { EventCard } from './components/EventCard';
+import { Sidebar } from './components/Sidebar';
 
 export const Community = () => {
   return (
     <>
       <Navbar />
+
       <div className="flex min-h-screen">
-        {/* Sidebar on the left */}
+        {/* Fixed Sidebar */}
         <Sidebar />
 
-        {/* Main content on the right */}
-        <div className="flex flex-col flex-1 items-center pt-8 bg-gray-100">
+        {/* Main content pushed to the right of sidebar */}
+        <div className="flex flex-col flex-1 ml-[18rem] items-center pt-8 bg-gray-100">
+          {/* Post input box */}
           <div className="p-4 shadow rounded-lg w-full max-w-lg bg-white">
             <div className="flex flex-row items-center mb-4">
               <div className="flex-1">
@@ -34,6 +36,7 @@ export const Community = () => {
 
             <div className="flex flex-row justify-around">
               <div className="flex items-center text-green-600 cursor-pointer">
+                {/* Video icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5 mr-1"
@@ -45,6 +48,7 @@ export const Community = () => {
                 Video
               </div>
               <div className="flex items-center text-blue-600 cursor-pointer">
+                {/* Photo icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="w-5 h-5 mr-1"
@@ -58,10 +62,13 @@ export const Community = () => {
             </div>
           </div>
 
+          {/* Events list */}
           <EventCard />
+
+          {/* Floating form */}
           <EventForm />
         </div>
       </div>
     </>
-  )
-}
+  );
+};
