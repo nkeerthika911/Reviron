@@ -26,8 +26,8 @@ export const EventForm = () => {
       padding: "20px",
       borderRadius: "12px",
       boxShadow: "0 0 15px rgba(0, 0, 0, 0.2)",
-      width: "90%",
-      maxWidth: "700px",
+      width: "100%",
+      maxWidth: "672px", // matches Tailwind's max-w-2xl
     },
     formGrid: {
       display: "grid",
