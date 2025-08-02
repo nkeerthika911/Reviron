@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AdminNavbar } from './components/AdminNavbar'; // optional, if you want to reuse your Navbar too
+import { AdminNavbar } from './components/AdminNavbar';
 
 export const AdminAddProduct = () => {
   const [product, setProduct] = useState({
@@ -35,9 +35,11 @@ export const AdminAddProduct = () => {
   };
 
   return (
-    <>
-      <AdminNavbar /> {/* Remove if you don’t want the navbar */}
-      <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-8 pb-8">
+    <div className="h-screen bg-gray-100 flex flex-col">
+      <AdminNavbar />
+
+      {/* Scrollable Content Below Navbar */}
+      <div className="flex-1 overflow-y-auto pt-8 pb-8 flex justify-center items-start">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -152,13 +154,13 @@ export const AdminAddProduct = () => {
             </button>
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded-lg shadow-sm transition"
+              className="bg-[#81AD87] hover:bg-[#92BE98] shadow-sm transition text-white font-medium px-6 py-2 rounded-lg shadow-sm transition"
             >
               Add Product
             </button>
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
