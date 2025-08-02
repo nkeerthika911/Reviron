@@ -8,13 +8,7 @@ require("dotenv").config();
 const BASE_URL = process.env.BASE_URL;
 
 const getUserByIdController = asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
-  console.log(userId);
-
-  if (!userId) {
-    throw Object.assign(new Error("Unauthorized: No user ID found"), { statusCode: 401 });
-  }
-
+  const userId = req.params.userid;
   const user = await userService.getUserbyUserId(userId);
 
   if (!user) {
@@ -23,7 +17,7 @@ const getUserByIdController = asyncHandler(async (req, res) => {
 
   const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
   const profilePhoto = fs.existsSync(photoPath)
-    ? `${BASE_URL}/uploads/userPhotos/${userId}.png`
+    ? `${BASE_URL}/uploads/profilePictures/${userId}.png`
     : null;
   res.status(200).json({
     success: true,
