@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { AdminNavbar } from './components/AdminNavbar';
 
 export const AdminAddProduct = () => {
@@ -9,6 +10,7 @@ export const AdminAddProduct = () => {
     quantity: '',
     brand: '',
     condition: 'Working',
+    categories: '',
     images: []
   });
 
@@ -21,22 +23,77 @@ export const AdminAddProduct = () => {
   };
 
   const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
     setProduct((prev) => ({
       ...prev,
       images: files
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting product:', product);
+
+    try {
+      const categoryArray = product.categories
+        .split(',')
+        .map((cat) => cat.trim())
+        .filter((cat) => cat !== '');
+
+      const payload = {
+        name: product.name,
+        description: product.description,
+        price: parseFloat(product.price),
+        quantity: parseInt(product.quantity),
+        brand: product.brand,
+        condition: product.condition,
+        category: categoryArray
+      };
+
+      const res = await axios.post('http://localhost:5000/api/products/post', payload);
+      const productId = res.data.data.data._id;
+      console.log('Product added:', productId);
+
+      // Prepare FormData for images
+      const formData = new FormData();
+      product.images.forEach((image) => {
+        formData.append('productPhotos', image);
+      });
+
+      // Send FormData to image upload endpoint
+      const imageRes = await axios.post(
+        `http://localhost:5000/api/products/uploadphotos/${productId}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      console.log('Images uploaded:', imageRes.data);
+      alert('Product and images added successfully!');
+
+      // Reset form
+      setProduct({
+        name: '',
+        description: '',
+        price: '',
+        quantity: '',
+        brand: '',
+        condition: 'Working',
+        categories: '',
+        images: []
+      });
+    } catch (error) {
+      console.error('Error adding product:', error);
+      alert('Failed to add product');
+    }
   };
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col">
       <AdminNavbar />
 
-      {/* Scrollable Content Below Navbar */}
       <div className="flex-1 overflow-y-auto pt-8 pb-8 flex justify-center items-start">
         <form
           onSubmit={handleSubmit}
