@@ -1,193 +1,434 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  MapPin,
+  Phone,
+  Edit2,
+  Trash2,
+  CreditCard
+} from 'lucide-react';
 
-export const Buynow = () => {
-  const location = useLocation();
-  const productFromState = location.state && location.state.product;
-  const [addresses, setAddresses] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [form, setForm] = useState({ name: '', type: '', address: '', mobile: '' });
+export function Buynow({ product }) {
+  const [addresses, setAddresses] = useState([
+    {
+      id: 1,
+      name: 'John Doe',
+      type: 'HOME',
+      address: '123 Main Street, Apartment 4B, Downtown Area',
+      mobile: '+1 234-567-8900',
+      isDefault: true
+    }
+  ]);
+
+  const [selectedAddress, setSelectedAddress] = useState(1);
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [addressForm, setAddressForm] = useState({
+    name: '',
+    type: 'HOME',
+    address: '',
+    mobile: '',
+    isDefault: false
+  });
   const [editIndex, setEditIndex] = useState(null);
 
-  // Use product from navigation state or fallback to sample
-  const [cart] = useState(productFromState ? {
-    name: productFromState.name,
-    price: Number(productFromState.price) || 0,
-    discount: productFromState.discount ? Number(productFromState.discount) : 0,
-    fee: productFromState.fee ? Number(productFromState.fee) : 0,
-    image: productFromState.image,
-  } : {
-    name: 'Sample Product',
-    price: 1899,
-    discount: 1178,
-    fee: 20,
-    image: 'https://cdn-icons-png.flaticon.com/512/263/263142.png',
+  const [cartItems, setCartItems] = useState(() => {
+    if (!product) return [];
+    return [
+      {
+        id: product.id || Date.now(),
+        name: product.name,
+        price: product.price,
+        originalPrice: product.originalPrice || product.price,
+        image: product.image,
+        quantity: product.quantity || 1,
+        inStock: product.inStock ?? true
+      }
+    ];
   });
 
-  const [showCartModal, setShowCartModal] = useState(false);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalDiscount = cartItems.reduce(
+    (sum, item) => sum + (item.originalPrice - item.price) * item.quantity,
+    0
+  );
+  const totalAmount = subtotal;
 
-  const navigate = useNavigate();
-
-  // Remove address by index
-  const handleRemove = idx => {
-    setAddresses(addresses.filter((_, i) => i !== idx));
+  const updateQuantity = (id, change) => {
+    setCartItems(items =>
+      items.map(item => {
+        if (item.id === id) {
+          const newQuantity = Math.max(1, item.quantity + change);
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      })
+    );
   };
 
-  // Open modal for editing
-  const handleEdit = idx => {
-    setEditIndex(idx);
-    setForm(addresses[idx]);
-    setShowModal(true);
+  const removeItem = id => {
+    setCartItems(items => items.filter(item => item.id !== id));
   };
 
-  // Add or update address
   const handleAddOrEditAddress = () => {
-    // Check if any field is empty
-    if (!form.name.trim() || !form.type.trim() || !form.address.trim() || !form.mobile.trim()) {
-      alert('Please fill in all address details.');
+    if (!addressForm.name.trim() || !addressForm.address.trim() || !addressForm.mobile.trim()) {
+      alert('Please fill in all required fields.');
       return;
     }
+
     if (editIndex !== null) {
-      const updated = addresses.map((addr, i) => (i === editIndex ? form : addr));
-      setAddresses(updated);
+      setAddresses(addresses.map((addr, i) => (i === editIndex ? { ...addressForm, id: addr.id } : addr)));
     } else {
-      setAddresses([...addresses, form]);
+      const newAddress = {
+        ...addressForm,
+        id: Date.now()
+      };
+      setAddresses([...addresses, newAddress]);
     }
-    setForm({ name: '', type: '', address: '', mobile: '' });
-    setShowModal(false);
+
+    resetAddressForm();
+  };
+
+  const resetAddressForm = () => {
+    setAddressForm({ name: '', type: 'HOME', address: '', mobile: '', isDefault: false });
+    setShowAddressModal(false);
     setEditIndex(null);
   };
 
-  // Navigate to payment page
-  const handleContinue = () => {
-    navigate('/payment', { state: { cart } });
+  const handleEditAddress = index => {
+    setEditIndex(index);
+    setAddressForm(addresses[index]);
+    setShowAddressModal(true);
   };
 
+  const handleRemoveAddress = index => {
+    const addressToRemove = addresses[index];
+    setAddresses(addresses.filter((_, i) => i !== index));
+
+    if (addressToRemove.id === selectedAddress && addresses.length > 1) {
+      setSelectedAddress(addresses.find((_, i) => i !== index)?.id || addresses[0]?.id);
+    }
+  };
+
+  const handleContinueToPayment = () => {
+    if (!selectedAddress) {
+      alert('Please select a delivery address.');
+      return;
+    }
+
+    const orderData = {
+      items: cartItems,
+      address: addresses.find(addr => addr.id === selectedAddress),
+      billing: {
+        subtotal,
+        discount: totalDiscount,
+        total: totalAmount
+      }
+    };
+
+    console.log('Proceeding to payment with:', orderData);
+    alert('Proceeding to payment...');
+  };
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="text-center text-gray-500 py-16">
+        No product selected. Please go back and choose a product to buy.
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full max-w-5xl flex flex-col md:flex-row gap-8">
-      {/* Address Section */}
-      <div className="flex-1 bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-gray-800">Select Delivery Address</h2>
-        <div className="space-y-4">
-          {addresses.map((addr, idx) => (
-            <div key={idx} className="border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 bg-gray-50">
-              <div>
-                <div className="font-semibold text-lg text-gray-800">{addr.name}
-                  <span className="ml-2 bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-medium">{addr.type}</span>
-                </div>
-                <div className="text-gray-600 text-sm">{addr.address}</div>
-                <div className="text-gray-500 text-sm">Mobile: <span className="font-semibold">{addr.mobile}</span></div>
-              </div>
-              <div className="flex gap-2 mt-2 md:mt-0">
-                <button className="px-3 py-1 rounded bg-red-100 text-red-600 hover:bg-red-200 transition" onClick={() => handleRemove(idx)}>Remove</button>
-                <button className="px-3 py-1 rounded bg-blue-100 text-blue-600 hover:bg-blue-200 transition" onClick={() => handleEdit(idx)}>Edit</button>
-              </div>
-            </div>
-          ))}
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
+          <p className="text-gray-600">Review your order and complete your purchase</p>
         </div>
-        <button
-          className="mt-6 bg-[#e1ebe2] text-[#2d4739] font-semibold rounded-lg px-4 py-2 shadow hover:bg-[#d0e0d2] focus:outline-none transition"
-          onClick={() => { setShowModal(true); setEditIndex(null); setForm({ name: '', type: '', address: '', mobile: '' }); }}
-        >
-          + Add New Address
-        </button>
-        {showModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 animate-fade-in">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl min-w-[320px] w-full max-w-md relative animate-scale-in">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">{editIndex !== null ? 'Edit Address' : 'Add New Address'}</h3>
-              <input
-                type="text"
-                placeholder="Name"
-                value={form.name}
-                onChange={e => setForm({ ...form, name: e.target.value })}
-                className="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 transition"
-              />
-              <input
-                type="text"
-                placeholder="Type (HOME/WORK)"
-                value={form.type}
-                onChange={e => setForm({ ...form, type: e.target.value })}
-                className="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 transition"
-              />
-              <textarea
-                placeholder="Address"
-                value={form.address}
-                onChange={e => setForm({ ...form, address: e.target.value })}
-                className="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 transition"
-              />
-              <input
-                type="text"
-                placeholder="Mobile"
-                value={form.mobile}
-                onChange={e => setForm({ ...form, mobile: e.target.value })}
-                className="w-full mb-3 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 transition"
-              />
-              <div className="flex justify-end gap-3 mt-4">
-                <button className="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition" onClick={() => { setShowModal(false); setEditIndex(null); }}>Cancel</button>
-                <button onClick={handleAddOrEditAddress} className="px-4 py-2 rounded-lg bg-[#81AD87] text-white hover:bg-[#6E9673] transition font-semibold">
-                  {editIndex !== null ? 'Update' : 'Add'}
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* LEFT: Address + Items */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Address Section */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-blue-600" />
+                  Delivery Address
+                </h2>
+                <button
+                  onClick={() => {
+                    setShowAddressModal(true);
+                    setEditIndex(null);
+                    setAddressForm({ name: '', type: 'HOME', address: '', mobile: '', isDefault: false });
+                  }}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+                >
+                  Add New Address
                 </button>
               </div>
-              <style>{`
-                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-                .animate-fade-in { animation: fade-in 0.3s ease; }
-                @keyframes scale-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-                .animate-scale-in { animation: scale-in 0.35s cubic-bezier(0.4,0,0.2,1); }
-              `}</style>
+
+              <div className="space-y-4">
+                {addresses.map((address, index) => (
+                  <div
+                    key={address.id}
+                    className={`border rounded-lg p-4 cursor-pointer transition-colors ${
+                      selectedAddress === address.id
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                    onClick={() => setSelectedAddress(address.id)}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <input
+                            type="radio"
+                            checked={selectedAddress === address.id}
+                            onChange={() => setSelectedAddress(address.id)}
+                            className="text-blue-600"
+                          />
+                          <span className="font-semibold text-gray-900">{address.name}</span>
+                          <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">
+                            {address.type}
+                          </span>
+                          {address.isDefault && (
+                            <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                              Default
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-600 mb-1">{address.address}</p>
+                        <p className="text-gray-500 text-sm flex items-center gap-1">
+                          <Phone className="w-4 h-4" />
+                          {address.mobile}
+                        </p>
+                      </div>
+                      <div className="flex gap-2 ml-4">
+                        <button
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleEditAddress(index);
+                          }}
+                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={e => {
+                            e.stopPropagation();
+                            handleRemoveAddress(index);
+                          }}
+                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Cart Section */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-green-600" />
+                Order Items ({cartItems.length})
+              </h2>
+
+              <div className="space-y-4">
+                {cartItems.map(item => (
+                  <div key={item.id} className="flex gap-4 p-4 border border-gray-200 rounded-lg">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-20 h-20 object-cover rounded-lg"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900 mb-1">{item.name}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xl font-bold text-gray-900">₹{item.price}</span>
+                        <span className="text-gray-500 line-through text-sm">₹{item.originalPrice}</span>
+                        <span className="text-green-600 text-sm font-medium">
+                          {Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% off
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm text-gray-600">Quantity:</span>
+                          <div className="flex items-center border border-gray-300 rounded-lg">
+                            <button
+                              onClick={() => updateQuantity(item.id, -1)}
+                              className="p-2 hover:bg-gray-100"
+                              disabled={item.quantity <= 1}
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
+                            <span className="px-4 py-2 border-x border-gray-300 min-w-[60px] text-center">
+                              {item.quantity}
+                            </span>
+                            <button
+                              onClick={() => updateQuantity(item.id, 1)}
+                              className="p-2 hover:bg-gray-100"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeItem(item.id)}
+                          className="text-red-600 hover:text-red-700 text-sm font-medium"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        )}
+
+          {/* RIGHT: Order Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8">
+              <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-purple-600" />
+                Order Summary
+              </h3>
+
+              <div className="space-y-3 mb-6">
+                <div className="flex justify-between text-gray-600">
+                  <span>Subtotal ({cartItems.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
+                  <span>₹{subtotal}</span>
+                </div>
+                <div className="flex justify-between text-green-600">
+                  <span>Discount</span>
+                  <span>-₹{totalDiscount}</span>
+                </div>
+                <hr className="border-gray-200" />
+                <div className="flex justify-between text-lg font-bold text-gray-900">
+                  <span>Total Amount</span>
+                  <span>₹{totalAmount}</span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <p className="text-green-800 text-sm font-medium">
+                    You saved ₹{totalDiscount} on this order!
+                  </p>
+                </div>
+
+                <button
+                  onClick={handleContinueToPayment}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Continue to Payment
+                </button>
+
+                <div className="text-center">
+                  <p className="text-xs text-gray-500">
+                    Secure checkout powered by 256-bit SSL encryption
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Cart & Payment Section */}
-      <div className="flex-1 max-w-md bg-white p-8 rounded-2xl shadow-lg flex flex-col items-center">
-        <h3 className="text-xl font-bold mb-4 text-gray-800">Price Details (1 Item)</h3>
-        <img src={cart.image} alt="Cart" className="w-20 h-20 object-contain mb-4" />
-        <div className="font-semibold text-lg text-gray-800 mb-2">{cart.name}</div>
-        <div className="w-full space-y-1 text-gray-700">
-          <div className="flex justify-between"><span>Total MRP:</span> <span>₹{cart.price}</span></div>
-          <div className="flex justify-between"><span>Discount on MRP:</span> <span className="text-green-600">-₹{cart.discount}</span></div>
-          <div className="flex justify-between"><span>Platform Fee:</span> <span>₹{cart.fee}</span></div>
-        </div>
-        <hr className="my-4 w-full border-gray-200" />
-        <div className="flex justify-between w-full text-lg font-bold text-gray-900 mb-4">
-          <span>Total Amount:</span>
-          <span>₹{cart.price - cart.discount + cart.fee}</span>
-        </div>
-        <button
-          className="mt-2 w-full py-3 rounded-lg bg-[#81AD87] text-white font-semibold text-base hover:bg-[#6E9673] transition-all duration-200 shadow"
-          onClick={handleContinue}
-        >
-          CONTINUE
-        </button>
-        {showCartModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 animate-fade-in">
-            <div className="bg-white p-8 rounded-2xl shadow-2xl min-w-[320px] w-full max-w-md text-center animate-scale-in">
-              <h3 className="text-xl font-bold mb-4 text-gray-800">Cart Details</h3>
-              <img src={cart.image} alt="Cart" className="w-28 h-28 object-contain mb-4 mx-auto" />
-              <div className="font-semibold text-lg text-gray-800 mb-2">{cart.name}</div>
-              <div className="w-full space-y-1 text-gray-700 mb-2">
-                <div className="flex justify-between"><span>Total MRP:</span> <span>₹{cart.price}</span></div>
-                <div className="flex justify-between"><span>Discount:</span> <span>₹{cart.discount}</span></div>
-                <div className="flex justify-between"><span>Platform Fee:</span> <span>₹{cart.fee}</span></div>
+      {/* Address Modal */}
+      {showAddressModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-6">
+                {editIndex !== null ? 'Edit Address' : 'Add New Address'}
+              </h3>
+
+              {/* Address Form */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                  <input
+                    type="text"
+                    value={addressForm.name}
+                    onChange={e => setAddressForm({ ...addressForm, name: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Address Type *</label>
+                  <select
+                    value={addressForm.type}
+                    onChange={e => setAddressForm({ ...addressForm, type: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                  >
+                    <option value="HOME">Home</option>
+                    <option value="WORK">Work</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Complete Address *</label>
+                  <textarea
+                    value={addressForm.address}
+                    onChange={e => setAddressForm({ ...addressForm, address: e.target.value })}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                    placeholder="House/Flat no, Building, Street, City, State, PIN"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number *</label>
+                  <input
+                    type="tel"
+                    value={addressForm.mobile}
+                    onChange={e => setAddressForm({ ...addressForm, mobile: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:outline-none"
+                    placeholder="+91 XXXXX XXXXX"
+                  />
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="isDefault"
+                    checked={addressForm.isDefault}
+                    onChange={e => setAddressForm({ ...addressForm, isDefault: e.target.checked })}
+                    className="w-4 h-4 text-blue-600"
+                  />
+                  <label htmlFor="isDefault" className="ml-2 text-sm text-gray-700">
+                    Make this my default address
+                  </label>
+                </div>
               </div>
-              <div className="flex justify-between w-full text-lg font-bold text-gray-900 mb-4">
-                <span>Total:</span>
-                <span>₹{cart.price - cart.discount + cart.fee}</span>
+
+              <div className="flex gap-3 mt-8">
+                <button
+                  onClick={resetAddressForm}
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddOrEditAddress}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+                >
+                  {editIndex !== null ? 'Update Address' : 'Add Address'}
+                </button>
               </div>
-              <button className="mt-2 w-full py-2 rounded-lg bg-[#81AD87] text-white font-semibold text-base hover:bg-[#6E9673] transition-all duration-200 shadow" onClick={() => setShowCartModal(false)}>
-                Close
-              </button>
-              <style>{`
-                @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-                .animate-fade-in { animation: fade-in 0.3s ease; }
-                @keyframes scale-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-                .animate-scale-in { animation: scale-in 0.35s cubic-bezier(0.4,0,0.2,1); }
-              `}</style>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
-};
+}

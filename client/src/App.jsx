@@ -30,6 +30,7 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetails/>}></Route>
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
+          <Route path="/buy" element={<BuyPage/>}></Route>
 
           {/* <Route path="/adminpages/Adminpage" element={<Adminpage/>}></Route> */}
           <Route path="/tester" element={<Tester/>}></Route>
@@ -41,7 +42,6 @@ function App() {
           <Route path="/community" element={<Community/>}></Route>
           <Route path="/admin/order" element={<AdminOrders/>}></Route>
           <Route path="/WorkerPage" element={<WorkerPage/>}></Route>
-          <Route path="/buypage" element={<BuyPage/>}></Route>
           <Route path="/payment" element={<Payment/>}></Route>
           <Route path="/ItemView" element={<ItemView/>}></Route>
         </Routes>

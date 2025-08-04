@@ -5,6 +5,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 export const ProductCard = ({ product }) => {
+  console.log(product);
   const [liked, setLiked] = useState(product.favorite || false);
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export const ProductCard = ({ product }) => {
 
 
   return (
-    <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer" onClick={handleCardClick}>
+    <div className="w-full h-full rounded-2xl overflow-hidden bg-white shadow-lg flex flex-col cursor-pointer transform transition-transform duration-200 hover:scale-103" onClick={handleCardClick}>
       <img
         src={product.image}
         alt={product.name}
@@ -77,7 +78,7 @@ export const ProductCard = ({ product }) => {
             {product.name}
           </h3>
           <div
-            className={`favorite-icon cursor-pointer transition-colors duration-200 ${liked ? 'text-red-500' : 'text-[#6F9674]'
+            className={`favorite-icon cursor-pointer transition-colors duration-200 ${liked ? 'text-red-500' : 'text-[#6F9674] transform transition-transform duration-200 hover:scale-115'
               }`}
             onClick={handleToggleFavorite}
           >
@@ -118,13 +119,13 @@ export const ProductCard = ({ product }) => {
 
         <div className="w-full h-[35px] flex gap-2.5 mt-4">
           <button
-            className="flex-1 bg-[#6F9674] text-white text-[12px] font-medium rounded-full"
-            onClick={() => navigate('/buypage', { state: { product } })}
+            className="flex-1 bg-[#6F9674] text-white text-[12px] font-medium rounded-full hover:cursor-pointer transform transition-transform duration-200 hover:scale-103"
+            onClick={() => navigate(`/buy`, { state: { product: { ...product, quantity: 1 } } })}
           >
             Buy now
           </button>
           <button
-            className="w-[35px] h-[35px] bg-[#6F9674] text-white rounded-full flex items-center justify-center transition-colors duration-200 hover:bg-[#4e6e54] focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
+            className="w-[35px] h-[35px] bg-[#6F9674] text-white rounded-full flex items-center justify-center transition-colors duration-200 hover:bg-[#4e6e54] focus:outline-none focus:ring-2 focus:ring-[#81AD87] transform transition-transform duration-200 hover:scale-110"
             onClick={handleAddToCart}
             title="Add to Cart"
           >
