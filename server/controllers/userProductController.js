@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const userProductService = require('../services/userProductService');
 
 const addUserProductController = asyncHandler(async (req, res) => {
-    const collectionData = await collectionService.addUserProductController(req.body);
+    const collectionData = await userProductService.addUserProduct(req.body);
 
     if (!collectionData) {
         throw Object.assign(new Error("Failed to add user product!"), { statusCode: 400 });
