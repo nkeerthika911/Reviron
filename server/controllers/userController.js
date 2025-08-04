@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-const bcryptjs = require('bcryptjs');
 const userService = require('../services/userService');
 const sharp = require("sharp");
 const path = require("path");

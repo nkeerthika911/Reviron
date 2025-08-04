@@ -29,27 +29,44 @@ export const Sell = () => {
             </div>
 
             {/* Right: Product Preview Panel */}
-            <div className="w-1/2 pl-2 bg-white rounded  shadow-md flex items-center justify-center">
+            <div className="w-1/2 pl-2 bg-white rounded shadow-md flex flex-col justify-between py-4">
               {products.length === 0 ? (
-                <p className="text-gray-500 text-center px-4">
+                <p className="text-gray-500 text-center px-4 my-auto">
                   No product added, add at least one product to sell
                 </p>
               ) : (
-                <div className="w-full space-y-4 px-4 overflow-y-auto max-h-[90vh]">
-                  {products.map((product) => (
-                    <UserProductCard
-                      key={product.id}
-                      name={product.name}
-                      category={product.category}
-                      condition={product.condition}
-                      quantity={product.quantity}
-                      priceStart={product.priceStart}
-                      priceEnd={product.priceEnd}
-                    />
-                  ))}
-                </div>
-              )}
+                <>
+                  <div className="w-full flex space-x-4 px-4 overflow-x-auto max-h-[70vh]">
+                    {products.map((product) => (
+                      <UserProductCard
+                        key={product.id}
+                        name={product.name}
+                        category={product.category}
+                        condition={product.condition}
+                        quantity={product.quantity}
+                        priceStart={product.priceStart}
+                        priceEnd={product.priceEnd}
+                      />
+                    ))}
+                  </div>
 
+                  {/* Centered Buttons */}
+                  <div className="flex justify-center items-center space-x-4 px-4 pt-4">
+                    <button
+                      onClick={() => setProducts([])}
+                      className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                    >
+                      Clear Products
+                    </button>
+                    <button
+                      onClick={() => alert('Sell Now clicked')}
+                      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
+                    >
+                      Sell Now
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
