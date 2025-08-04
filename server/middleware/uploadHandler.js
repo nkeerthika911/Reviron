@@ -20,7 +20,7 @@ const uploadProfile = multer({
 
 //Product Photos
 const productFileFilter=(req,file,cb) => {
-    const allowedTypes= /jpeg|jpg|png|gif/;
+    const allowedTypes= /jpeg|jpg|png|gif|webp/;
     const isAllowed  = allowedTypes.test(file.mimetype);
     if(isAllowed){
         cb(null,true);

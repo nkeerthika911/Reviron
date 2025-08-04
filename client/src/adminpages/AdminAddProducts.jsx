@@ -194,10 +194,11 @@ export const AdminAddProduct = () => {
             <input
               type="file"
               multiple
-              accept="image/*"
+              accept=".jpg,.jpeg,.png,.gif,.webp"
               onChange={handleImageChange}
               className="block w-full p-2 border border-green-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
+
           </div>
 
           <div className="md:col-span-2 flex justify-end gap-4">
