@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Navbar } from '../Navbar';
 
 export const ProductDetails = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
+
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -110,7 +112,7 @@ export const ProductDetails = () => {
                 product.condition === 'Working' ? 'bg-[#81ad87]' : 'bg-red-500'
               }`}
             >
-              {product.condition || "not working"}
+              {product.condition || 'not working'}
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-medium text-black bg-[#ffcf00]">
               {product.brand}
@@ -137,7 +139,9 @@ export const ProductDetails = () => {
               <span className="font-medium">In stock:</span> {product.quantity} items
             </p>
             <div className="flex items-center gap-2">
-              <label htmlFor="quantity" className="font-medium">Quantity:</label>
+              <label htmlFor="quantity" className="font-medium">
+                Quantity:
+              </label>
               <input
                 type="number"
                 id="quantity"
@@ -157,7 +161,19 @@ export const ProductDetails = () => {
             <button className="bg-[#f5e7aa] hover:bg-[#f1de85] text-black font-medium px-6 py-2 rounded shadow-sm">
               Add to Cart
             </button>
-            <button className="bg-[#4f785e] hover:bg-[#3b624b] text-white font-medium px-6 py-2 rounded shadow-sm">
+            <button
+              onClick={() =>
+                navigate('/buy', {
+                  state: {
+                    product: {
+                      ...product,
+                      quantity: selectedQuantity,
+                    },
+                  },
+                })
+              }
+              className="bg-[#4f785e] hover:bg-[#3b624b] text-white font-medium px-6 py-2 rounded shadow-sm"
+            >
               Buy Now
             </button>
           </div>

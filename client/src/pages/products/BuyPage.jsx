@@ -1,13 +1,17 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Navbar } from '../Navbar';
 import { Buynow } from './components/Buynow';
 
 export const BuyPage = () => {
+  const location = useLocation();
+  const product = location.state?.product;
+
   return (
     <div className="min-h-screen bg-[#f6faf5] flex flex-col">
       <Navbar />
       <div className="flex-1 flex items-start justify-center py-8 animate-fade-in-smooth">
-        <Buynow />
+        <Buynow product={product} />
       </div>
       <style>{`
         @keyframes fade-in-smooth {
