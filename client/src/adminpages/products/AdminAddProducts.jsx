@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { AdminNavbar } from './products/components/AdminNavbar';
+import { AdminNavbar } from '../AdminNavbar';
 
 export const AdminAddProduct = () => {
   const [product, setProduct] = useState({
@@ -83,13 +83,17 @@ export const AdminAddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-      <AdminNavbar />
+    <div className="min-h-screen bg-gray-100 relative">
+      {/* Fixed Navbar */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <AdminNavbar />
+      </div>
 
-      <div className="flex-1 overflow-y-auto py-10 flex justify-center items-start">
+      {/* Scrollable form area */}
+      <div className="pt-20 h-screen overflow-y-auto flex justify-center items-start px-4">
         <form
           onSubmit={handleSubmit}
-          className="bg-white border border-gray-200 p-8 rounded shadow-sm w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="bg-white border border-gray-200 p-8 mt-4 rounded shadow-sm w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 mb-10"
         >
           <h2 className="md:col-span-2 text-2xl font-semibold text-green-700 text-center mb-2">
             Admin - Add New Product

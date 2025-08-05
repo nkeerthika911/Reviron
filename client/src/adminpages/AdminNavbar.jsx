@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from "../../assets/RevironLogo.png";
-import userIcon from "../../assets/user-icon.jpg";
+import logo from "../assets/RevironLogo.png";
+import userIcon from "../assets/user-icon.jpg";
 
 
 export const AdminNavbar = () => {

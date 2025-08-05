@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Login } from './pages/Login/Login'
 import { Products } from './pages/products/Products'
 import { ProductDetails } from './pages/products/ProductDetails'
-import { AdminAddProduct } from './adminpages/AdminAddProducts'
+import { AdminAddProduct } from './adminpages/products/AdminAddProducts'
 import { Cart } from './pages/cart/Cart'
 
 import Contactus from './pages/contactus/Contact'
@@ -17,7 +17,7 @@ import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
 import { Tester } from './pages/tester/Tester'
 import { Seller } from './pages/seller/Seller'
-import { AdminRequests } from './adminpages/AdminRequests'
+import { AdminRequests } from './adminpages/products/AdminRequests'
 
 function App() {
   const [count, setCount] = useState(0)

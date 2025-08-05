@@ -1,5 +1,5 @@
 import React from 'react'
-import { CollectionRequestCard } from './products/components/CollectionRequestCard'
+import { CollectionRequestCard } from './components/CollectionRequestCard'
 
 export const AdminRequests = () => {
   return (
