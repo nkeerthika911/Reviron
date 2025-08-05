@@ -61,20 +61,25 @@ export const OrderCard = ({ order }) => {
             >
               Assign
             </button>
+            <button
+              className="w-30 h-14 bg-[#81AD87] hover:bg-[#72997A] text-white text-sm font-semibold px-5 py-2 rounded-xl shadow-md transition hover:scale-105"
+            >
+              Collecting Request
+            </button>
           </div>
         </div>
       </div>
 
       {showAssignPopup && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
-            <Assign onAssignmentSubmit={handleAssignmentSubmit} />
+        <div >
+          <div >
             <button
               onClick={() => setShowAssignPopup(false)}
-              style={closeBtnStyle}
             >
               ✕
             </button>
+            <Assign onAssignmentSubmit={handleAssignmentSubmit} />
+            
           </div>
         </div>
       )}
