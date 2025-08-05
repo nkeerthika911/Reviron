@@ -72,12 +72,11 @@ export const Sell = () => {
       for (const product of products) {
         const productPayload = {
           ...product,        // name, category, etc.
-          userId: userId,
-          collectionId: collectionId,  // if you want to link product to the collection
+          requestId: collectionId,  // if you want to link product to the collection
         };
 
         const productResponse = await axios.post(
-          'http://localhost:5000/api/product/add',
+          'http://localhost:5000/api/userproduct/add',
           productPayload
         );
 
@@ -89,6 +88,8 @@ export const Sell = () => {
 
       // Step 3: Done
       alert('Collection and all products uploaded successfully!');
+      setProducts([]);
+      setShowForm(false);
       console.log('Uploaded product IDs:', uploadedProductIds);
 
       // Now you can handle image uploads for these product IDs
