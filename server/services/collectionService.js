@@ -6,7 +6,8 @@ const addCollectionRequest = async (collectionData) => {
 }
 
 const getAllCollectionData = async () => {
-    const collection = await Collection.find();
+    const collection = await Collection.find().populate('userId');
     return collection;
 }
-module.exports = { addCollectionRequest, getAllCollectionData};
+
+module.exports = { addCollectionRequest, getAllCollectionData };

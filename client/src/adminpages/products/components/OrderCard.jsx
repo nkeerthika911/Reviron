@@ -22,10 +22,22 @@ export const OrderCard = ({ order }) => {
     switch (status?.toLowerCase()) {
       case 'completed':
         return 'bg-green-100 text-green-800';
-      case 'in-progress':
-      case 'assigned':
+      case 'processing':
         return 'bg-blue-100 text-blue-800';
       case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getEmployeeStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case 'assigned':
+        return 'bg-green-100 text-green-800';
+      case 'unassigned':
         return 'bg-yellow-100 text-yellow-800';
       default:
         return 'bg-gray-100 text-gray-800';
@@ -34,14 +46,14 @@ export const OrderCard = ({ order }) => {
 
   return (
     <>
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
         <div className="flex items-start gap-4">
           {/* Profile Photo */}
           <div className="flex-shrink-0">
             <img
               src={order.profileImage}
               alt={order.customerName}
-              className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
+              className="w-16 h-16 rounded-lg object-cover border-2 border-gray-200"
               onError={(e) => {
                 e.target.src = "https://randomuser.me/api/portraits/lego/1.jpg";
               }}
@@ -50,7 +62,7 @@ export const OrderCard = ({ order }) => {
 
           {/* Order Information */}
           <div className="flex-1 min-w-0">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Request ID</p>
                 <p className="text-sm text-gray-600 font-mono">{order.requestId}</p>
@@ -58,37 +70,61 @@ export const OrderCard = ({ order }) => {
               
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Customer</p>
-                <p className="text-sm text-gray-600">{order.userId}</p>
+                <p className="text-sm text-gray-600">{order.customerName}</p>
               </div>
               
               <div>
-                <p className="text-sm font-medium text-gray-900 mb-1">Date</p>
+                <p className="text-sm font-medium text-gray-900 mb-1">Created Date</p>
                 <p className="text-sm text-gray-600">{order.date}</p>
               </div>
               
               <div>
-                <p className="text-sm font-medium text-gray-900 mb-1">Status</p>
+                <p className="text-sm font-medium text-gray-900 mb-1">Pickup Date</p>
+                <p className="text-sm text-gray-600">{order.pickupDate}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-gray-900 mb-1">Collection Status</p>
                 <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                   {order.status}
                 </span>
               </div>
               
               <div>
-                <p className="text-sm font-medium text-gray-900 mb-1">Assigned Employee</p>
-                <p className="text-sm text-gray-600">{order.employee}</p>
+                <p className="text-sm font-medium text-gray-900 mb-1">Employee Status</p>
+                <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getEmployeeStatusColor(order.employeeStatus)}`}>
+                  {order.employeeStatus}
+                </span>
               </div>
               
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Product Count</p>
                 <p className="text-sm text-gray-600">{order.productCount} items</p>
               </div>
+
+              <div>
+                <p className="text-sm font-medium text-gray-900 mb-1">Contact</p>
+                <p className="text-sm text-gray-600">{order.customerPhone}</p>
+              </div>
             </div>
 
             {/* Additional Info */}
-            {order.customerPhone !== "N/A" && (
-              <div className="mb-4">
-                <p className="text-sm font-medium text-gray-900 mb-1">Contact</p>
-                <p className="text-sm text-gray-600">{order.customerPhone}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+              <div>
+                <p className="text-sm font-medium text-gray-900 mb-1">Email</p>
+                <p className="text-sm text-gray-600">{order.customerEmail}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-gray-900 mb-1">Collection Address</p>
+                <p className="text-sm text-gray-600">{order.address}</p>
+              </div>
+            </div>
+
+            {order.customerAddress !== "N/A" && order.customerAddress !== order.address && (
+              <div className="mb-3">
+                <p className="text-sm font-medium text-gray-900 mb-1">Customer Address</p>
+                <p className="text-sm text-gray-600">{order.customerAddress}</p>
               </div>
             )}
           </div>
@@ -151,7 +187,7 @@ export const OrderCard = ({ order }) => {
             </div>
           </div>
         </div>
-      )}
+      )}                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     </>
   );
 };

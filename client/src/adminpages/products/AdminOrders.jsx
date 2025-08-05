@@ -21,14 +21,22 @@ export const AdminOrders = () => {
             id: order._id,
             requestId: order._id.slice(-6).toUpperCase(),
             date: new Date(order.createdAt).toLocaleDateString("en-GB"),
+            pickupDate: new Date(order.pickupBy).toLocaleDateString("en-GB"),
             status: order.collectionStatus || "Pending",
-            employee: order.employeeName || "Unassigned",
+            employeeStatus: order.employeeStatus || "Unassigned",
+            employee: order.employeeName || order.employeeStatus === "unassigned" ? "Unassigned" : "Assigned",
             employeeId: order.employeeId || null,
             productCount: order.productSize || 0,
-            customerName: order.customerName || "N/A",
-            customerPhone: order.customerPhone || "N/A",
+            customerName: order.userId?.fullName || "N/A",
+            customerPhone: order.userId?.phone || "N/A",
+            customerEmail: order.userId?.email || "N/A",
+            customerGender: order.userId?.gender || "N/A",
+            customerPoints: order.userId?.points || 0,
+            customerAddress: order.userId?.Address || order.address || "N/A",
             address: order.address || "N/A",
-            profileImage: order.profileImage || "https://randomuser.me/api/portraits/lego/1.jpg"
+            profileImage: order.userId?.gender === "f" 
+              ? "https://randomuser.me/api/portraits/women/44.jpg"
+              : "https://randomuser.me/api/portraits/men/32.jpg"
           }));
 
           setOrders(formattedOrders);
