@@ -7,6 +7,30 @@ import { Sidebar } from "./components/Sidebar";
 export const Community = () => {
   const [postText, setPostText] = useState("");
   const [videoPreview, setVideoPreview] = useState(null);
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      title: "Waves of Change",
+      image: "/beach-cleanup.png",
+      organizer: "Elisabeth May",
+      timeAgo: "6h ago",
+      description:
+        '"Waves of Change" is a community-driven beach cleanup event dedicated to restoring our shoreline and inspiring a cleaner, greener future.',
+      joinedCount: 150,
+      datetime: "12/08/2025 11:09 AM",
+    },
+    {
+      id: 2,
+      title: "EcoClean Movement",
+      image: "/ewaste-awareness.png",
+      organizer: "Dr Ronald Jackson",
+      timeAgo: "8h ago",
+      description:
+        '"EcoClean Movement" is a united community initiative focused on cleaning and preserving our environment for a greener, healthier future.',
+      joinedCount: 280,
+      datetime: "12/08/2025 1:09 PM",
+    },
+  ]);
 
   const imageInputRef = useRef(null);
   const videoInputRef = useRef(null);
@@ -22,13 +46,8 @@ export const Community = () => {
     }
   };
 
-  const handleImageClick = () => {
-    imageInputRef.current.click();
-  };
-
-  const handleVideoClick = () => {
-    videoInputRef.current.click();
-  };
+  const handleImageClick = () => imageInputRef.current.click();
+  const handleVideoClick = () => videoInputRef.current.click();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -45,62 +64,60 @@ export const Community = () => {
     }
   };
 
+  const handleAddEvent = (newEvent) => {
+    setEvents((prevEvents) => [newEvent, ...prevEvents]);
+  };
+
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Navbar />
 
-      {/* Page Layout */}
-      <div className="flex h-[calc(100vh-4rem)] overflow-hidden">
-        {/* Fixed Sidebar */}
-        <Sidebar />
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <div className="w-72 bg-white border-r border-gray-200 overflow-y-auto">
+          <Sidebar />
+        </div>
 
-        {/* Scrollable Content */}
-        <div className="ml-[18rem] flex-1 overflow-y-auto bg-gray-100 px-9 pt-6">
-          {/* 🌟 Top Post Input Box - centered and narrow */}
-          <div className="max-w-2xl mx-auto w-full bg-white shadow rounded-xl p-6 mb-6">
-            <div className="flex flex-col gap-3">
-              {/* Input Row */}
-              <div className="flex items-center">
-                <img
-                  src="/path/to/your/profile-image.jpg"
-                  alt="Profile"
-                  className="w-10 h-10 rounded-full"
-                />
-                <input
-                  type="text"
-                  placeholder="Start a post"
-                  value={postText}
-                  onChange={(e) => setPostText(e.target.value)}
-                  className="ml-4 flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none"
-                />
-                <button
-                  onClick={handlePost}
-                  disabled={postText.trim() === "" && !videoPreview}
-                  className={`ml-4 px-4 py-2 rounded-full text-white font-semibold transition 
-                    ${
-                      postText.trim() !== "" || videoPreview
-                        ? "bg-green-500 hover:bg-green-600"
-                        : "bg-gray-400 cursor-not-allowed"
-                    }
-                  `}
-                >
-                  Post
-                </button>
-              </div>
-
-              {/* Video Preview */}
-              {videoPreview && (
-                <div className="mt-2">
-                  <video
-                    src={videoPreview}
-                    controls
-                    className="w-full max-h-64 rounded-lg border"
-                  />
-                </div>
-              )}
+        {/* Main Content */}
+        <div className="flex-5 overflow-y-auto bg-gray-100 px-9 pt-6">
+          {/* Post Input Box */}
+          <div className="max-w-6xl mx-auto w-full bg-white shadow rounded-xl p-7 mb-6">
+            <div className="flex items-center gap-3">
+              <img
+                src="/path/to/your/profile-image.jpg"
+                alt="Profile"
+                className="w-10 h-10 rounded-full"
+              />
+              <input
+                type="text"
+                placeholder="Start a post"
+                value={postText}
+                onChange={(e) => setPostText(e.target.value)}
+                className="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none"
+              />
+              <button
+                onClick={handlePost}
+                disabled={postText.trim() === "" && !videoPreview}
+                className={`px-4 py-2 rounded-full text-white font-semibold transition ${
+                  postText.trim() !== "" || videoPreview
+                    ? "bg-green-500 hover:bg-green-600"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Post
+              </button>
             </div>
 
-            {/* Hidden Inputs */}
+            {videoPreview && (
+              <div className="mt-2">
+                <video
+                  src={videoPreview}
+                  controls
+                  className="w-full max-h-64 rounded-lg border"
+                />
+              </div>
+            )}
+
             <input
               type="file"
               accept="image/*"
@@ -116,7 +133,6 @@ export const Community = () => {
               className="hidden"
             />
 
-            {/* Action Options */}
             <div className="flex justify-around mt-4">
               <div
                 className="flex items-center text-green-600 cursor-pointer"
@@ -149,11 +165,13 @@ export const Community = () => {
             </div>
           </div>
 
-          {/* Event Cards and Form (Full Width) */}
-          <EventCard />
-          <EventForm />
+          {/* Event Cards */}
+          <EventCard events={events} />
+
+          {/* Floating Event Form */}
+          <EventForm onAddEvent={handleAddEvent} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
