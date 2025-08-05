@@ -23,7 +23,7 @@ export const AdminNavbar = () => {
                     <path d="M12 4v16m8-8H4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             ),
-            path: '/admin/product/add'
+            path: 'admin/product/add'
         },
         {
             label: 'Collection Requests',
