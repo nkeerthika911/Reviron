@@ -1,4 +1,3 @@
-// Sidebar.jsx
 import React, { useState } from "react";
 
 export const Sidebar = () => {
@@ -6,15 +5,15 @@ export const Sidebar = () => {
   const items = ["All posts", "My posts", "All Events", "My Events", "Others"];
 
   return (
-    <div className="fixed top-16 left-0 w-[18rem] h-[calc(100vh-4rem)] bg-white border-r border-gray-200 font-['Poppins'] z-40 overflow-y-auto">
+    <div className="h-full bg-white font-['Poppins'] overflow-y-auto">
       {items.map((item) => (
         <button
           key={item}
           onClick={() => setActive(item)}
-          className={`w-full px-4 py-3 font-medium transition-colors
+                     className={`w-full px-4 py-3 font-medium transition-colors 
             ${active === item
-              ? "bg-[#d1d6de] text-white"
-              : "text-[#81ad87] hover:bg-[#d1d6de] hover:text-white"
+              ? "bg-[#81ad87] text-white"
+              : "bg-white-200 hover:bg-white-300 text-white-800 font-medium px-6 py-2  transition"
             }`}
         >
           {item}
