@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const userProductSchema = new mongoose.Schema({
+    requestId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Collection',
+        required: true,
+    },
     name: {
         type: String,
         default: "",
