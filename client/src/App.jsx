@@ -10,7 +10,7 @@ import Contactus from './pages/contactus/Contact'
 import { Profile } from './pages/profile/Profile'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
-import { AdminOrders } from './pages/products/AdminOrders'
+import { AdminOrders } from './adminpages/products/AdminOrders'
 import { WorkerPage } from './adminpages/employee/WorkerPage'
 import { BuyPage } from './pages/products/BuyPage';
 import { Payment } from './pages/products/components/payment';
@@ -32,6 +32,7 @@ function App() {
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path="/buy" element={<BuyPage/>}></Route>
           <Route path="/contactus" element={<Contactus />}></Route>
+          <Route path="/sell" element={<Sell/>}></Route>
 
 
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
@@ -44,7 +45,6 @@ function App() {
           <Route path="/seller" element={<Seller/>}></Route>
           <Route path="/admin" element={<AdminRequests/>}></Route>
           <Route path="/Profile" element={<Profile />}></Route>
-          <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
           <Route path="/payment" element={<Payment/>}></Route>
         </Routes>
