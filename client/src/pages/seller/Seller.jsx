@@ -20,15 +20,15 @@ export const Seller = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col">
+    <div className="h-screen bg-white flex flex-col">
       <Navbar />
 
       <div className="flex-1 overflow-y-auto pt-8 pb-8 flex justify-center items-start">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-2xl"
+          className="bg-white p-10 rounded-md shadow-lg w-full max-w-2xl border border-gray-300"
         >
-          <h2 className="text-2xl font-bold mb-6 text-green-700">
+          <h2 className="text-2xl font-bold mb-6 text-green-700 text-center">
             Seller - Upload Refurbished Product
           </h2>
 
@@ -38,7 +38,7 @@ export const Seller = () => {
             value={testerName}
             onChange={(e) => setTesterName(e.target.value)}
             placeholder="Enter Tester Name or ID"
-            className="w-full p-3 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 mb-4 border border-gray-400 placeholder-[#81AD87] rounded-md focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
           />
 
           <label className="block mb-2 font-medium">Product Name</label>
@@ -47,7 +47,7 @@ export const Seller = () => {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             placeholder="Enter Product Name"
-            className="w-full p-3 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 mb-4 border border-gray-400 placeholder-[#81AD87] rounded-md focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
           />
 
           <label className="block mb-2 font-medium">Verified Working Parts List</label>
@@ -56,7 +56,7 @@ export const Seller = () => {
             value={workingParts}
             onChange={(e) => setWorkingParts(e.target.value)}
             placeholder="List of working parts"
-            className="w-full p-3 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 mb-4 border border-gray-400 placeholder-[#81AD87] rounded-md focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
           />
 
           <label className="block mb-2 font-medium">Verified Non-Working Parts List</label>
@@ -65,7 +65,7 @@ export const Seller = () => {
             value={nonWorkingParts}
             onChange={(e) => setNonWorkingParts(e.target.value)}
             placeholder="List of non-working parts"
-            className="w-full p-3 mb-4 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 mb-4 border border-gray-400 placeholder-[#81AD87] rounded-md focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
           />
 
           <label className="block mb-2 font-medium">Date</label>
@@ -73,12 +73,12 @@ export const Seller = () => {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full p-3 mb-6 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full p-3 mb-6 border border-gray-400 text-[#81AD87] rounded-md focus:outline-none focus:ring-2 focus:ring-[#81AD87]"
           />
 
           <button
             type="submit"
-            className="w-full bg-[#81AD87] text-white py-3 rounded-lg hover:bg-[#92BE98] shadow-sm transition"
+            className="w-full bg-[#81AD87] text-white py-3 rounded-md hover:bg-[#92BE98] shadow-sm transition"
           >
             Submit
           </button>
