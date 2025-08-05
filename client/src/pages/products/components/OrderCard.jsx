@@ -66,12 +66,11 @@ export const OrderCard = ({ order }) => {
       </div>
 
       {showAssignPopup && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
+        <div >
+          <div >
             <Assign onAssignmentSubmit={handleAssignmentSubmit} />
             <button
               onClick={() => setShowAssignPopup(false)}
-              style={closeBtnStyle}
             >
               ✕
             </button>

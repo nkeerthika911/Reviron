@@ -1,17 +1,6 @@
 import React from "react";
 import { FaThumbsUp, FaCommentAlt, FaShareAlt } from "react-icons/fa";
 
-// Auto-generate current datetime
-const formatDateTime = () => {
-  const now = new Date();
-  const date = now.toLocaleDateString("en-GB"); // e.g. 15/07/2025
-  const time = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  }); // e.g. 11:09 AM
-  return `${date} ${time}`;
-};
-
 const events = [
   {
     id: 1,
@@ -39,18 +28,17 @@ const events = [
 
 export const EventCard = () => {
   return (
-    <div className="flex flex-col items-center gap-6 bg-gray-100 py-10 px-4">
+    <div className="flex flex-col gap-6 bg-gray-100 py-10 px-4">
       {events.map((event) => (
         <div
-        key={event.id}
-        className="relative bg-white rounded-xl shadow-lg flex w-full min-h-[220px] p-6"
->
-
+          key={event.id}
+          className="bg-white rounded-xl shadow-lg flex w-full min-h-[240px] p-6 items-stretch"
+        >
           {/* Left Image */}
           <img
             src={event.image}
             alt={event.title}
-            className="w-48 h-60 object-cover rounded-lg mr-4"
+            className="w-48 h-full object-cover rounded-lg mr-4"
           />
 
           {/* Main Content */}
@@ -77,7 +65,7 @@ export const EventCard = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="flex flex-col items-end justify-between ml-6">
+          <div className="flex flex-col justify-between items-end ml-6">
             <button className="border border-gray-400 px-5 py-1 rounded-full hover:bg-green-100 whitespace-nowrap">
               Join
             </button>
