@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Navbar } from '../Navbar';
+  import React, { useState, useEffect } from 'react';
+  import { useParams, useNavigate } from 'react-router-dom';
+  import axios from 'axios';
+  import { Navbar } from '../Navbar';
 
-export const ProductDetails = () => {
-  const { productId } = useParams();
-  const navigate = useNavigate();
+  export const ProductDetails = () => {
+    const { productId } = useParams();
+    const navigate = useNavigate();
 
-  const [product, setProduct] = useState(null);
-  const [selectedImage, setSelectedImage] = useState('');
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+    const [product, setProduct] = useState(null);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [selectedQuantity, setSelectedQuantity] = useState(1);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -33,8 +33,8 @@ export const ProductDetails = () => {
       }
     };
 
-    fetchProduct();
-  }, [productId]);
+      fetchProduct();
+    }, [productId]);
 
   if (loading) {
     return (

@@ -15,7 +15,6 @@
         const [user, setUser] = useState(null);
         const [loading, setLoading] = useState(false);
         const [error, setError] = useState(null);
-        const [showProfile, setShowProfile] = useState(false);
 
         const getUserIdFromToken = () => {
             const token = localStorage.getItem("jwt");

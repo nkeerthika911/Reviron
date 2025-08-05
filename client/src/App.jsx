@@ -17,6 +17,7 @@ import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
 import { Tester } from './pages/tester/Tester'
 import { Seller } from './pages/seller/Seller'
+import { AdminRequests } from './adminpages/AdminRequests'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,11 +29,11 @@ function App() {
           <Route path="/" element={<Login />}></Route>
           <Route path="/products" element={<Products />}></Route>
           <Route path="/product/:productId" element={<ProductDetails/>}></Route>
-          <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
+          <Route path="/admin/add/products" element={<AdminAddProduct/>}></Route>
+          <Route path="/admin" element={<AdminRequests/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path="/buy" element={<BuyPage/>}></Route>
 
-          {/* <Route path="/adminpages/Adminpage" element={<Adminpage/>}></Route> */}
           <Route path="/tester" element={<Tester/>}></Route>
           <Route path="/seller" element={<Seller/>}></Route>
 

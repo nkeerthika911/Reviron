@@ -20,6 +20,8 @@ app.use("/api/auth", require('./routes/authRoutes'));
 app.use("/api/products", require('./routes/productRoutes'));
 app.use("/api/user", require('./routes/userRoutes'));
 app.use("/api/cart", require('./routes/cartRoutes'));
+app.use("/api/userproduct", require('./routes/userProductRoutes'));
+app.use("/api/collection", require('./routes/collectionRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(errorHandler);

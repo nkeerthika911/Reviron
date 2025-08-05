@@ -1,12 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Navbar } from "../Navbar";
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin } from "lucide-react";
 
 const ContactPage = () => {
   return (
-    <div>
-      <Navbar />
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div className="relative">
+      {/* Fixed Navbar */}
+      <div className="fixed top-0 left-0 w-full z-50">
+        <Navbar />
+      </div>
+
+      {/* Scrollable Content with padding to avoid overlap with navbar */}
+      <div className="pt-20 min-h-screen flex items-center justify-center bg-gray-50 p-6">
         <div className="bg-white rounded-xl shadow-xl flex w-full max-w-5xl overflow-hidden">
           {/* Form Section */}
           <div className="w-1/2 p-8 bg-white">
@@ -73,11 +78,13 @@ const ContactPage = () => {
                   Old Mahapalipuram Road
                 </p>
                 <p>
-                  Near Sathyabama University<br />
+                  Near Sathyabama University
+                  <br />
                   Chennai 6000823.
                 </p>
                 <p>
-                  Registered Office: B-91, A-6, LGF, Semacherry,<br />
+                  Registered Office: B-91, A-6, LGF, Semacherry,
+                  <br />
                   Chennai, Kanceepuram 600034 Delhi, India
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { X } from 'lucide-react';
 
 export const SellForm = ({ onSubmit, onCancel }) => {
@@ -9,15 +9,44 @@ export const SellForm = ({ onSubmit, onCancel }) => {
         quantity: '',
         description: '',
     });
-
+    const fileInputRef = useRef(null);
     const [images, setImages] = useState([]);
+    const [priceRange, setPriceRange] = useState('');
+
+    const updatePriceRange = (category, condition, quantity) => {
+        const map = {
+            monitor: { new: [2000, 4000], second: [500, 1500] },
+            cpu: { new: [4000, 8000], second: [1000, 2500] },
+            keyboard: { new: [300, 800], second: [50, 200] },
+            mouse: { new: [200, 600], second: [30, 150] },
+            wires: { new: [100, 300], second: [10, 80] },
+            phone: { new: [5000, 20000], second: [1000, 5000] },
+            charger: { new: [300, 1000], second: [100, 400] },
+        };
+
+        const unitPrice = map[category]?.[condition];
+
+        if (unitPrice && quantity > 0) {
+            const [min, max] = unitPrice;
+            const totalMin = min * quantity;
+            const totalMax = max * quantity;
+            setPriceRange(`₹${totalMin} - ₹${totalMax}`);
+        } else {
+            setPriceRange('');
+        }
+    };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setForm((prev) => ({
-            ...prev,
-            [name]: value
-        }));
+        const newForm = { ...form, [name]: value };
+        setForm(newForm);
+
+        const quantity = parseInt(newForm.quantity, 10) || 0;
+
+        if (['category', 'condition', 'quantity'].includes(name)) {
+            updatePriceRange(newForm.category, newForm.condition, quantity);
+        }
     };
 
     const handleImageChange = (e) => {
@@ -31,7 +60,7 @@ export const SellForm = ({ onSubmit, onCancel }) => {
 
         const newImages = files.map((file) => ({
             file,
-            preview: URL.createObjectURL(file)
+            preview: URL.createObjectURL(file),
         }));
 
         setImages((prev) => [...prev, ...newImages]);
@@ -43,22 +72,47 @@ export const SellForm = ({ onSubmit, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const { name, category, condition, quantity, description } = form;
+        const { name, category, condition, quantity } = form;
 
-        if (!name || !category || !condition || !quantity || !description || images.length === 0) {
+        if (!name || !category || !condition || !quantity || !form.description || images.length === 0) {
             alert('Please fill out all fields and upload at least one image.');
             return;
         }
 
-        onSubmit({ ...form, images });
+        // Extract priceStart and priceEnd from priceRange string
+        const priceMatch = priceRange.match(/₹(\d+)\s*-\s*₹(\d+)/);
+        let priceStart = 0;
+        let priceEnd = 0;
+
+        if (priceMatch) {
+            priceStart = parseInt(priceMatch[1], 10);
+            priceEnd = parseInt(priceMatch[2], 10);
+        }
+
+        const formattedCondition = condition === 'new' ? 'Working' : 'Not Working';
+
+        const formattedData = {
+            name,
+            category: category.charAt(0).toUpperCase() + category.slice(1),
+            condition: formattedCondition,
+            quantity,
+            priceStart,
+            priceEnd,
+        };
+
+        onSubmit(formattedData);
+
+        // Reset form
         setForm({
             name: '',
             category: '',
             condition: '',
             quantity: '',
-            description: ''
+            description: '',
         });
         setImages([]);
+        fileInputRef.current.value = null;
+        setPriceRange('');
     };
 
     return (
@@ -118,16 +172,26 @@ export const SellForm = ({ onSubmit, onCancel }) => {
                     />
                 </div>
 
+                {priceRange && (
+                    <div className="text-sm text-gray-700 px-1">
+                        <label className="font-medium">Price Offered: </label>
+                        <div className="mt-1 px-3 py-2 bg-gray-100 rounded border border-gray-300 w-fit inline-block">
+                            {priceRange}
+                        </div>
+                    </div>
+                )}
+
                 <textarea
                     name="description"
                     value={form.description}
                     onChange={handleChange}
                     placeholder="Description"
                     required
-                    className="p-3 rounded border border-gray-300 h-22 resize-none overflow-auto"
+                    className="p-3 rounded border border-gray-300 h-20 resize-none overflow-auto"
                 />
 
                 <input
+                    ref={fileInputRef}
                     type="file"
                     name="images"
                     accept=".jpg,.jpeg,.png,.gif,.webp"
