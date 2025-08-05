@@ -30,14 +30,14 @@ function App() {
           <Route path="/products" element={<Products />}></Route>
           <Route path="/product/:productId" element={<ProductDetails/>}></Route>
           <Route path="/admin/add/products" element={<AdminAddProduct/>}></Route>
-          <Route path="/admin" element={<AdminRequests/>}></Route>
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path="/buy" element={<BuyPage/>}></Route>
+          <Route path="/contactus" element={<Contactus />}></Route>
 
           <Route path="/tester" element={<Tester/>}></Route>
           <Route path="/seller" element={<Seller/>}></Route>
+          <Route path="/admin" element={<AdminRequests/>}></Route>
 
-          <Route path="/contactus" element={<Contactus />}></Route>
           <Route path="/Profile" element={<Profile />}></Route>
           <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
