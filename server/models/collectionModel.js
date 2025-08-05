@@ -7,16 +7,34 @@ const collectionSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    productId: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'products',
+    productSize:{
+      type: Number,
       required: true,
-    }],
-    status: {
+    },
+    estimatedStartPrice:{
+      type: Number,
+      required: true,
+    },
+    estimatedEndPrice:{
+      type: Number,
+      required: true,
+    },
+    address:{
+
+    },
+    collectionStatus: {
       type: String,
       enum: ['processing', 'pickup initiated', 'collected'],
       default: 'processing',
     },
+    employeeStatus:{
+      type: String,
+      enum: ['unassigned','assigned']
+    },
+    employeeName:{
+      type: String,
+      default: "NA"
+    }
   },
   {
     timestamps: true,
