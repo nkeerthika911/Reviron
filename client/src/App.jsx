@@ -33,19 +33,20 @@ function App() {
           <Route path="/buy" element={<BuyPage/>}></Route>
           <Route path="/contactus" element={<Contactus />}></Route>
 
+
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
+          <Route path="/admin/order" element={<AdminOrders/>}></Route>
           <Route path="/admin/employee" element={<WorkerPage/>}></Route>
+          <Route path="/admin/itemview" element={<ItemView/>}></Route>
+
 
           <Route path="/tester" element={<Tester/>}></Route>
           <Route path="/seller" element={<Seller/>}></Route>
           <Route path="/admin" element={<AdminRequests/>}></Route>
-
           <Route path="/Profile" element={<Profile />}></Route>
           <Route path="/sell" element={<Sell/>}></Route>
           <Route path="/community" element={<Community/>}></Route>
-          <Route path="/admin/order" element={<AdminOrders/>}></Route>
           <Route path="/payment" element={<Payment/>}></Route>
-          <Route path="/ItemView" element={<ItemView/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
