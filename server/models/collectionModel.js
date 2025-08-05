@@ -20,7 +20,8 @@ const collectionSchema = new mongoose.Schema(
       required: true,
     },
     address:{
-
+      type: String,
+      required: true,
     },
     collectionStatus: {
       type: String,
@@ -29,7 +30,8 @@ const collectionSchema = new mongoose.Schema(
     },
     employeeStatus:{
       type: String,
-      enum: ['unassigned','assigned']
+      enum: ['unassigned','assigned'],
+      default: "unassigned"
     },
     employeeName:{
       type: String,
