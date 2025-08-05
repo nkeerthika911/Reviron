@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Navbar } from '../Navbar';
 import { SellForm } from './components/SellForm';
 import { UserProductCard } from './components/userProductCard';
+import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 
 export const Sell = () => {
   const [showForm, setShowForm] = useState(false);
@@ -9,6 +11,21 @@ export const Sell = () => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const scrollRef = useRef(null);
+
+  const getUserIdFromToken = () => {
+    const token = localStorage.getItem("jwt");
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode(token);
+      return decoded.userId || null;
+    } catch (err) {
+      console.error("Invalid JWT token", err);
+      return null;
+    }
+  };
+  const userId = getUserIdFromToken();
+  console.log(userId);
 
   const toggleForm = () => setShowForm(!showForm);
 
@@ -26,15 +43,59 @@ export const Sell = () => {
     }
   };
 
-  const handleSellNow = () => {
+  const handleSellNow = async () => {
     if (!address.trim() || !phone.trim()) {
       alert('Please fill in both address and phone number before selling.');
       return;
     }
 
-    // Replace this with your submit logic
-    console.log('Sell Now clicked with:', { products, address, phone });
-    alert('Products submitted!');
+    try {
+      // Step 1: Create Collection Request
+      const collectionPayload = {
+        userId: userId,
+        productSize: products.length,
+        address,
+        pickupBy: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      };
+
+      const response = await axios.post(
+        'http://localhost:5000/api/collection/addrequest',
+        collectionPayload
+      );
+
+      const collectionId = response.data.data.data._id;
+      console.log("Collection ID:", collectionId);
+
+      // Step 2: Upload each product
+      const uploadedProductIds = [];
+
+      for (const product of products) {
+        const productPayload = {
+          ...product,        // name, category, etc.
+          userId: userId,
+          collectionId: collectionId,  // if you want to link product to the collection
+        };
+
+        const productResponse = await axios.post(
+          'http://localhost:5000/api/product/add',
+          productPayload
+        );
+
+        const productId = productResponse.data.data._id;
+        console.log('Product uploaded:', productId);
+
+        uploadedProductIds.push(productId);
+      }
+
+      // Step 3: Done
+      alert('Collection and all products uploaded successfully!');
+      console.log('Uploaded product IDs:', uploadedProductIds);
+
+      // Now you can handle image uploads for these product IDs
+    } catch (err) {
+      console.error(err);
+      alert('Failed to create collection or upload products. Please try again.');
+    }
   };
 
   return (
