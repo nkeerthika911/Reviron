@@ -96,7 +96,7 @@ export const OrderCard = ({ order }) => {
           <button
             onClick={() => setShowSellingRequests(true)}
             style={{
-              backgroundColor: "#3b82f6",
+              backgroundColor: "#81AD87",
               color: "white",
               border: "none",
               padding: "8px 16px",
