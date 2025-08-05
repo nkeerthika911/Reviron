@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Assign } from "./Assign"; 
+import { Assign } from "./Assign";
+import { SellingRequests } from "./SellingRequest";
 
 export const OrderCard = ({ order }) => {
+  const [showSellingRequests, setShowSellingRequests] = useState(false);
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const navigate = useNavigate();
 
@@ -17,64 +19,179 @@ export const OrderCard = ({ order }) => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-start justify-between bg-white rounded-xl shadow-md p-6 max-w-7xl w-full mx-auto mb-6 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] overflow-x-hidden">
-        <div className="flex-grow flex flex-col space-y-4 text-gray-800 max-w-5xl w-full">
-          <div className="flex flex-wrap gap-y-2 text-base font-semibold">
-            <div>
-              <span className="font-bold">Request ID:</span>{" "}
-              <span className="font-normal">{order.requestId}</span>
-            </div>
-            <div className="ml-20.5">
-              <span className="font-bold">Date:</span>{" "}
-              <span className="font-normal">{order.date}</span>
-            </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: "#fff",
+          borderRadius: "12px",
+          padding: "20px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+          margin: "20px 0",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Left Section */}
+        <div style={{ flexGrow: 1 }}>
+          <div style={{ marginBottom: "10px", fontSize: "16px" }}>
+            <strong>Request ID:</strong> {order.requestId}
           </div>
-
-          <div className="flex flex-wrap gap-x-10 text-base font-semibold">
-            <div>
-              <span className="font-bold">Status:</span>{" "}
-              <span className="font-normal">{order.status}</span>
-            </div>
-            <div>
-              <span className="font-bold">Employee:</span>{" "}
-              <span className="font-normal">{order.employee}</span>
-            </div>
+          <div style={{ marginBottom: "10px", fontSize: "16px" }}>
+            <strong>Date:</strong> {order.date}
           </div>
-
-          <div className="flex text-base font-semibold">
-            <span className="font-bold">Product Count:</span>{" "}
-            <span className="ml-2 font-normal">{order.productCount}</span>
+          <div style={{ marginBottom: "10px", fontSize: "16px" }}>
+            <strong>Status:</strong> {order.status}
+          </div>
+          <div style={{ marginBottom: "10px", fontSize: "16px" }}>
+            <strong>Employee:</strong> {order.employee}
+          </div>
+          <div style={{ marginBottom: "10px", fontSize: "16px" }}>
+            <strong>Product Count:</strong> {order.productCount}
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-end space-y-3 mt-4 md:mt-7 ml-0 md:ml-4 w-full md:w-auto">
-          <div className="flex space-x-3 w-full md:w-auto justify-end">
-            <button
-              onClick={handleViewItems}
-              className="w-30 h-9 bg-[#81AD87] hover:bg-[#72997A] text-white text-sm font-semibold px-5 py-2 rounded-xl shadow-md transition hover:scale-105"
-            >
-              View Items
-            </button>
-            <button
-              onClick={() => setShowAssignPopup(true)}
-              className="w-30 h-9 bg-[#81AD87] hover:bg-[#72997A] text-white text-sm font-semibold px-5 py-2 rounded-xl shadow-md transition hover:scale-105"
-            >
-              Assign
-            </button>
-          </div>
+        {/* Right Button Section */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+            alignItems: "flex-end",
+          }}
+        >
+          <button
+            onClick={handleViewItems}
+            style={{
+              backgroundColor: "#81AD87",
+              color: "white",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              fontWeight: "bold",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+          >
+            View Items
+          </button>
+
+          <button
+            onClick={() => setShowAssignPopup(true)}
+            style={{
+              backgroundColor: "#81AD87",
+              color: "white",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              fontWeight: "bold",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+          >
+            Assign
+          </button>
+
+          <button
+            onClick={() => setShowSellingRequests(true)}
+            style={{
+              backgroundColor: "#81AD87",
+              color: "white",
+              border: "none",
+              padding: "8px 16px",
+              borderRadius: "8px",
+              fontWeight: "bold",
+              fontSize: "14px",
+              cursor: "pointer",
+            }}
+          >
+            Collecting Requests
+          </button>
         </div>
       </div>
 
+      {/* Assign Popup */}
       {showAssignPopup && (
-        <div style={overlayStyle}>
-          <div style={modalStyle}>
-            <Assign onAssignmentSubmit={handleAssignmentSubmit} />
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div style={{ position: "relative" }}>
             <button
               onClick={() => setShowAssignPopup(false)}
-              style={closeBtnStyle}
+              style={{
+                position: "absolute",
+                top: "-20px",
+                right: "-20px",
+                background: "red",
+                color: "white",
+                border: "none",
+                borderRadius: "50%",
+                width: "30px",
+                height: "30px",
+                cursor: "pointer",
+              }}
             >
-              ✕
+              ×
             </button>
+            <Assign onAssignmentSubmit={handleAssignmentSubmit} />
+          </div>
+        </div>
+      )}
+
+      {/* Selling Requests Popup */}
+      {showSellingRequests && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              backgroundColor: "#fff",
+              borderRadius: "10px",
+              padding: "20px",
+            }}
+          >
+            <button
+              onClick={() => setShowSellingRequests(false)}
+              style={{
+                position: "absolute",
+                top: "-20px",
+                right: "-20px",
+                background: "red",
+                color: "white",
+                border: "none",
+                borderRadius: "50%",
+                width: "30px",
+                height: "30px",
+                cursor: "pointer",
+              }}
+            >
+              ×
+            </button>
+            <SellingRequests />
           </div>
         </div>
       )}
