@@ -32,7 +32,6 @@ function App() {
           <Route path="/cart" element={<Cart/>}></Route>
           <Route path="/buy" element={<BuyPage/>}></Route>
 
-          {/* <Route path="/adminpages/Adminpage" element={<Adminpage/>}></Route> */}
           <Route path="/tester" element={<Tester/>}></Route>
           <Route path="/seller" element={<Seller/>}></Route>
 
