@@ -1,15 +1,15 @@
 import React from 'react';
 
 export const UserProductCard = (
-    {
+  {
     image = null,
-      name= "CD/DVD Drive Units",
-      category= "Keyboard",
-      condition= "Working",
-      quantity= "16",
-      priceStart= 120,
-      priceEnd= 180
-    }
+    name = "CD/DVD Drive Units",
+    category = "Keyboard",
+    condition = "Working",
+    quantity = "16",
+    priceStart = 0,
+    priceEnd = 0
+  }
 ) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden max-w-sm mx-auto">
@@ -53,10 +53,14 @@ export const UserProductCard = (
           
           <div className="border-t border-gray-200 pt-3 mt-3">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium text-gray-600">Price Range</span>
-              <span className="text-base font-bold text-blue-600">
-                ₹{priceStart} - ₹{priceEnd}
-              </span>
+              <span className="text-sm font-medium text-gray-600">Price Range: </span>
+              {priceStart === 0 && priceEnd === 0 ? (
+                <span className="text-base font-semibold text-yellow-600">Estimation pending</span>
+              ) : (
+                <span className="text-base font-bold text-blue-600">
+                  ₹{priceStart} - ₹{priceEnd}
+                </span>
+              )}
             </div>
           </div>
         </div>

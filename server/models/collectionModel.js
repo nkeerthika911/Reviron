@@ -36,6 +36,10 @@ const collectionSchema = new mongoose.Schema(
     employeeName:{
       type: String,
       default: "NA"
+    },
+    pickupBy:{
+      type: Date,
+      required: true
     }
   },
   {
