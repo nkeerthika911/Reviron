@@ -11,14 +11,6 @@ const collectionSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    estimatedStartPrice:{
-      type: Number,
-      required: true,
-    },
-    estimatedEndPrice:{
-      type: Number,
-      required: true,
-    },
     address:{
       type: String,
       required: true,
@@ -33,9 +25,13 @@ const collectionSchema = new mongoose.Schema(
       enum: ['unassigned','assigned'],
       default: "unassigned"
     },
-    employeeName:{
-      type: String,
-      default: "NA"
+    employeeId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+    pickupBy:{
+      type: Date,
+      required: true
     }
   },
   {

@@ -5,4 +5,9 @@ const addCollectionRequest = async (collectionData) => {
     return requestData;
 }
 
-module.exports = {addCollectionRequest,}
+const getAllCollectionData = async () => {
+    const collection = await Collection.find().populate('userId');
+    return collection;
+}
+
+module.exports = { addCollectionRequest, getAllCollectionData };
