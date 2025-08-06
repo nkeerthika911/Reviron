@@ -29,9 +29,26 @@ const getAllCollectionData = asyncHandler(async(req,res) => {
             data: collection,
         }
     });
+});
+
+const getCollectionDataByUserIdController = asyncHandler(async(req,res) => {
+    const collections = await collectionService.getCollectionDataByUserId(req.params.userid);
+    if(!collections){
+        throw Object.assign(new Error("Failed to create collection request!"), { statusCode: 400 });
+    }
+    res.status(201).json({
+        success: true,
+        data:{
+            message: "Collection requests fetched successfully",
+            data: collections,
+        }
+    });
 }); 
+
+
 
 module.exports = {
     addCollectionRequestController,
     getAllCollectionData,
+    getCollectionDataByUserIdController,
 }

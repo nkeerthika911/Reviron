@@ -10,4 +10,9 @@ const getAllCollectionData = async () => {
     return collection;
 }
 
-module.exports = { addCollectionRequest, getAllCollectionData };
+const getCollectionDataByUserId = async (userId) => {
+    const collection = await Collection.find({userId});
+    return collection;
+}
+
+module.exports = { addCollectionRequest, getAllCollectionData, getCollectionDataByUserId };
