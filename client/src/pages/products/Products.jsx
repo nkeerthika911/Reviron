@@ -4,6 +4,7 @@ import { Navbar } from '../Navbar';
 import { ProductCard } from './components/ProductCard';
 import { Filters } from './components/Filters';
 import { Search } from 'lucide-react';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
 // Import Poppins font
 const style = document.createElement('style');
@@ -21,8 +22,16 @@ export const Products = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [favourite, setFavourite] = useState(false); // Fixed prop name to match Navbar
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  
+  // Initialize favourite state from URL params
+  const [favourite, setFavourite] = useState(() => {
+    return searchParams.get('favorites') === 'true';
+  });
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(() => {
+    return searchParams.get('favorites') === 'true';
+  });
   
   const [filters, setFilters] = useState({
     priceMin: 0,
@@ -32,6 +41,23 @@ export const Products = () => {
     brand: '',
     location: ''
   });
+
+  // Update URL when favourite state changes
+  useEffect(() => {
+    if (favourite) {
+      setSearchParams({ favorites: 'true' }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  }, [favourite, setSearchParams]);
+
+  // Update favourite state when URL params change
+  useEffect(() => {
+    const favoritesParam = searchParams.get('favorites');
+    const newFavouriteState = favoritesParam === 'true';
+    setFavourite(newFavouriteState);
+    setShowFavoritesOnly(newFavouriteState);
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -54,7 +80,7 @@ export const Products = () => {
     };
 
     fetchProducts();
-  }, [favourite]);
+  }, []);
 
   // Watch for changes in favourite state from Navbar
   useEffect(() => {
