@@ -127,7 +127,7 @@ export const Sell = () => {
         {showForm && (
           <>
             {/* Left: Sell Form */}
-            <div className="w-1/2 pr-2">
+            <div className="flex-1 mr-2">
               <SellForm
                 onCancel={toggleForm}
                 onSubmit={handleAddProduct}
@@ -135,7 +135,7 @@ export const Sell = () => {
             </div>
 
             {/* Right: Product Preview Panel */}
-            <div className="w-1/2 pl-2 bg-white rounded shadow-md flex flex-col justify-between py-4">
+            <div className="flex-2 pl-2 rounded shadow-md flex flex-col justify-between py-4">
               {products.length === 0 ? (
                 <p className="text-gray-500 text-center px-4 my-auto">
                   No product added, add at least one product to sell

@@ -73,7 +73,7 @@ export const SellForm = ({ onSubmit, onCancel }) => {
     };
 
     return (
-        <div className="bg-white border border-gray-300 w-[40vw] h-full p-6 overflow-y-auto relative transition-all duration-500 ease-out">
+        <div className="bg-white p-6 w-full h-full shadow overflow-y-auto relative transition-all duration-500 ease-out">
             <h2 className="text-lg font-semibold mb-4">Add Product</h2>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                 <input
