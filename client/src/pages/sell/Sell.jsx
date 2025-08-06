@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { SellForm } from './components/SellForm';
 import { UserProductCard } from './components/userProductCard';
@@ -11,6 +11,8 @@ export const Sell = () => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const scrollRef = useRef(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
 
   const getUserIdFromToken = () => {
     const token = localStorage.getItem("jwt");
@@ -24,6 +26,7 @@ export const Sell = () => {
       return null;
     }
   };
+
   const userId = getUserIdFromToken();
   console.log(userId);
 
@@ -33,6 +36,23 @@ export const Sell = () => {
     setProducts([...products, { ...productData, id: Date.now() }]);
   };
 
+  // Check if arrows should be visible
+  const checkArrowVisibility = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  // Check arrow visibility on mount and when products change
+  useEffect(() => {
+    checkArrowVisibility();
+    const handleResize = () => checkArrowVisibility();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [products]);
+
   const handleScroll = (direction) => {
     if (scrollRef.current) {
       const scrollAmount = 300;
@@ -40,6 +60,9 @@ export const Sell = () => {
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
+
+      // Check arrow visibility after scroll
+      setTimeout(() => checkArrowVisibility(), 150);
     }
   };
 
@@ -113,7 +136,7 @@ export const Sell = () => {
       alert('Collection and all products uploaded successfully!');
       setProducts([]);
       setShowForm(false);
- 
+
     } catch (err) {
       console.error(err);
       alert('Failed to create collection or upload products. Please try again.');
@@ -128,7 +151,7 @@ export const Sell = () => {
         {showForm && (
           <>
             {/* Left: Sell Form */}
-            <div className="w-1/2 pr-2">
+            <div className="flex-1 mr-2">
               <SellForm
                 onCancel={toggleForm}
                 onSubmit={handleAddProduct}
@@ -136,77 +159,106 @@ export const Sell = () => {
             </div>
 
             {/* Right: Product Preview Panel */}
-            <div className="w-1/2 pl-2 bg-white rounded shadow-md flex flex-col justify-between py-4">
+            <div className="flex-2 pl-2 rounded shadow-md flex flex-col justify-between py-4">
               {products.length === 0 ? (
                 <p className="text-gray-500 text-center px-4 my-auto">
                   No product added, add at least one product to sell
                 </p>
               ) : (
                 <>
-                  {/* Scrollable Product Cards with Arrows */}
-                  <div className="relative px-4">
-                    <button
-                      onClick={() => handleScroll('left')}
-                      className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-2 py-1 rounded shadow z-10"
-                    >
-                      &lt;
-                    </button>
+                  {/* Improved Scrollable Product Cards with Conditional Arrows */}
+                  <div className="relative">
+                    {/* Left Arrow */}
+                    {showLeftArrow && (
+                      <button
+                        onClick={() => handleScroll('left')}
+                        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 w-8 h-8 rounded-full shadow-md border border-gray-200 flex items-center justify-center z-20 transition-all duration-200 hover:scale-110"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M7.5 9L4.5 6L7.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    )}
+
+                    {/* Right Arrow */}
+                    {showRightArrow && (
+                      <button
+                        onClick={() => handleScroll('right')}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 w-8 h-8 rounded-full shadow-md border border-gray-200 flex items-center justify-center z-20 transition-all duration-200 hover:scale-110"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M4.5 3L7.5 6L4.5 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </button>
+                    )}
+
+                    {/* Scrollable Container */}
                     <div
                       ref={scrollRef}
-                      className="w-full flex space-x-4 overflow-x-auto max-h-[70vh] scrollbar-hide"
+                      onScroll={checkArrowVisibility}
+                      className="flex space-x-4 overflow-x-auto overflow-y-hidden max-h-[65vh] px-4 py-2 scroll-smooth justify-center"
+                      style={{
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
+                      }}
                     >
                       {products.map((product) => (
-                        <UserProductCard
-                          key={product.id}
-                          name={product.name}
-                          category={product.category}
-                          condition={product.condition}
-                          quantity={product.quantity}
-                          priceStart={product.priceStart}
-                          priceEnd={product.priceEnd}
-                        />
+                        <div key={product.id} className="flex-shrink-0">
+                          <UserProductCard
+                            name={product.name}
+                            category={product.category}
+                            condition={product.condition}
+                            quantity={product.quantity}
+                            priceStart={product.priceStart}
+                            priceEnd={product.priceEnd}
+                          />
+                        </div>
                       ))}
                     </div>
-                    <button
-                      onClick={() => handleScroll('right')}
-                      className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-2 py-1 rounded shadow z-10"
-                    >
-                      &gt;
-                    </button>
+
+                    {/* Fade effect for scroll indication */}
+                    {showLeftArrow && (
+                      <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white via-white to-transparent pointer-events-none z-10" />
+                    )}
+                    {showRightArrow && (
+                      <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white via-white to-transparent pointer-events-none z-10" />
+                    )}
                   </div>
 
-                  {/* Address & Phone Inputs */}
-                  <div className="px-4 pt-4">
-                    <input
-                      type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Address"
-                      className="w-full h-20 mb-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Phone number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                  </div>
+                  {/* Address, Phone Inputs & Action Buttons */}
+                  <div className="m-2 space-y-1">
+                    {/* Address & Phone Inputs */}
+                    <div className="space-y-1">
+                      <textarea
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Enter your full address..."
+                        className="w-full h-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+                      />
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Phone number"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex justify-center items-center space-x-4 px-4 pt-4">
-                    <button
-                      onClick={() => setProducts([])}
-                      className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
-                    >
-                      Clear Products
-                    </button>
-                    <button
-                      onClick={handleSellNow}
-                      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-                    >
-                      Sell Now
-                    </button>
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 pt-2">
+                      <button
+                        onClick={() => setProducts([])}
+                        className="flex-1 bg-red-500 text-white px-4 py-2.5 rounded-md hover:bg-red-600 transition duration-200 font-medium"
+                      >
+                        Clear Products
+                      </button>
+                      <button
+                        onClick={handleSellNow}
+                        className="flex-1 bg-green-600 text-white px-4 py-2.5 rounded-md hover:bg-green-700 transition duration-200 font-medium"
+                      >
+                        Sell Now
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
@@ -223,6 +275,12 @@ export const Sell = () => {
           +
         </button>
       )}
+
+      <style jsx>{`
+        div::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
