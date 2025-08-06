@@ -55,6 +55,7 @@ export const Sell = () => {
         userId: userId,
         productSize: products.length,
         address,
+        phone,
         pickupBy: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       };
 
