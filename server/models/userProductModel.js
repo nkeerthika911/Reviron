@@ -34,12 +34,10 @@ const userProductSchema = new mongoose.Schema({
     startPrice: {
         type: Number,
         default: 0,
-        required: true,
     },
     endPrice: {
         type: Number,
         default: 0,
-        required: true,
     },
 });
 
