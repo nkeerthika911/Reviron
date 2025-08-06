@@ -21,8 +21,8 @@ export const Assign = ({ onAssignmentSubmit }) => {
     return (
         <div style={{
             width: '100%',
-            maxWidth: '600px',
-            minHeight: '160px', // reduced height
+            maxWidth: '700px',
+            minHeight: '200px', // reduced height
             display: 'flex',
             border: '1px solid #e5e7eb',
             borderRadius: '12px',
