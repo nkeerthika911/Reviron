@@ -1,6 +1,6 @@
     import React from 'react'
     import { useState, useEffect } from 'react';
-    import { useNavigate, useLocation } from 'react-router-dom';
+    import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
     import logo from "../assets/RevironLogo.png";
     import userIcon from "../assets/user-icon.jpg";
     import axios from 'axios';
@@ -12,6 +12,7 @@
         const [searchQuery, setSearchQuery] = useState('');
         const navigate = useNavigate();
         const location = useLocation();
+        const [searchParams, setSearchParams] = useSearchParams();
         const [user, setUser] = useState(null);
         const [loading, setLoading] = useState(false);
         const [error, setError] = useState(null);
@@ -139,24 +140,23 @@
                 if (location.pathname === '/products') {
                     // If on products page, just toggle favorites
                     console.log('On products page - toggling favorites');
-                    setFavourite(prev => {
-                        console.log('Toggling from', prev, 'to', !prev);
-                        return !prev;
-                    });
+                    const newFavouriteState = !favourite;
+                    setFavourite(newFavouriteState);
+                    
+                    // Update URL parameters
+                    if (newFavouriteState) {
+                        setSearchParams({ favorites: 'true' }, { replace: true });
+                    } else {
+                        setSearchParams({}, { replace: true });
+                    }
                 } else {
-                    // If not on products page (community, sell, contact, cart, etc.), 
-                    // navigate to products page and apply favorites filter
+                    // If not on products page, navigate to products page with favorites enabled
                     console.log('Not on products page - navigating to products with favorites ON');
-                    console.log('Navigating from:', location.pathname, 'to: /products');
+                    console.log('Navigating from:', location.pathname, 'to: /products?favorites=true');
 
-                    // First set favorites to true
-                    setFavourite(true);
-                    console.log('Set favourite to true');
-
-                    // Then navigate to products page
-                    navigate('/products');
-                    console.log('Navigated to /products');
-
+                    // Navigate to products page with favorites parameter
+                    navigate('/products?favorites=true');
+                    
                     // Set active page to Products
                     setActivePage('Products');
                     console.log('Set active page to Products');
