@@ -26,7 +26,7 @@ export const Sell = () => {
       return null;
     }
   };
-  
+
   const userId = getUserIdFromToken();
   console.log(userId);
 
@@ -60,7 +60,7 @@ export const Sell = () => {
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
-      
+
       // Check arrow visibility after scroll
       setTimeout(() => checkArrowVisibility(), 150);
     }
@@ -135,7 +135,7 @@ export const Sell = () => {
       alert('Collection and all products uploaded successfully!');
       setProducts([]);
       setShowForm(false);
- 
+
     } catch (err) {
       console.error(err);
       alert('Failed to create collection or upload products. Please try again.');
@@ -174,7 +174,7 @@ export const Sell = () => {
                         className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 w-8 h-8 rounded-full shadow-md border border-gray-200 flex items-center justify-center z-20 transition-all duration-200 hover:scale-110"
                       >
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M7.5 9L4.5 6L7.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M7.5 9L4.5 6L7.5 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </button>
                     )}
@@ -186,7 +186,7 @@ export const Sell = () => {
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 w-8 h-8 rounded-full shadow-md border border-gray-200 flex items-center justify-center z-20 transition-all duration-200 hover:scale-110"
                       >
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                          <path d="M4.5 3L7.5 6L4.5 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M4.5 3L7.5 6L4.5 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </button>
                     )}
@@ -195,7 +195,7 @@ export const Sell = () => {
                     <div
                       ref={scrollRef}
                       onScroll={checkArrowVisibility}
-                      className="flex space-x-4 overflow-x-auto overflow-y-hidden max-h-[65vh] px-4 py-2 scroll-smooth"
+                      className="flex space-x-4 overflow-x-auto overflow-y-hidden max-h-[65vh] px-4 py-2 scroll-smooth justify-center"
                       style={{
                         scrollbarWidth: 'none',
                         msOverflowStyle: 'none',
@@ -224,38 +224,40 @@ export const Sell = () => {
                     )}
                   </div>
 
-                  {/* Address & Phone Inputs */}
-                  <div className="px-4 pt-4">
-                    <input
-                      type="text"
-                      value={address}
-                      onChange={(e) => setAddress(e.target.value)}
-                      placeholder="Address"
-                      className="w-full h-20 mb-2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      placeholder="Phone number"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    />
-                  </div>
+                  {/* Address, Phone Inputs & Action Buttons */}
+                  <div className="m-2 space-y-1">
+                    {/* Address & Phone Inputs */}
+                    <div className="space-y-1">
+                      <textarea
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Enter your full address..."
+                        className="w-full h-20 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+                      />
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="Phone number"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
 
-                  {/* Action Buttons */}
-                  <div className="flex justify-center items-center space-x-4 px-4 pt-4">
-                    <button
-                      onClick={() => setProducts([])}
-                      className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
-                    >
-                      Clear Products
-                    </button>
-                    <button
-                      onClick={handleSellNow}
-                      className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition"
-                    >
-                      Sell Now
-                    </button>
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 pt-2">
+                      <button
+                        onClick={() => setProducts([])}
+                        className="flex-1 bg-red-500 text-white px-4 py-2.5 rounded-md hover:bg-red-600 transition duration-200 font-medium"
+                      >
+                        Clear Products
+                      </button>
+                      <button
+                        onClick={handleSellNow}
+                        className="flex-1 bg-green-600 text-white px-4 py-2.5 rounded-md hover:bg-green-700 transition duration-200 font-medium"
+                      >
+                        Sell Now
+                      </button>
+                    </div>
                   </div>
                 </>
               )}
