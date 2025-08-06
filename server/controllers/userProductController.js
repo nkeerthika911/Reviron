@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const mongoose = require('mongoose');
 const userProductService = require('../services/userProductService');
 const sharp = require("sharp");
 const path = require("path");
@@ -18,6 +19,20 @@ const addUserProductController = asyncHandler(async (req, res) => {
             data: collectionData
         }
     });
+});
+
+const getProductByOrderId = asyncHandler(async (req, res) => {
+    const { orderId } = req.params;
+        const requestId = new mongoose.Types.ObjectId(orderId);
+    const productList = await userProductService.getProductByOrderId(requestId);
+    if(!productList){
+        throw Object.assign(new Error("No Products Available"), { statusCode: 400 });
+    }
+    res.status(201).json({
+        success: true,
+        data: productList,
+    });
+
 });
 
 const uploadUserProductController = async (req, res, next) => {
@@ -60,7 +75,10 @@ const uploadUserProductController = async (req, res, next) => {
     }
 };
 
-module.exports = {
-    addUserProductController, uploadUserProductController
 
+
+module.exports = {
+    addUserProductController, 
+    uploadUserProductController,
+    getProductByOrderId,
 }
