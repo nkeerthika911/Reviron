@@ -9,7 +9,7 @@ export const OrderCard = ({ order }) => {
   const navigate = useNavigate();
 
   const handleViewItems = () => {
-    navigate("/itemview", { state: { orderId: order.id } });
+    navigate(`/admin/itemview/${order.id}`);
   };
 
   const handleAssignmentSubmit = (rate, employee) => {
