@@ -66,33 +66,53 @@ export const Sell = () => {
       const collectionId = response.data.data.data._id;
       console.log("Collection ID:", collectionId);
 
-      // Step 2: Upload each product
-      const uploadedProductIds = [];
-
       for (const product of products) {
         const productPayload = {
-          ...product,        // name, category, etc.
-          requestId: collectionId,  // if you want to link product to the collection
+          requestId: collectionId,
+          name: product.name,
+          category: product.category,
+          condition: product.condition,
+          quantity: product.quantity,
+          description: product.description,
         };
 
+        // Step 1: Upload product data
         const productResponse = await axios.post(
           'http://localhost:5000/api/userproduct/add',
           productPayload
         );
 
-        const productId = productResponse.data.data._id;
+        console.log(productResponse);
+        const productId = productResponse.data.data.data._id;
         console.log('Product uploaded:', productId);
 
-        uploadedProductIds.push(productId);
+        // Step 2: Upload product images (if any)
+        if (product.images && product.images.length > 0) {
+          const formData = new FormData();
+          product.images.forEach((image) => {
+            formData.append('userProductPhotos', image);
+          });
+
+          try {
+            await axios.post(
+              `http://localhost:5000/api/userproduct/uploadphotos/${productId}`,
+              formData,
+              {
+                headers: { 'Content-Type': 'multipart/form-data' },
+              }
+            );
+            console.log(`Images uploaded for product ${productId}`);
+          } catch (err) {
+            console.error(`Failed to upload images for product ${productId}`, err);
+          }
+        }
       }
 
       // Step 3: Done
       alert('Collection and all products uploaded successfully!');
       setProducts([]);
       setShowForm(false);
-      console.log('Uploaded product IDs:', uploadedProductIds);
-
-      // Now you can handle image uploads for these product IDs
+ 
     } catch (err) {
       console.error(err);
       alert('Failed to create collection or upload products. Please try again.');

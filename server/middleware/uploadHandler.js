@@ -35,5 +35,22 @@ const uploadProductPhotos = multer({
     fileFilter: productFileFilter,
 })
 
+// User Product Photos
+const userProductFileFilter=(req,file,cb) => {
+    const allowedTypes= /jpeg|jpg|png|gif|webp/;
+    const isAllowed  = allowedTypes.test(file.mimetype);
+    if(isAllowed){
+        cb(null,true);
+    }
+    else{
+        cb(Object.assign(new Error("Ivalid file type!"), { statusCode: 400 }),false);
+    }
+};
 
-module.exports = {uploadProfile, uploadProductPhotos};
+const uploadUserProductPhotos = multer({
+    storage: multer.memoryStorage(),
+    fileFilter: userProductFileFilter,
+})
+
+
+module.exports = {uploadProfile, uploadProductPhotos, uploadUserProductPhotos};
