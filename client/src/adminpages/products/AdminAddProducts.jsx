@@ -57,7 +57,7 @@ export const AdminAddProduct = () => {
       });
 
       await axios.post(
-        `http://localhost:5000/api/products/uploadphotos/${productId}`,
+        `${import.meta.env.BASE_URL}api/products/uploadphotos/${productId}`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' }

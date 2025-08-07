@@ -42,7 +42,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/user/details/${userId}`);
+        const res = await axios.get(`${import.meta.env.BASE_URL}api/user/details/${userId}`);
         const fetchedUser = res.data.data.data;
         setUser(fetchedUser);
         setFormData({
@@ -74,7 +74,7 @@ export const Profile = () => {
 
     try {
       const res = await axios.patch(
-        `http://localhost:5000/api/user/editprofile/${user._id}`,
+        `${import.meta.env.BASE_URL}api/user/editprofile/${user._id}`,
         editProfile,
         { withCredentials: true }
       );

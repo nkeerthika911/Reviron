@@ -33,7 +33,7 @@ export const ProductCard = ({ product }) => {
 
   const handleAddToCart = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/cart/add", {
+      const res = await axios.post(`${import.meta.env.BASE_URL}api/cart/add`, {
         userId: getUserIdFromToken(),
         productId: product._id,
         quantity: 1,
@@ -51,7 +51,7 @@ export const ProductCard = ({ product }) => {
     e.stopPropagation(); // Prevent card click
 
     try {
-      const res = await axios.patch(`http://localhost:5000/api/products/favourite/${product._id}`);
+      const res = await axios.patch(`${import.meta.env.BASE_URL}api/products/favourite/${product._id}`);
 
       if (res.status === 200) {
         setLiked(res.data.data.favorite); // Update the state from server response

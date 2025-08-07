@@ -63,7 +63,7 @@ export const Products = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`${import.meta.env.BASE_URL}api/products`);
         if (response.data.success) {
           setProducts(response.data.data.data);
           setFilteredProducts(response.data.data.data);

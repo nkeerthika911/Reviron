@@ -9,8 +9,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT;
 app.use(cors({
-  origin: 'http://localhost:5173',
-  origin: '',
+  origin: ['http://localhost:5173', 'https://reviron-seven.vercel.app/'],
   credentials: true 
 }));
 
@@ -26,8 +25,6 @@ app.use("/api/collection", require('./routes/collectionRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use('/api/payment', require('./routes/paymentRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
-
-
 
 app.use(errorHandler);
 

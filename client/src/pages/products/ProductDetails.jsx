@@ -17,7 +17,7 @@
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5000/api/products/${productId}`);
+        const res = await axios.get(`${import.meta.env.BASE_URL}api/products/${productId}`);
         const data = res.data.data.data;
         setProduct({
           ...data,
