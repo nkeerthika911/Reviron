@@ -33,13 +33,13 @@ const getUserByIdController = asyncHandler(async (req, res) => {
 
 const editProfileController = asyncHandler(async (req, res) => {
   const userId = req.params.userid;
-  const { phone, email } = req.body;
+  const { phone, address } = req.body;
 
-  if (!phone && !email) {
-    throw Object.assign(new Error("Phone number or email is required"), { statusCode: 400 });
+  if (!phone && !address) {
+    throw Object.assign(new Error("Phone number or address is required"), { statusCode: 400 });
   }
 
-  const updatedUser = await userService.editUserById(userId, { phone, email });
+  const updatedUser = await userService.editUserById(userId, { phone, address });
 
   if (!updatedUser) {
     throw Object.assign(new Error("User not found"), { statusCode: 404 });
