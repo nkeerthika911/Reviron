@@ -1,7 +1,7 @@
 import React from 'react'
 import {Orders} from './Orders.jsx'
 import { AdminNavbar } from '../AdminNavbar.jsx'
-import { UpdatePopUpStatus } from './UpdatePopUpStatus.jsx'
+
 
 export const OrdersPage = () => {
   return (
