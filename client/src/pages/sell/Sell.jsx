@@ -134,7 +134,7 @@ export const Sell = () => {
       };
 
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/api/collection/addrequest`,
+        `https://reviron-1.onrender.com/api/collection/addrequest`,
         collectionPayload
       );
 
@@ -153,7 +153,7 @@ export const Sell = () => {
 
         // Step 1: Upload product data
         const productResponse = await axios.post(
-            `${import.meta.env.VITE_BASE_URL}/api/userproduct/add`,
+            `https://reviron-1.onrender.com/api/userproduct/add`,
           productPayload
         );
 
@@ -170,7 +170,7 @@ export const Sell = () => {
 
           try {
             await axios.post(
-              `${import.meta.env.VITE_BASE_URL}/api/userproduct/uploadphotos/${productId}`,
+              `https://reviron-1.onrender.com/api/userproduct/uploadphotos/${productId}`,
               formData,
               {
                 headers: { 'Content-Type': 'multipart/form-data' },

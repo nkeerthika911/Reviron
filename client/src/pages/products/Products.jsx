@@ -63,7 +63,7 @@ export const Products = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products`);
+        const response = await axios.get(`https://reviron-1.onrender.com/api/products`);
         if (response.data.success) {
           setProducts(response.data.data.data);
           setFilteredProducts(response.data.data.data);

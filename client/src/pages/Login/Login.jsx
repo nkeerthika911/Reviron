@@ -22,7 +22,7 @@ export const Login = () => {
 
   const handleLogin = async (formData) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/login`, formData);
+      const response = await axios.post(`https://reviron-1.onrender.com/api/auth/login`, formData);
       console.log("hello",response);
       if(response){
         localStorage.setItem("jwt", response.data.data.token);
@@ -40,7 +40,7 @@ export const Login = () => {
     try {
       const { fullName, email, password, gender } = formData;
 
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/auth/signup`, {
+      const response = await axios.post(`https://reviron-1.onrender.com//api/auth/signup`, {
         fullName,
         email,
         password,

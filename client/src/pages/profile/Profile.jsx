@@ -42,7 +42,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/user/details/${userId}`);
+        const res = await axios.get(`https://reviron-1.onrender.com/api/user/details/${userId}`);
         const fetchedUser = res.data.data.data;
         setUser(fetchedUser);
         setFormData({
@@ -74,7 +74,7 @@ export const Profile = () => {
 
     try {
       const res = await axios.patch(
-        `${import.meta.env.VITE_BASE_URL}/api/user/editprofile/${user._id}`,
+        `https://reviron-1.onrender.com/api/user/editprofile/${user._id}`,
         editProfile,
         { withCredentials: true }
       );

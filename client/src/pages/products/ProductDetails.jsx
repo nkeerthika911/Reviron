@@ -17,7 +17,7 @@
     const fetchProduct = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products/${productId}`);
+        const res = await axios.get(`https://reviron-1.onrender.com/api/products/${productId}`);
         const data = res.data.data.data;
         setProduct({
           ...data,
