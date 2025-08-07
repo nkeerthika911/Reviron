@@ -54,7 +54,7 @@ const getProductByIdController = asyncHandler(async (req, res) => {
     if (fs.existsSync(imageDir)) {
         const files = fs.readdirSync(imageDir);
         imageUrls = files.map((file) => {
-            return `${BASE_URL}/uploads/productPhotos/${productid}/${file}`;
+            return `https://reviron-1.onrender.com/uploads/productPhotos/${productid}/${file}`;
         });
     }
 
