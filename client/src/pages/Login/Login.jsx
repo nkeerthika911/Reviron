@@ -22,7 +22,7 @@ export const Login = () => {
 
   const handleLogin = async (formData) => {
     try {
-      const response = await axios.post('${import.meta.env.BASE_URL}api/auth/login', formData);
+      const response = await axios.post(`${import.meta.env.BASE_URL}api/auth/login`, formData);
       console.log("hello",response);
       if(response){
         localStorage.setItem("jwt", response.data.data.token);
