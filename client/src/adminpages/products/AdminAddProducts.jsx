@@ -48,7 +48,7 @@ export const AdminAddProduct = () => {
         category: categoryArray
       };
 
-      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/products/post`, payload);
+      const res = await axios.post(`${import.meta.env.BASE_URL}/api/products/post`, payload);
       const productId = res.data.data.data._id;
 
       const formData = new FormData();
