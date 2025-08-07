@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ViewItemsDetails = () => {
+export const ViewItemDetails = () => {
   return (
     <div className="p-4 border shadow flex flex-row max-w-4xl">
       {/* Image */}
@@ -39,7 +39,7 @@ export const ViewItemsDetails = () => {
           <p className="text-green-600 font-medium">Free shipping</p>
         </div>
         <div className="flex flex-col gap-2 w-full max-w-[10rem]">
-          <button className="bg-[#6F9674] text-white py-2 rounded hover:bg-[#6F9674]">
+          <button className="bg-[#6F9674] text-white py-2 rounded hover:bg-[#6F9674">
             BUY NOW
           </button>
           <button className="border border-[#6F9674] text-[#6F9674] py-2 rounded">

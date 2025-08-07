@@ -22,38 +22,10 @@ const products = [
     id: 1,
     name: "Fan motor - Working",
     image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 4,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 5,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 6,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
+      "https://5.imimg.com/data5/SELLER/Default/2022/12/VS/PD/QU/161247931/ceiling-fan-motor-500x500.jpg",
+  }
+ 
+  
 ];
 
 // ViewItem Component
