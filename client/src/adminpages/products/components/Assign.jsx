@@ -18,42 +18,31 @@ export const Assign = ({ onAssignmentSubmit }) => {
     if (onAssignmentSubmit) onAssignmentSubmit(assignRate, employee);
   };
 
-  return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: '600px',
-        minHeight: '160px',
-        display: 'flex',
-        border: '1px solid #e2e8f0',
-        borderRadius: '16px',
-        background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04)',
-        transition: 'all 0.3s ease',
-        // Removed overflow: 'hidden' here to allow dropdown to show outside container
-      }}
-    >
-      {/* Left Image */}
-      <div
-        style={{
-          width: '200px',
-          height: '160px',
-          flexShrink: 0,
-          overflow: 'hidden', // keep overflow hidden on image container to clip corners
-          borderTopLeftRadius: '16px',
-          borderBottomLeftRadius: '16px',
-        }}
-      >
-        <img
-          src="https://preview.redd.it/what-precautions-should-i-take-before-buying-a-2nd-hand-v0-r5xqh8muipad1.jpeg?auto=webp&s=64dffaa36eb3b1e3c924d884d1f6ed8282865d1e"
-          alt="Product"
-          style={{
+    return (
+        <div style={{
             width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-          }}
-        />
-      </div>
+            maxWidth: '600px',
+            minHeight: '160px', // reduced height
+            display: 'flex',
+            border: '1px solid #e5e7eb',
+            borderRadius: '12px',
+            background: '#fff',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+        }}>
+            {/* Left Image */}
+            <div style={{ width: '200px', height: '160px', flexShrink: 0 }}>
+                <img
+                    src="https://preview.redd.it/what-precautions-should-i-take-before-buying-a-2nd-hand-v0-r5xqh8muipad1.jpeg?auto=webp&s=64dffaa36eb3b1e3c924d884d1f6ed8282865d1e"
+                    alt="Product"
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderTopLeftRadius: '12px',
+                        borderBottomLeftRadius: '12px'
+                    }}
+                />
+            </div>
 
       {/* Right Content */}
       <div

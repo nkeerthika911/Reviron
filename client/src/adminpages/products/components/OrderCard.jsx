@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Assign } from "./Assign";
 import { SellingRequests } from "./SellingRequest";
 
-export const OrderCard = ({ order }) => {
+export const OrderCard = ({ order, type='user' }) => {
   const [showSellingRequests, setShowSellingRequests] = useState(false);
   const [showAssignPopup, setShowAssignPopup] = useState(false);
   const navigate = useNavigate();
@@ -48,17 +48,19 @@ export const OrderCard = ({ order }) => {
     <>
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200">
         <div className="flex items-start gap-4">
-          {/* Profile Photo */}
-          <div className="flex-shrink-0">
-            <img
-              src={order.profileImage}
-              alt={order.customerName}
-              className="w-16 h-16 rounded-lg object-cover border-2 border-gray-200"
-              onError={(e) => {
-                e.target.src = "https://randomuser.me/api/portraits/lego/1.jpg";
-              }}
-            />
-          </div>
+          {/* Profile Photo (admin only) */}
+          {type === 'admin' && (
+            <div className="flex-shrink-0">
+              <img
+                src={order.profileImage}
+                alt={order.customerName}
+                className="w-16 h-16 rounded-lg object-cover border-2 border-gray-200"
+                onError={(e) => {
+                  e.target.src = "https://randomuser.me/api/portraits/lego/1.jpg";
+                }}
+              />
+            </div>
+          )}
 
           {/* Order Information */}
           <div className="flex-1 min-w-0">
@@ -68,10 +70,13 @@ export const OrderCard = ({ order }) => {
                 <p className="text-sm text-gray-600 font-mono">{order.requestId}</p>
               </div>
 
-              <div>
-                <p className="text-sm font-medium text-gray-900 mb-1">Customer</p>
-                <p className="text-sm text-gray-600">{order.customerName}</p>
-              </div>
+              {/* Customer Name (admin only) */}
+              {type === 'admin' && (
+                <div>
+                  <p className="text-sm font-medium text-gray-900 mb-1">Customer</p>
+                  <p className="text-sm text-gray-600">{order.customerName}</p>
+                </div>
+              )}
 
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Created Date</p>
@@ -138,19 +143,23 @@ export const OrderCard = ({ order }) => {
               View Items
             </button>
 
-            <button
-              onClick={() => setShowAssignPopup(true)}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 min-w-[120px]"
-            >
-              Assign
-            </button>
+            {type === 'admin' && (
+              <button
+                onClick={() => setShowAssignPopup(true)}
+                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 min-w-[120px]"
+              >
+                Assign
+              </button>
+            )}
 
-            <button
-              onClick={() => setShowSellingRequests(true)}
-              className="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200 min-w-[120px]"
-            >
-              Collection Requests
-            </button>
+            {type !== 'admin' && (
+              <button
+                onClick={() => setShowSellingRequests(true)}
+                className="px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-lg hover:bg-purple-700 transition-colors duration-200 min-w-[120px]"
+              >
+                Collection Requests
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -174,8 +183,8 @@ export const OrderCard = ({ order }) => {
         </div>
       )}
 
-      {/* Selling Requests Popup */}
-      {showSellingRequests && (
+      {/* Selling Requests Popup (not for admin) */}
+      {type !== 'admin' && showSellingRequests && (
         <div className="fixed inset-0 backdrop-blur-md bg-black/20 flex items-center justify-center z-50 p-4">
           <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto shadow-2xl border border-gray-100">
             <button
