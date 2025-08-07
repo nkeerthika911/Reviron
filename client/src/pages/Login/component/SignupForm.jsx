@@ -113,7 +113,7 @@ export const SignupForm = ({ onSignup }) => {
     };
 
     return (
-        <div className="w-full h-fit p-8 bg-white border border-gray-200 rounded-2xl">
+        <div className="w-full max-w-md min-h-[600px] p-8 bg-white border border-gray-200 rounded-2xl mx-auto flex flex-col justify-center">
             <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">Signup</h1>
 
             {/* Full Name */}
@@ -128,7 +128,7 @@ export const SignupForm = ({ onSignup }) => {
                         className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none ${errors.fullName ? 'border-red-500' : 'border-gray-300'}`}
                     />
                 </div>
-                {errors.fullName && <p className="text-sm text-red-500 mt-1">{errors.fullName}</p>}
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.fullName || '\u00A0'}</p>
             </div>
 
             {/* Email */}
@@ -143,7 +143,7 @@ export const SignupForm = ({ onSignup }) => {
                         className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                     />
                 </div>
-                {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.email || '\u00A0'}</p>
             </div>
 
             {/* Gender */}
@@ -159,7 +159,7 @@ export const SignupForm = ({ onSignup }) => {
                     <option value="f">Female</option>
                     <option value="n">Prefer not to say</option>
                 </select>
-                {errors.gender && <p className="text-sm text-red-500 mt-1">{errors.gender}</p>}
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.gender || '\u00A0'}</p>
             </div>
 
             {/* Password */}
@@ -182,7 +182,7 @@ export const SignupForm = ({ onSignup }) => {
                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                 </div>
-                {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.password || '\u00A0'}</p>
                 {formData.password && (
                     <div className="mt-2">
                         <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
@@ -220,7 +220,7 @@ export const SignupForm = ({ onSignup }) => {
                         {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                 </div>
-                {errors.confirmPassword && <p className="text-sm text-red-500 mt-1">{errors.confirmPassword}</p>}
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.confirmPassword || '\u00A0'}</p>
             </div>
 
             {/* Signup Button */}

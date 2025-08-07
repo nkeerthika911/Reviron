@@ -9,13 +9,13 @@ export const OrderCard = ({ order }) => {
   const navigate = useNavigate();
 
   const handleViewItems = () => {
-    navigate("/itemview", { state: { orderId: order.id } });
+    navigate(`/admin/itemview/${order.id}`, { state: { order } });
   };
+
 
   const handleAssignmentSubmit = (rate, employee) => {
     console.log("Submitted assignment with:", rate, employee);
     setShowAssignPopup(false);
-    // Here you can make API call to update the assignment
   };
 
   const getStatusColor = (status) => {
@@ -67,36 +67,36 @@ export const OrderCard = ({ order }) => {
                 <p className="text-sm font-medium text-gray-900 mb-1">Request ID</p>
                 <p className="text-sm text-gray-600 font-mono">{order.requestId}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Customer</p>
                 <p className="text-sm text-gray-600">{order.customerName}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Created Date</p>
                 <p className="text-sm text-gray-600">{order.date}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Pickup Date</p>
                 <p className="text-sm text-gray-600">{order.pickupDate}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Collection Status</p>
                 <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                   {order.status}
                 </span>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Employee Status</p>
                 <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getEmployeeStatusColor(order.employeeStatus)}`}>
                   {order.employeeStatus}
                 </span>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Product Count</p>
                 <p className="text-sm text-gray-600">{order.productCount} items</p>
@@ -114,7 +114,7 @@ export const OrderCard = ({ order }) => {
                 <p className="text-sm font-medium text-gray-900 mb-1">Email</p>
                 <p className="text-sm text-gray-600">{order.customerEmail}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Collection Address</p>
                 <p className="text-sm text-gray-600">{order.address}</p>
@@ -157,15 +157,17 @@ export const OrderCard = ({ order }) => {
 
       {/* Assign Popup */}
       {showAssignPopup && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="relative bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-auto">
+        <div className="fixed inset-0 backdrop-blur-md bg-black/20 flex items-center justify-center z-50 p-4">
+          <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto shadow-2xl border border-gray-100">
             <button
               onClick={() => setShowAssignPopup(false)}
-              className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 z-10"
+              className="absolute top-4 right-4 w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center hover:from-red-600 hover:to-red-700 transition-all duration-200 z-10 shadow-lg hover:shadow-xl hover:scale-105"
             >
-              ×
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-            <div className="p-6">
+            <div className="p-8">
               <Assign onAssignmentSubmit={handleAssignmentSubmit} />
             </div>
           </div>
@@ -174,20 +176,22 @@ export const OrderCard = ({ order }) => {
 
       {/* Selling Requests Popup */}
       {showSellingRequests && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="relative bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-auto">
+        <div className="fixed inset-0 backdrop-blur-md bg-black/20 flex items-center justify-center z-50 p-4">
+          <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-auto shadow-2xl border border-gray-100">
             <button
               onClick={() => setShowSellingRequests(false)}
-              className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors duration-200 z-10"
+              className="absolute top-4 right-4 w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full flex items-center justify-center hover:from-red-600 hover:to-red-700 transition-all duration-200 z-10 shadow-lg hover:shadow-xl hover:scale-105"
             >
-              ×
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-            <div className="p-6">
+            <div className="p-8">
               <SellingRequests />
             </div>
           </div>
         </div>
-      )}                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+      )}
     </>
   );
 };

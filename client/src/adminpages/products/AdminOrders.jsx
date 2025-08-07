@@ -28,7 +28,7 @@ export const AdminOrders = () => {
             employeeId: order.employeeId || null,
             productCount: order.productSize || 0,
             customerName: order.userId?.fullName || "N/A",
-            customerPhone: order.userId?.phone || "N/A",
+            customerPhone: order.phone || "N/A",
             customerEmail: order.userId?.email || "N/A",
             customerGender: order.userId?.gender || "N/A",
             customerPoints: order.userId?.points || 0,

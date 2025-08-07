@@ -6,7 +6,7 @@ export const EventForm = () => {
   return (
     <div className="relative min-h-screen bg-gray-50 flex flex-col items-center justify-center">
       {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-10">
+        <div className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-10">
           <form className="bg-white rounded-xl shadow-lg p-8 w-full max-w-2xl border border-blue-200 relative">
             {/* X Close Button */}
             <button
