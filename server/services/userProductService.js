@@ -10,5 +10,15 @@ const getProductByOrderId = async (requestId) => {
     return prodData;
 };
 
+const assignPriceToProduct = async (productId, startPrice, endPrice) => {
+    const updatedProduct = await UserProduct.findByIdAndUpdate(
+        productId,
+        { startPrice, endPrice },
+        { new: true } 
+    );
 
-module.exports = { addUserProduct, getProductByOrderId }
+    return updatedProduct;
+};
+
+
+module.exports = { addUserProduct, getProductByOrderId, assignPriceToProduct }
