@@ -40,7 +40,7 @@ export const Login = () => {
     try {
       const { fullName, email, password, gender } = formData;
 
-      const response = await axios.post(`${import.meta.env.BASE_URL}api/auth/signup`, {
+      const response = await axios.post(`${import.meta.env.BASE_URL}/api/auth/signup`, {
         fullName,
         email,
         password,
