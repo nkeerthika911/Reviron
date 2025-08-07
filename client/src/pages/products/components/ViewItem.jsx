@@ -120,7 +120,7 @@ export const ViewItem = ({ order }) => {
 
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.BASE_URL}api/userproduct/${orderId}`);
+        const response = await fetch(`https://reviron-1.onrender.com/api/userproduct/${orderId}`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -176,7 +176,7 @@ export const ViewItem = ({ order }) => {
     try {
       setSubmittingPrice(true);
 
-      const response = await fetch(`${import.meta.env.BASE_URL}api/userproduct/assignprice`, {
+      const response = await fetch(`https://reviron-1.onrender.com/api/userproduct/assignprice`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
