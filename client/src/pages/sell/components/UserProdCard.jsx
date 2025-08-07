@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const UserProductCard = (
+export const UserProdCard = (
   {
     image = null,
     name = "CD/DVD Drive Units",

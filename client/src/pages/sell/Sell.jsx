@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { SellForm } from './components/SellForm';
 import { OrderCard } from '../../adminpages/products/components/OrderCard';
-import { UserProductCard } from './components/UserProductCard';
+import { UserProdCard } from './components/UserProdCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 
@@ -255,7 +255,7 @@ export const Sell = () => {
                     >
                       {products.map((product) => (
                         <div key={product.id} className="flex-shrink-0">
-                          <UserProductCard
+                          <UserProdCard
                             name={product.name}
                             category={product.category}
                             condition={product.condition}
