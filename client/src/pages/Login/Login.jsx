@@ -40,7 +40,7 @@ export const Login = () => {
     try {
       const { fullName, email, password, gender } = formData;
 
-      const response = await axios.post(`https://reviron-1.onrender.com//api/auth/signup`, {
+      const response = await axios.post(`https://reviron-1.onrender.com/api/auth/signup`, {
         fullName,
         email,
         password,
