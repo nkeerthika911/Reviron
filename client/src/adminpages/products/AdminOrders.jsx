@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Navbar } from "../../pages/Navbar";
+import { AdminNavbar } from '../AdminNavbar';
 import { OrderCard } from "./components/OrderCard";
 
 export const AdminOrders = () => {
@@ -57,7 +57,7 @@ export const AdminOrders = () => {
   if (loading) {
     return (
       <div className="h-screen w-screen bg-gray-50 flex flex-col">
-        <Navbar />
+        <AdminNavbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
@@ -71,7 +71,7 @@ export const AdminOrders = () => {
   if (error) {
     return (
       <div className="h-screen w-screen bg-gray-50 flex flex-col">
-        <Navbar />
+        <AdminNavbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-red-500 text-xl mb-2">⚠️</div>
@@ -84,7 +84,7 @@ export const AdminOrders = () => {
 
   return (
     <div className="h-screen w-screen bg-gray-50 flex flex-col">
-      <Navbar />
+      <AdminNavbar />
       <div className="flex-1 overflow-y-auto p-4">
         <div className="max-w-6xl mx-auto">
           <div className="mb-6">
