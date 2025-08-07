@@ -33,11 +33,11 @@ const userProductSchema = new mongoose.Schema({
     },
     startPrice: {
         type: Number,
-        default: 0,
+        default: -1,
     },
     endPrice: {
         type: Number,
-        default: 0,
+        default: -1,
     },
 });
 

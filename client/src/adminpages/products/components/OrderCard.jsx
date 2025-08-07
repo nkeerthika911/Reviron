@@ -9,13 +9,13 @@ export const OrderCard = ({ order }) => {
   const navigate = useNavigate();
 
   const handleViewItems = () => {
-    navigate(`/admin/itemview/${order.id}`);
+    navigate(`/admin/itemview/${order.id}`, { state: { order } });
   };
+
 
   const handleAssignmentSubmit = (rate, employee) => {
     console.log("Submitted assignment with:", rate, employee);
     setShowAssignPopup(false);
-    // Here you can make API call to update the assignment
   };
 
   const getStatusColor = (status) => {
@@ -67,36 +67,36 @@ export const OrderCard = ({ order }) => {
                 <p className="text-sm font-medium text-gray-900 mb-1">Request ID</p>
                 <p className="text-sm text-gray-600 font-mono">{order.requestId}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Customer</p>
                 <p className="text-sm text-gray-600">{order.customerName}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Created Date</p>
                 <p className="text-sm text-gray-600">{order.date}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Pickup Date</p>
                 <p className="text-sm text-gray-600">{order.pickupDate}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Collection Status</p>
                 <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                   {order.status}
                 </span>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Employee Status</p>
                 <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${getEmployeeStatusColor(order.employeeStatus)}`}>
                   {order.employeeStatus}
                 </span>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Product Count</p>
                 <p className="text-sm text-gray-600">{order.productCount} items</p>
@@ -114,7 +114,7 @@ export const OrderCard = ({ order }) => {
                 <p className="text-sm font-medium text-gray-900 mb-1">Email</p>
                 <p className="text-sm text-gray-600">{order.customerEmail}</p>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium text-gray-900 mb-1">Collection Address</p>
                 <p className="text-sm text-gray-600">{order.address}</p>
@@ -191,7 +191,7 @@ export const OrderCard = ({ order }) => {
             </div>
           </div>
         </div>
-      )}                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+      )}
     </>
   );
 };
