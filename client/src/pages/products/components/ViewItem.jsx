@@ -4,60 +4,68 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 
 // Product Card Component
-const ProductCard = ({ product }) => {
-  return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-full h-48 object-cover"
-      />
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
+const ProductCard = ({ product, onAssignPrice }) => (
+  <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-gray-200">
+    <div className="relative">
+      <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+        {/* Category-based icon or default image */}
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mb-2">
+            {product.category === 'electronics' ? (
+              <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            ) : (
+              <svg className="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+              </svg>
+            )}
+          </div>
+          <span className="text-xs text-gray-500 capitalize">{product.category}</span>
+        </div>
+      </div>
+      <div className="absolute top-2 right-2 bg-white rounded-full px-2 py-1 text-xs font-medium text-gray-600 shadow">
+        Qty: {product.quantity}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+    </div>
+    <div className="p-4">
+      <h3 className="text-lg font-semibold text-gray-800 truncate">{product.name}</h3>
+      <div className="flex items-center justify-between mt-3">
+        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+          product.condition === 'Working' 
+            ? 'bg-green-100 text-green-800' 
+            : product.condition === 'Damaged' 
+              ? 'bg-red-100 text-red-800'
+              : 'bg-yellow-100 text-yellow-800'
+        }`}>
+          {product.condition}
+        </span>
+        <span className="text-xs text-gray-500 capitalize">{product.category}</span>
+      </div>
+      {product.description && (
+        <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+      )}
+      <div className="mt-3 text-sm">
+        {product.startPrice === -1 && product.endPrice === -1 ? (
+          <button 
+            onClick={() => onAssignPrice(product)}
+            className="bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 w-full"
+          >
+            Assign Price Range
+          </button>
+        ) : (
+          <>
+            <span className="text-gray-500">Price Range: </span>
+            <span className="font-medium text-gray-900">
+              ₹{product.startPrice} - ₹{product.endPrice}
+            </span>
+          </>
+        )}
       </div>
     </div>
-  );
-};
-
-// Products Data
-const products = [
-  {
-    id: 1,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 2,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 3,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 4,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 5,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-  {
-    id: 6,
-    name: "Fan motor - Working",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop",
-  },
-];
+  </div>
+);
 
 // ViewItem Component
 export const ViewItem = ({ order }) => {
@@ -66,6 +74,10 @@ export const ViewItem = ({ order }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showPriceModal, setShowPriceModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [startPrice, setStartPrice] = useState("");
+  const [endPrice, setEndPrice] = useState("");
   
   const {
     requestId,
@@ -146,34 +158,6 @@ export const ViewItem = ({ order }) => {
 
   return (
     <div className="min-h-screen w-full">
-      {/* Header Section */}
-      <div className="bg-white shadow-sm border-b border-gray-200 sticky top-16 z-10">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => navigate(-1)}
-                className="p-2 hover:bg-gray-100 rounded-xl transition-colors duration-200 group"
-                title="Go back"
-              >
-                <svg className="w-6 h-6 text-gray-600 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-              </button>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Order Details</h1>
-                <p className="text-gray-600 text-sm mt-1">Request ID: <span className="font-mono font-medium">{requestId}</span></p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <span className={`px-4 py-2 rounded-xl text-sm font-semibold border ${getStatusColor(status)}`}>
-                {status}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex flex-wrap lg:flex-nowrap gap-6">
@@ -211,7 +195,14 @@ export const ViewItem = ({ order }) => {
             ) : products.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                  <ProductCard 
+                    key={product._id} 
+                    product={product}
+                    onAssignPrice={(product) => {
+                      setSelectedProduct(product);
+                      setShowPriceModal(true);
+                    }}
+                  />
                 ))}
               </div>
             ) : (
@@ -368,6 +359,59 @@ export const ViewItem = ({ order }) => {
           </div>
         </div>
       </div>
+
+      {/* Price Modal */}
+      {showPriceModal && selectedProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+
+          <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md relative">
+            <button 
+              onClick={() => setShowPriceModal(false)} 
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Assign Price Range</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Product Name</label>
+                <div className="bg-gray-50 p-3 rounded-lg text-gray-900 font-semibold">{selectedProduct.name}</div>
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">Start Price</label>
+                <input 
+                  type="number" 
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                  value={startPrice} 
+                  onChange={(e) => setStartPrice(e.target.value)} 
+                  placeholder="Enter start price" 
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1">End Price</label>
+                <input 
+                  type="number" 
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                  value={endPrice} 
+                  onChange={(e) => setEndPrice(e.target.value)} 
+                  placeholder="Enter end price" 
+                />
+              </div>
+              <button 
+                onClick={() => { 
+                  console.log(`Submitting price range for ${selectedProduct._id}: ₹${startPrice}-₹${endPrice}`); 
+                  setShowPriceModal(false); 
+                }} 
+                className="bg-[#2E8B57] hover:bg-[#3CB371] text-white px-4 py-2 rounded-lg w-full font-medium transition-colors duration-200"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
