@@ -162,7 +162,7 @@ export const ViewItem = ({ order }) => {
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex flex-wrap lg:flex-nowrap gap-6">
           {/* Product Section */}
-          <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+          <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-lg border border-gray-100 p-8 max-h-[600px] overflow-y-auto" style={{maxHeight: '600px', overflowY: 'auto'}}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Items</h2>
               <span className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold">
@@ -219,7 +219,7 @@ export const ViewItem = ({ order }) => {
           </div>
 
           {/* Order & Customer Info */}
-          <div className="w-full lg:w-96 flex-shrink-0 space-y-6">
+          <div className="w-full lg:w-96 flex-shrink-0 space-y-6 max-h-[600px] overflow-y-auto" style={{maxHeight: '600px', overflowY: 'auto'}}>
             {/* Customer Profile Card */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
               <div className="flex flex-col items-center text-center mb-6">
