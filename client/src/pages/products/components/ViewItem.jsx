@@ -78,6 +78,8 @@ export const ViewItem = ({ order }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [startPrice, setStartPrice] = useState("");
   const [endPrice, setEndPrice] = useState("");
+  const [submittingPrice, setSubmittingPrice] = useState(false);
+  const [priceError, setPriceError] = useState("");
   
   const {
     requestId,
@@ -142,6 +144,104 @@ export const ViewItem = ({ order }) => {
     fetchProducts();
   }, [orderId]);
 
+  // Handle price assignment
+  const handleAssignPrice = async () => {
+    // Reset previous errors
+    setPriceError("");
+    
+    // Validation
+    if (!startPrice || !endPrice) {
+      setPriceError("Both start price and end price are required");
+      return;
+    }
+
+    const startPriceNum = parseFloat(startPrice);
+    const endPriceNum = parseFloat(endPrice);
+
+    if (isNaN(startPriceNum) || isNaN(endPriceNum)) {
+      setPriceError("Please enter valid numbers for prices");
+      return;
+    }
+
+    if (startPriceNum < 0 || endPriceNum < 0) {
+      setPriceError("Prices cannot be negative");
+      return;
+    }
+
+    if (startPriceNum >= endPriceNum) {
+      setPriceError("Start price must be less than end price");
+      return;
+    }
+
+    try {
+      setSubmittingPrice(true);
+
+      const response = await fetch('http://localhost:5000/api/userproduct/assignprice', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId: selectedProduct._id,
+          startPrice: startPriceNum,
+          endPrice: endPriceNum,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || `HTTP error! status: ${response.status}`);
+      }
+
+      if (result.success) {
+        // Update the products list with the new price
+        setProducts(prevProducts => 
+          prevProducts.map(product => 
+            product._id === selectedProduct._id 
+              ? { ...product, startPrice: startPriceNum, endPrice: endPriceNum }
+              : product
+          )
+        );
+
+        // Close modal and reset form
+        setShowPriceModal(false);
+        setSelectedProduct(null);
+        setStartPrice("");
+        setEndPrice("");
+        
+        // Optional: Show success message
+        console.log('Price assigned successfully:', result.data);
+      } else {
+        throw new Error(result.message || 'Failed to assign price');
+      }
+
+    } catch (err) {
+      console.error('Error assigning price:', err);
+      setPriceError(err.message || 'Failed to assign price. Please try again.');
+    } finally {
+      setSubmittingPrice(false);
+    }
+  };
+
+  // Handle opening the price modal
+  const handleOpenPriceModal = (product) => {
+    setSelectedProduct(product);
+    setStartPrice("");
+    setEndPrice("");
+    setPriceError("");
+    setShowPriceModal(true);
+  };
+
+  // Handle closing the price modal
+  const handleClosePriceModal = () => {
+    setShowPriceModal(false);
+    setSelectedProduct(null);
+    setStartPrice("");
+    setEndPrice("");
+    setPriceError("");
+  };
+
   const getStatusColor = (status) => {
     const colors = {
       'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
@@ -198,10 +298,7 @@ export const ViewItem = ({ order }) => {
                   <ProductCard 
                     key={product._id} 
                     product={product}
-                    onAssignPrice={(product) => {
-                      setSelectedProduct(product);
-                      setShowPriceModal(true);
-                    }}
+                    onAssignPrice={handleOpenPriceModal}
                   />
                 ))}
               </div>
@@ -363,51 +460,81 @@ export const ViewItem = ({ order }) => {
       {/* Price Modal */}
       {showPriceModal && selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-
           <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md relative">
             <button 
-              onClick={() => setShowPriceModal(false)} 
+              onClick={handleClosePriceModal} 
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              disabled={submittingPrice}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
               </svg>
             </button>
             <h3 className="text-xl font-bold text-gray-900 mb-4">Assign Price Range</h3>
+            
+            {priceError && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-sm">{priceError}</p>
+              </div>
+            )}
+            
             <div className="space-y-4">
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Product Name</label>
                 <div className="bg-gray-50 p-3 rounded-lg text-gray-900 font-semibold">{selectedProduct.name}</div>
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Start Price</label>
+                <label className="block text-gray-700 font-medium mb-1">Start Price (₹)</label>
                 <input 
                   type="number" 
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                   value={startPrice} 
                   onChange={(e) => setStartPrice(e.target.value)} 
                   placeholder="Enter start price" 
+                  disabled={submittingPrice}
+                  min="0"
+                  step="0.01"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-1">End Price</label>
+                <label className="block text-gray-700 font-medium mb-1">End Price (₹)</label>
                 <input 
                   type="number" 
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
                   value={endPrice} 
                   onChange={(e) => setEndPrice(e.target.value)} 
                   placeholder="Enter end price" 
+                  disabled={submittingPrice}
+                  min="0"
+                  step="0.01"
                 />
               </div>
-              <button 
-                onClick={() => { 
-                  console.log(`Submitting price range for ${selectedProduct._id}: ₹${startPrice}-₹${endPrice}`); 
-                  setShowPriceModal(false); 
-                }} 
-                className="bg-[#2E8B57] hover:bg-[#3CB371] text-white px-4 py-2 rounded-lg w-full font-medium transition-colors duration-200"
-              >
-                Submit
-              </button>
+              <div className="flex gap-3">
+                <button 
+                  onClick={handleClosePriceModal}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
+                  disabled={submittingPrice}
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleAssignPrice}
+                  disabled={submittingPrice}
+                  className="flex-1 bg-[#2E8B57] hover:bg-[#3CB371] disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
+                >
+                                        {submittingPrice ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting...
+                    </>
+                  ) : (
+                    'Submit'
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
