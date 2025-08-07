@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 // Product Card Component
 const ProductCard = ({ product, onAssignPrice }) => (
@@ -32,13 +33,12 @@ const ProductCard = ({ product, onAssignPrice }) => (
     <div className="p-4">
       <h3 className="text-lg font-semibold text-gray-800 truncate">{product.name}</h3>
       <div className="flex items-center justify-between mt-3">
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-          product.condition === 'Working' 
-            ? 'bg-green-100 text-green-800' 
-            : product.condition === 'Damaged' 
+        <span className={`px-2 py-1 rounded-full text-xs font-medium ${product.condition === 'Working'
+            ? 'bg-green-100 text-green-800'
+            : product.condition === 'Damaged'
               ? 'bg-red-100 text-red-800'
               : 'bg-yellow-100 text-yellow-800'
-        }`}>
+          }`}>
           {product.condition}
         </span>
         <span className="text-xs text-gray-500 capitalize">{product.category}</span>
@@ -48,7 +48,7 @@ const ProductCard = ({ product, onAssignPrice }) => (
       )}
       <div className="mt-3 text-sm">
         {product.startPrice === -1 && product.endPrice === -1 ? (
-          <button 
+          <button
             onClick={() => onAssignPrice(product)}
             className="bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 w-full"
           >
@@ -80,7 +80,7 @@ export const ViewItem = ({ order }) => {
   const [endPrice, setEndPrice] = useState("");
   const [submittingPrice, setSubmittingPrice] = useState(false);
   const [priceError, setPriceError] = useState("");
-  
+
   const {
     requestId,
     customerName,
@@ -120,22 +120,29 @@ export const ViewItem = ({ order }) => {
 
       try {
         setLoading(true);
-        const response = await fetch(`https://reviron-1.onrender.com/api/userproduct/${orderId}`);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          setProducts(result.data || []);
+
+        const response = await axios.get(`https://reviron-1.onrender.com/api/userproduct/${orderId}`);
+
+        if (response.data.success) {
+          setProducts(response.data.data || []);
         } else {
-          throw new Error(result.message || 'Failed to fetch products');
+          throw new Error(response.data.message || 'Failed to fetch products');
         }
+
       } catch (err) {
         console.error('Error fetching products:', err);
-        setError(err.message || 'Failed to fetch products');
+
+        // Handle different types of axios errors
+        if (err.response) {
+          // Server responded with error status
+          setError(`Server error: ${err.response.status} - ${err.response.data?.message || err.message}`);
+        } else if (err.request) {
+          // Request was made but no response received
+          setError('Network error: No response from server');
+        } else {
+          // Something else happened
+          setError(err.message || 'Failed to fetch products');
+        }
       } finally {
         setLoading(false);
       }
@@ -148,7 +155,7 @@ export const ViewItem = ({ order }) => {
   const handleAssignPrice = async () => {
     // Reset previous errors
     setPriceError("");
-    
+
     // Validation
     if (!startPrice || !endPrice) {
       setPriceError("Both start price and end price are required");
@@ -176,29 +183,25 @@ export const ViewItem = ({ order }) => {
     try {
       setSubmittingPrice(true);
 
-      const response = await fetch(`https://reviron-1.onrender.com/api/userproduct/assignprice`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await axios.patch(
+        `https://reviron-1.onrender.com/api/userproduct/assignprice`,
+        {
           productId: selectedProduct._id,
           startPrice: startPriceNum,
           endPrice: endPriceNum,
-        }),
-      });
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || `HTTP error! status: ${response.status}`);
-      }
-
-      if (result.success) {
+      if (response.data.success) {
         // Update the products list with the new price
-        setProducts(prevProducts => 
-          prevProducts.map(product => 
-            product._id === selectedProduct._id 
+        setProducts(prevProducts =>
+          prevProducts.map(product =>
+            product._id === selectedProduct._id
               ? { ...product, startPrice: startPriceNum, endPrice: endPriceNum }
               : product
           )
@@ -209,48 +212,30 @@ export const ViewItem = ({ order }) => {
         setSelectedProduct(null);
         setStartPrice("");
         setEndPrice("");
-        
+
         // Optional: Show success message
-        console.log('Price assigned successfully:', result.data);
+        console.log('Price assigned successfully:', response.data.data);
       } else {
-        throw new Error(result.message || 'Failed to assign price');
+        throw new Error(response.data.message || 'Failed to assign price');
       }
 
     } catch (err) {
       console.error('Error assigning price:', err);
-      setPriceError(err.message || 'Failed to assign price. Please try again.');
+
+      // Handle different types of axios errors
+      if (err.response) {
+        // Server responded with error status
+        setPriceError(`Server error: ${err.response.status} - ${err.response.data?.message || 'Failed to assign price'}`);
+      } else if (err.request) {
+        // Request was made but no response received
+        setPriceError('Network error: Unable to connect to server');
+      } else {
+        // Something else happened
+        setPriceError(err.message || 'Failed to assign price. Please try again.');
+      }
     } finally {
       setSubmittingPrice(false);
     }
-  };
-
-  // Handle opening the price modal
-  const handleOpenPriceModal = (product) => {
-    setSelectedProduct(product);
-    setStartPrice("");
-    setEndPrice("");
-    setPriceError("");
-    setShowPriceModal(true);
-  };
-
-  // Handle closing the price modal
-  const handleClosePriceModal = () => {
-    setShowPriceModal(false);
-    setSelectedProduct(null);
-    setStartPrice("");
-    setEndPrice("");
-    setPriceError("");
-  };
-
-  const getStatusColor = (status) => {
-    const colors = {
-      'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      'In Progress': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Completed': 'bg-green-100 text-green-800 border-green-200',
-      'Assigned': 'bg-purple-100 text-purple-800 border-purple-200',
-      'Available': 'bg-gray-100 text-gray-800 border-gray-200',
-    };
-    return colors[status] || 'bg-gray-100 text-gray-800 border-gray-200';
   };
 
   // Calculate actual product count from fetched data
@@ -262,14 +247,14 @@ export const ViewItem = ({ order }) => {
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex flex-wrap lg:flex-nowrap gap-6">
           {/* Product Section */}
-          <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-lg border border-gray-100 p-8 max-h-[600px] overflow-y-auto" style={{maxHeight: '600px', overflowY: 'auto'}}>
+          <div className="flex-1 min-w-0 bg-white rounded-2xl shadow-lg border border-gray-100 p-8 max-h-[600px] overflow-y-auto" style={{ maxHeight: '600px', overflowY: 'auto' }}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-900">Items</h2>
               <span className="bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold">
                 {actualProductCount} {actualProductCount === 1 ? 'item' : 'items'}
               </span>
             </div>
-            
+
             {loading ? (
               <div className="flex flex-col items-center justify-center h-48 text-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
@@ -285,8 +270,8 @@ export const ViewItem = ({ order }) => {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-700 mb-1">Error Loading Products</h3>
                 <p className="text-gray-500 mb-4">{error}</p>
-                <button 
-                  onClick={() => window.location.reload()} 
+                <button
+                  onClick={() => window.location.reload()}
                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   Retry
@@ -295,8 +280,8 @@ export const ViewItem = ({ order }) => {
             ) : products.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {products.map((product) => (
-                  <ProductCard 
-                    key={product._id} 
+                  <ProductCard
+                    key={product._id}
                     product={product}
                     onAssignPrice={handleOpenPriceModal}
                   />
@@ -316,7 +301,7 @@ export const ViewItem = ({ order }) => {
           </div>
 
           {/* Order & Customer Info */}
-          <div className="w-full lg:w-96 flex-shrink-0 space-y-6 max-h-[600px] overflow-y-auto" style={{maxHeight: '600px', overflowY: 'auto'}}>
+          <div className="w-full lg:w-96 flex-shrink-0 space-y-6 max-h-[600px] overflow-y-auto" style={{ maxHeight: '600px', overflowY: 'auto' }}>
             {/* Customer Profile Card */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
               <div className="flex flex-col items-center text-center mb-6">
@@ -374,13 +359,13 @@ export const ViewItem = ({ order }) => {
                 </svg>
                 Order Information
               </h4>
-              
+
               <div className="space-y-5">
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
                   <span className="text-gray-600 font-medium">Request ID</span>
                   <span className="text-gray-900 font-mono bg-white px-3 py-1 rounded-lg border text-sm">{requestId}</span>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-100">
                     <div className="text-blue-600 text-sm font-medium mb-1">Created</div>
@@ -391,7 +376,7 @@ export const ViewItem = ({ order }) => {
                     <div className="text-gray-900 font-semibold">{pickupDate}</div>
                   </div>
                 </div>
-                
+
                 <div className="text-center p-4 bg-purple-50 rounded-xl border border-purple-100">
                   <div className="text-purple-600 text-sm font-medium mb-1">Total Items</div>
                   <div className="text-gray-900 font-bold text-xl">{actualProductCount}</div>
@@ -404,7 +389,7 @@ export const ViewItem = ({ order }) => {
                       {status}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between p-3 bg-indigo-50 rounded-xl">
                     <span className="text-gray-700 font-medium">Employee Status</span>
                     <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(employeeStatus)}`}>
@@ -424,7 +409,7 @@ export const ViewItem = ({ order }) => {
                 </svg>
                 Address Information
               </h4>
-              
+
               <div className="space-y-5">
                 <div>
                   <div className="flex items-center mb-3">
@@ -461,23 +446,23 @@ export const ViewItem = ({ order }) => {
       {showPriceModal && selectedProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
           <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md relative">
-            <button 
-              onClick={handleClosePriceModal} 
+            <button
+              onClick={handleClosePriceModal}
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
               disabled={submittingPrice}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
             <h3 className="text-xl font-bold text-gray-900 mb-4">Assign Price Range</h3>
-            
+
             {priceError && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p className="text-red-600 text-sm">{priceError}</p>
               </div>
             )}
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Product Name</label>
@@ -485,12 +470,12 @@ export const ViewItem = ({ order }) => {
               </div>
               <div>
                 <label className="block text-gray-700 font-medium mb-1">Start Price (₹)</label>
-                <input 
-                  type="number" 
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                  value={startPrice} 
-                  onChange={(e) => setStartPrice(e.target.value)} 
-                  placeholder="Enter start price" 
+                <input
+                  type="number"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={startPrice}
+                  onChange={(e) => setStartPrice(e.target.value)}
+                  placeholder="Enter start price"
                   disabled={submittingPrice}
                   min="0"
                   step="0.01"
@@ -498,31 +483,31 @@ export const ViewItem = ({ order }) => {
               </div>
               <div>
                 <label className="block text-gray-700 font-medium mb-1">End Price (₹)</label>
-                <input 
-                  type="number" 
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                  value={endPrice} 
-                  onChange={(e) => setEndPrice(e.target.value)} 
-                  placeholder="Enter end price" 
+                <input
+                  type="number"
+                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={endPrice}
+                  onChange={(e) => setEndPrice(e.target.value)}
+                  placeholder="Enter end price"
                   disabled={submittingPrice}
                   min="0"
                   step="0.01"
                 />
               </div>
               <div className="flex gap-3">
-                <button 
+                <button
                   onClick={handleClosePriceModal}
                   className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
                   disabled={submittingPrice}
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   onClick={handleAssignPrice}
                   disabled={submittingPrice}
                   className="flex-1 bg-[#2E8B57] hover:bg-[#3CB371] disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center"
                 >
-                                        {submittingPrice ? (
+                  {submittingPrice ? (
                     <>
                       <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

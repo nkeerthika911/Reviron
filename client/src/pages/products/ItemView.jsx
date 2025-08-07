@@ -39,7 +39,7 @@ export const ItemView = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       <Navbar />
-      <div className="pt-16">
+      <div className="">
         <ViewItem order={order} />
       </div>
     </div>
