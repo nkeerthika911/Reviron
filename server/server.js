@@ -25,6 +25,8 @@ app.use("/api/collection", require('./routes/collectionRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use('/api/payment', require('./routes/paymentRoutes'));
 
+
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

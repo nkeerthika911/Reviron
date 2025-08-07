@@ -58,10 +58,31 @@ const getCollectionDataByUserIdController = asyncHandler(async (req, res) => {
 });
 
 
+const assignEmployeeToCollection = asyncHandler(async (req, res) => {
+    const { collectionId, employeeId } = req.body;
+
+    const updatedCollection = await collectionService.assignEmployee(collectionId, employeeId);
+
+    if (!updatedCollection) {
+        throw Object.assign(new Error("Failed to assign employee"), { statusCode: 400 });
+    }
+
+    res.status(200).json({
+        success: true,
+        data: {
+            message: "Employee assigned successfully",
+            data: updatedCollection
+        }
+    });
+    console.log("Assigning employee", employeeId, "to collection", collectionId);
+
+
+});
 
 
 module.exports = {
     addCollectionRequestController,
     getAllCollectionData,
     getCollectionDataByUserIdController,
+    assignEmployeeToCollection,
 }
