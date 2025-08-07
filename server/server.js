@@ -9,7 +9,7 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT;
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://reviron.vercel.app'],
+  origin: ['http://localhost:5173', 'https://reviron.vercel.app', 'https://www.reviron.in/'],
   credentials: true 
 }));
 
