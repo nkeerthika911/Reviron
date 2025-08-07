@@ -15,4 +15,24 @@ const getCollectionDataByUserId = async (userId) => {
     return collection;
 }
 
-module.exports = { addCollectionRequest, getAllCollectionData, getCollectionDataByUserId };
+const assignEmployee = async (collectionId, employeeId) => {
+  try {
+    const updated = await Collection.findByIdAndUpdate(
+      collectionId,
+      {
+        employeeStatus: 'assigned',
+        collectionStatus: 'pickup initiated',
+        employeeId: employeeId
+      },
+      { new: true } // this returns the updated document
+    );
+    console.log("Finding and updating collection with ID:", collectionId);
+
+    return updated;
+  } catch (error) {
+    console.error('Error in assignEmployee:', error.message);
+    return null;
+  }
+};
+
+module.exports = { addCollectionRequest, getAllCollectionData, getCollectionDataByUserId ,assignEmployee , };

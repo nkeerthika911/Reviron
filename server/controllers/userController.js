@@ -30,6 +30,29 @@ const getUserByIdController = asyncHandler(async (req, res) => {
   });
 });
 
+
+const editProfileController = asyncHandler(async (req, res) => {
+  const userId = req.params.userid;
+  const { phone, email } = req.body;
+
+  if (!phone && !email) {
+    throw Object.assign(new Error("Phone number or email is required"), { statusCode: 400 });
+  }
+
+  const updatedUser = await userService.editUserById(userId, { phone, email });
+
+  if (!updatedUser) {
+    throw Object.assign(new Error("User not found"), { statusCode: 404 });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Profile updated successfully",
+    data: updatedUser,
+  });
+});
+
+
 const uploadProfileController = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -57,4 +80,4 @@ const uploadProfileController = async (req, res, next) => {
   }
 };
 
-module.exports = { getUserByIdController, uploadProfileController }
+module.exports = { getUserByIdController, uploadProfileController, editProfileController }
