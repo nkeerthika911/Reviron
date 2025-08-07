@@ -1,6 +1,7 @@
 import React from 'react'
 import {Orders} from './Orders.jsx'
 import { AdminNavbar } from '../AdminNavbar.jsx'
+import { UpdatePopUpStatus } from './UpdatePopUpStatus.jsx'
 
 export const OrdersPage = () => {
   return (
@@ -14,6 +15,7 @@ export const OrdersPage = () => {
       <div className="pt-16 pl-[70px]"> {/* Adjust pt-16 based on your navbar height */}
         <Orders />
       </div>
+      
     </div>
   )
 }
