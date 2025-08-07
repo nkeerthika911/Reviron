@@ -163,7 +163,8 @@ export function Buynow({ product }) {
                     setEditIndex(null);
                     setAddressForm({ name: '', type: 'HOME', address: '', mobile: '', isDefault: false });
                   }}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm"
+                  className="text-white px-4 py-2 rounded-lg text-sm hover:opacity-90 transition"
+style={{ backgroundColor: '#53975cff' }}
                 >
                   Add New Address
                 </button>
@@ -324,10 +325,14 @@ export function Buynow({ product }) {
 
                 <button
                   onClick={handleContinueToPayment}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+  className="w-full text-white py-3 px-4 rounded-lg font-semibold text-sm transition duration-200 ease-in-out hover:bg-green-900"
+  style={{ backgroundColor: '#53975cff' }}
                 >
-                  Continue to Payment
+
+                Continue to Payment
                 </button>
+
+
 
                 <div className="text-center">
                   <p className="text-xs text-gray-500">
@@ -420,7 +425,7 @@ export function Buynow({ product }) {
                 </button>
                 <button
                   onClick={handleAddOrEditAddress}
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-grren-700 font-medium"
                 >
                   {editIndex !== null ? 'Update Address' : 'Add Address'}
                 </button>
