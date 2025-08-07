@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { SellForm } from './components/SellForm';
 import { UserProductCard } from './components/userProductCard';
+import { OrderCard } from '../../adminpages/products/components/OrderCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 
@@ -13,6 +14,56 @@ export const Sell = () => {
   const scrollRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+
+  
+  // Static data for orders
+  const [orders] = useState([
+    {
+      id: '1',
+      requestId: 'REQ-2023-001',
+      customerName: 'John Doe',
+      date: '2023-05-15',
+      pickupDate: '2023-05-20',
+      status: 'Processing',
+      employeeStatus: 'Assigned',
+      productCount: 3,
+      customerPhone: '+1 555-123-4567',
+      customerEmail: 'john.doe@example.com',
+      address: '123 Main St, Anytown, USA',
+      customerAddress: '123 Main St, Anytown, USA',
+      profileImage: 'https://randomuser.me/api/portraits/men/1.jpg'
+    },
+    {
+      id: '2',
+      requestId: 'REQ-2023-002',
+      customerName: 'Jane Smith',
+      date: '2023-05-18',
+      pickupDate: '2023-05-23',
+      status: 'Pending',
+      employeeStatus: 'Unassigned',
+      productCount: 5,
+      customerPhone: '+1 555-987-6543',
+      customerEmail: 'jane.smith@example.com',
+      address: '456 Oak Ave, Somewhere, USA',
+      customerAddress: '456 Oak Ave, Somewhere, USA',
+      profileImage: 'https://randomuser.me/api/portraits/women/2.jpg'
+    },
+    {
+      id: '3',
+      requestId: 'REQ-2023-003',
+      customerName: 'Robert Johnson',
+      date: '2023-05-20',
+      pickupDate: '2023-05-25',
+      status: 'Completed',
+      employeeStatus: 'Assigned',
+      productCount: 2,
+      customerPhone: '+1 555-456-7890',
+      customerEmail: 'robert.j@example.com',
+      address: '789 Pine Rd, Nowhere, USA',
+      customerAddress: '789 Pine Rd, Nowhere, USA',
+      profileImage: 'https://randomuser.me/api/portraits/men/3.jpg'
+    }
+  ]);
 
   const getUserIdFromToken = () => {
     const token = localStorage.getItem("jwt");
@@ -148,7 +199,7 @@ export const Sell = () => {
       <Navbar />
 
       <div className="flex p-4 w-full h-full overflow-hidden">
-        {showForm && (
+        {showForm ? (
           <>
             {/* Left: Sell Form */}
             <div className="flex-1 mr-2">
@@ -264,6 +315,21 @@ export const Sell = () => {
               )}
             </div>
           </>
+        ) : (
+          <div className="w-full h-full overflow-y-auto p-4">
+            <div className="max-w-6xl mx-auto">
+              <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Collection Requests</h1>
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <OrderCard 
+                    key={order.id} 
+                    order={order} 
+                    type="user" 
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
