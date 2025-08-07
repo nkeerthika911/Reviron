@@ -20,7 +20,7 @@ const getAllProductsController = asyncHandler(async (req, res) => {
         const productid = product._id.toString();
         const imageDir = path.join(__dirname, "..", "uploads", "productPhotos", productid);
         const files = fs.readdirSync(imageDir).filter(file => file.endsWith(".png"));
-        const firstImage = `${BASE_URL}/uploads/productPhotos/${productid}/${files[0]}`;
+        const firstImage = `https://reviron-1.onrender.com/uploads/productPhotos/${productid}/${files[0]}`;
 
         return {
             ...product.toObject(),

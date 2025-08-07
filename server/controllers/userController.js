@@ -16,7 +16,7 @@ const getUserByIdController = asyncHandler(async (req, res) => {
 
   const photoPath = path.join(__dirname, "..", "uploads", "profilePictures", `${userId}.png`);
   const profilePhoto = fs.existsSync(photoPath)
-    ? `${BASE_URL}/uploads/profilePictures/${userId}.png`
+    ? `https://reviron-1.onrender.com/uploads/profilePictures/${userId}.png`
     : null;
   res.status(200).json({
     success: true,
