@@ -52,7 +52,7 @@ export const ProductCard = ({ product }) => {
 
     try {
       const res = await axios.patch(`https://reviron-1.onrender.com/api/products/favourite/${product._id}`);
-
+      console.log(product._id);
       if (res.status === 200) {
         setLiked(res.data.data.favorite); // Update the state from server response
       } else {

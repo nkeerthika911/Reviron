@@ -111,7 +111,7 @@ export const SignupForm = ({ onSignup }) => {
     };
 
     const handleGoogleLogin = () => {
-        console.log('Google login clicked');
+        console.log('');
     };
 
     return (

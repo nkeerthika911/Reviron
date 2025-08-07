@@ -49,7 +49,7 @@ export const LoginForm = ({ onLogin }) => {
   };
 
   const handleGoogleLogin = () => {
-    console.log('Google login clicked');
+    console.log('');
   };
 
   return (
