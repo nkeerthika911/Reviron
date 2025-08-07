@@ -8,6 +8,7 @@ export const SignupForm = ({ onSignup }) => {
         gender: '',
         password: '',
         confirmPassword: '',
+        otp: '', // ✅ Added
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -15,10 +16,7 @@ export const SignupForm = ({ onSignup }) => {
     const [errors, setErrors] = useState({});
     const [passwordStrength, setPasswordStrength] = useState(0);
 
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    };
+    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     const calculatePasswordStrength = (password) => {
         let score = 0;
@@ -96,6 +94,10 @@ export const SignupForm = ({ onSignup }) => {
             newErrors.confirmPassword = 'Please confirm your password';
         } else if (formData.password !== formData.confirmPassword) {
             newErrors.confirmPassword = 'Passwords do not match';
+        }
+
+        if (!formData.otp.trim()) {
+            newErrors.otp = 'OTP is required';
         }
 
         setErrors(newErrors);
@@ -201,7 +203,7 @@ export const SignupForm = ({ onSignup }) => {
             </div>
 
             {/* Confirm Password */}
-            <div className="mb-6">
+            <div className="mb-4">
                 <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
@@ -223,6 +225,20 @@ export const SignupForm = ({ onSignup }) => {
                 <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.confirmPassword || '\u00A0'}</p>
             </div>
 
+            {/* ✅ OTP Field */}
+            <div className="mb-6">
+                <div className="relative">
+                    <input
+                        name="otp"
+                        value={formData.otp}
+                        onChange={handleChange}
+                        placeholder="Enter OTP"
+                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none ${errors.otp ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                </div>
+                <p className="text-sm text-red-500 mt-1 min-h-[20px]">{errors.otp || '\u00A0'}</p>
+            </div>
+
             {/* Signup Button */}
             <button
                 onClick={handleSubmit}
@@ -230,6 +246,7 @@ export const SignupForm = ({ onSignup }) => {
             >
                 Signup
             </button>
+
             {/* Divider */}
             <div className="flex items-center mb-6">
                 <div className="flex-1 border-t border-gray-200"></div>
