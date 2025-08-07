@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Navbar } from '../Navbar';
 import { SellForm } from './components/SellForm';
-import { UserProductCard } from './components/userProductCard';
+import { UserProductCard } from './components/UserProductCard';
 import { OrderCard } from '../../adminpages/products/components/OrderCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
