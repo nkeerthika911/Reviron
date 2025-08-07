@@ -5,4 +5,10 @@ const addUserProduct = async (productData) => {
     return prodData;
 }
 
-module.exports = {addUserProduct,}
+const getProductByOrderId = async (requestId) => {
+    const prodData = await UserProduct.find({ requestId: requestId });
+    return prodData;
+};
+
+
+module.exports = { addUserProduct, getProductByOrderId }

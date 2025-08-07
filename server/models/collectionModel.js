@@ -15,6 +15,10 @@ const collectionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phone:{
+      type: Number,
+      required: true,
+    },
     collectionStatus: {
       type: String,
       enum: ['processing', 'pickup initiated', 'collected'],
