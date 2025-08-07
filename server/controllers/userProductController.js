@@ -75,10 +75,33 @@ const uploadUserProductController = async (req, res, next) => {
     }
 };
 
+const assignPriceController = asyncHandler(async (req, res) => {
+    const { productId, startPrice, endPrice } = req.body;
+
+    if (!productId || startPrice == null || endPrice == null) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
+
+    const updatedProduct = await userProductService.assignPriceToProduct(productId, startPrice, endPrice);
+
+    if (!updatedProduct) {
+        res.status(404);
+        throw new Error("Product not found");
+    }
+
+    res.status(200).json({
+        success: true,
+        message: "Price assigned successfully",
+        data: updatedProduct,
+    });
+});
+
+
 
 
 module.exports = {
     addUserProductController, 
     uploadUserProductController,
-    getProductByOrderId,
+    getProductByOrderId, assignPriceController,
 }
