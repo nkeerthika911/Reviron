@@ -100,8 +100,8 @@ export const AdminOrders = () => {
           ) : (
             <div className="space-y-4">
               {orders.map((order) => (
-                <OrderCard key={order.id} order={order} />
-              ))}
+                <OrderCard key={order.id} order={order} type={'admin'}/>
+              ))} 
             </div>
           )}
         </div>
