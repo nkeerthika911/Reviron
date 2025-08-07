@@ -7,18 +7,26 @@ const orderSchema = new mongoose.Schema(
       ref: 'users',
       required: true,
     },
-    productId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'products',
+    orderAmount: {
+      type: Number,
       required: true,
     },
     status: {
       type: String,
-      default: 'in processing',
+      enum: ['processing', 'shipped', 'delivered'],
+      default: 'processing',
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
     },
   },
   {
-    timestamps: true, // Automatically 
+    timestamps: true,
   }
 );
 
