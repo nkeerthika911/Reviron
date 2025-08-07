@@ -11,7 +11,7 @@ import { Profile } from './pages/profile/Profile'
 import { Sell } from './pages/sell/Sell'
 import { Community } from './pages/community/Community'
 import { AdminOrders } from './adminpages/products/AdminOrders'
-import { WorkerPage } from './adminpages/employee/WorkerPage'
+import { CollectedProductsPage } from './adminpages/CollectedProducts/CollectedProductsPage'
 import { BuyPage } from './pages/products/BuyPage';
 import { Payment } from './pages/products/components/payment';
 import { ItemView } from './pages/products/ItemView'
@@ -37,7 +37,7 @@ function App() {
 
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
           <Route path="/admin/order" element={<AdminOrders/>}></Route>
-          <Route path="/admin/employee" element={<WorkerPage/>}></Route>
+          <Route path="/admin/collectedproducts" element={<CollectedProductsPage/>}></Route>
           <Route path="/admin/itemview/:orderId" element={<ItemView/>}></Route>
 
 
