@@ -23,7 +23,6 @@ app.use("/api/cart", require('./routes/cartRoutes'));
 app.use("/api/userproduct", require('./routes/userProductRoutes'));
 app.use("/api/collection", require('./routes/collectionRoutes'));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use('/api/payment', require('./routes/paymentRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));
 
 app.use(errorHandler);
