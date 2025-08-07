@@ -58,47 +58,30 @@ export const SellingRequests = () => {
 
   return (
     <div style={styles.card}>
-      {/* Left Image */}
-      <div style={styles.imageContainer}>
-        <img
-          src="https://preview.redd.it/what-precautions-should-i-take-before-buying-a-2nd-hand-v0-r5xqh8muipad1.jpeg?auto=webp&s=64dffaa36eb3b1e3c924d884d1f6ed8282865d1e"
-          alt="Product"
-          style={styles.image}
-        />
-      </div>
-
-      {/* Right Content */}
-      <div style={styles.content}>
-        <div>
-          <h2 style={styles.title}>Professional Business Laptop</h2>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Assign Rate:</label>
-            <div style={styles.priceInputBox}>
-              <span style={styles.currency}>₹</span>
-              <input
-                type="number"
-                value={assignRate}
-                onChange={(e) => setAssignRate(e.target.value)}
-                placeholder="0.00"
-                style={styles.input}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div style={{ display: "flex", gap: "12px" }}>
-          <button
-            style={styles.cashBtn}
-            onClick={() => {
-              setShowCameraModal(true);
-              handleStartCamera();
+      {/* Right Content Only - Image removed */}
+      <div style={{ ...styles.content, alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, justifyContent: 'center' }}>
+          <label style={{ ...styles.title, marginBottom: 0, textAlign: 'center', fontSize: '1.5rem' }}>Total Amount :</label>
+          <input
+            type="number"
+            value={assignRate}
+            onChange={(e) => setAssignRate(e.target.value)}
+            placeholder="0.00"
+            style={{
+              ...styles.input,
+              width: '120px',
+              fontSize: '1.1rem',
+              fontWeight: 600,
+              textAlign: 'center',
+              border: '1.5px solid #d1d5db',
+              borderRadius: 8,
+              padding: '8px 0',
+              background: '#f9fafb',
             }}
-          >
-            Get Cash
-          </button>
-
+          />
+        </div>
+        {/* Buttons */}
+        <div style={{ display: "flex", gap: "20px", justifyContent: 'center', width: '100%' }}>
           <button
             style={styles.onlineBtn}
             onClick={() => {
@@ -108,7 +91,13 @@ export const SellingRequests = () => {
               setOtp(["", "", "", ""]);
             }}
           >
-            Get Online
+            Accept
+          </button>
+          <button
+            style={styles.cashBtn}
+            // Decline button has no functionality
+          >
+            Decline
           </button>
         </div>
       </div>
