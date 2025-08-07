@@ -134,7 +134,7 @@ export const Sell = () => {
       };
 
       const response = await axios.post(
-        `${import.meta.env.BASE_URL}api/collection/addrequest`,
+        `${import.meta.env.VITE_BASE_URL}/api/collection/addrequest`,
         collectionPayload
       );
 
@@ -153,7 +153,7 @@ export const Sell = () => {
 
         // Step 1: Upload product data
         const productResponse = await axios.post(
-            `${import.meta.env.BASE_URL}api/userproduct/add`,
+            `${import.meta.env.VITE_BASE_URL}/api/userproduct/add`,
           productPayload
         );
 
@@ -170,7 +170,7 @@ export const Sell = () => {
 
           try {
             await axios.post(
-              `${import.meta.env.BASE_URL}api/userproduct/uploadphotos/${productId}`,
+              `${import.meta.env.VITE_BASE_URL}/api/userproduct/uploadphotos/${productId}`,
               formData,
               {
                 headers: { 'Content-Type': 'multipart/form-data' },

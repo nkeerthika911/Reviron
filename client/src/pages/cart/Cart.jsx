@@ -25,7 +25,7 @@ export const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.BASE_URL}api/cart/${userId}`);
+        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/cart/${userId}`);
         const formatted = res.data.map((item) => ({
           id: item.productId._id,
           name: item.productId.name,
@@ -54,7 +54,7 @@ export const Cart = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.BASE_URL}api/cart/delete/${userId}/${id}`);
+      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/cart/delete/${userId}/${id}`);
       console.log(userId, id);
     } catch (err) {
       console.error("Error removing item:", err);

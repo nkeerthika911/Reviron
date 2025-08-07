@@ -109,7 +109,7 @@
             const fetchUserDetails = async () => {
                 try {
                     setLoading(true);
-                    const response = await axios.get(`${import.meta.env.BASE_URL}api/user/details/${userId}`);
+                    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/user/details/${userId}`);
 
                     if (response.data.success) {
                         const userData = response.data.data.data;
