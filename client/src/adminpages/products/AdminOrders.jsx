@@ -12,7 +12,7 @@ export const AdminOrders = () => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.BASE_URL}api/collection/all`);
+        const response = await axios.get(`https://reviron-1.onrender.com/api/collection/all`);
         
         if (response.data.success && response.data.data?.data) {
           const rawOrders = response.data.data.data;
@@ -100,8 +100,8 @@ export const AdminOrders = () => {
           ) : (
             <div className="space-y-4">
               {orders.map((order) => (
-                <OrderCard key={order.id} order={order} />
-              ))}
+                <OrderCard key={order.id} order={order} type={'admin'}/>
+              ))} 
             </div>
           )}
         </div>

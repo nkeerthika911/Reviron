@@ -23,14 +23,12 @@ export const Login = () => {
   const handleLogin = async (formData) => {
     try {
       const response = await axios.post(`https://reviron-1.onrender.com/api/auth/login`, formData);
-      console.log("hello",response);
       if(response){
         localStorage.setItem("jwt", response.data.data.token);
       }
       setToast({ message: response.data.data.message, color: 'bg-green-500' });
       navigate('/products');
     } catch (err) {
-      console.log(err);
       const errorData = err?.response?.data?.data;
       const errorMsg = errorData?.message || 'Something went wrong';
       setToast({ message: errorMsg, color: 'bg-red-500' });
