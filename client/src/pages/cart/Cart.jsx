@@ -7,7 +7,7 @@ import { jwtDecode } from "jwt-decode";
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [ isRemoved, setIsRemoved] = useState(false);
+  const [isRemoved, setIsRemoved] = useState(false);
   const getUserIdFromToken = () => {
     const token = localStorage.getItem("jwt");
     if (!token) return null;
@@ -26,7 +26,7 @@ export const Cart = () => {
     const fetchCart = async () => {
       try {
         const res = await axios.get(`https://reviron-1.onrender.com/api/cart/${userId}`);
-        const formatted = res.data.map((item) => ({
+        const formatted = res.data.data.map((item) => ({
           id: item.productId._id,
           name: item.productId.name,
           price: item.productId.price,
@@ -38,6 +38,7 @@ export const Cart = () => {
         console.error("Failed to fetch cart:", err);
       }
     };
+
 
     fetchCart();
   }, [userId, isRemoved]);
@@ -59,10 +60,10 @@ export const Cart = () => {
     } catch (err) {
       console.error("Error removing item:", err);
     }
-    if(isRemoved){
+    if (isRemoved) {
       setIsRemoved(false);
     }
-    else{
+    else {
       setIsRemoved(true);
     }
   };
