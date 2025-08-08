@@ -24,7 +24,7 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
           className="w-full h-full object-cover"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = "https://via.placeholder.com/300x300?text=No+Image";
+            e.target.src = `https://reviron-1.onrender.com/uploads/productPhotos/${product.id}/${product.id}-1.png`;
           }}
         />
       </div>
