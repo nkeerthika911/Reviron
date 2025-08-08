@@ -25,8 +25,8 @@ export const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`https://reviron-1.onrender.com/api/cart/add/${userId}`);
-        const formatted = res.data.data.map((item) => ({
+        const res = await axios.get(`https://reviron-1.onrender.com/api/cart/${userId}`);
+        const formatted = res.data.map((item) => ({
           id: item.productId._id,
           name: item.productId.name,
           price: item.productId.price,
