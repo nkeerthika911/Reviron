@@ -19,9 +19,10 @@ export const CartProduct = ({ product, onQuantityChange, onRemove }) => {
     >
       {/* Product Image */}
       <div className="w-60 h-60 flex-shrink-0 border border-gray-200 rounded overflow-hidden">
-        <im
+        <img
           alt={product.title || product.name || "Product"}
           className="w-full h-full object-cover"
+          src={`https://reviron-1.onrender.com/uploads/productPhotos/${product.id}/${product.id}-1.png`}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = `https://reviron-1.onrender.com/uploads/productPhotos/${product.id}/${product.id}-1.png`;
