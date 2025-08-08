@@ -25,7 +25,7 @@ export const Cart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/cart/${userId}`);
+        const res = await axios.get(`https://reviron-1.onrender.com/api/cart/${userId}`);
         const formatted = res.data.map((item) => ({
           id: item.productId._id,
           name: item.productId.name,
