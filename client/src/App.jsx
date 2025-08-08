@@ -34,6 +34,7 @@ function App() {
           <Route path="/buy" element={<BuyPage/>}></Route>
           <Route path="/contactus" element={<Contactus />}></Route>
           <Route path="/sell" element={<Sell/>}></Route>
+          <Route path="/payment" element={<Payment/>}></Route>
 
 
           <Route path="/admin/product/add" element={<AdminAddProduct/>}></Route>
@@ -49,7 +50,6 @@ function App() {
           <Route path="/admin" element={<AdminRequests/>}></Route>
           <Route path="/Profile" element={<Profile />}></Route>
           <Route path="/community" element={<Community/>}></Route>
-          <Route path="/payment" element={<Payment/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

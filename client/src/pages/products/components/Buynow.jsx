@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ShoppingCart,
   Plus,
@@ -11,6 +12,8 @@ import {
 } from 'lucide-react';
 
 export function Buynow({ product }) {
+  const navigate = useNavigate();
+  
   const [addresses, setAddresses] = useState([
     {
       id: 1,
@@ -117,9 +120,11 @@ export function Buynow({ product }) {
       return;
     }
 
+    const selectedAddressData = addresses.find(addr => addr.id === selectedAddress);
+    
     const orderData = {
       items: cartItems,
-      address: addresses.find(addr => addr.id === selectedAddress),
+      address: selectedAddressData,
       billing: {
         subtotal,
         discount: totalDiscount,
@@ -127,8 +132,17 @@ export function Buynow({ product }) {
       }
     };
 
-    console.log('Proceeding to payment with:', orderData);
-    alert('Proceeding to payment...');
+    // Navigate to payment page with order data as state
+    navigate('/payment', { 
+      state: { 
+        orderData,
+        totalAmount,
+        items: cartItems,
+        address: selectedAddressData,
+        subtotal,
+        discount: totalDiscount
+      } 
+    });
   };
 
   if (cartItems.length === 0) {
@@ -325,7 +339,7 @@ style={{ backgroundColor: '#53975cff' }}
 
                 <button
                   onClick={handleContinueToPayment}
-  className="w-full text-white py-3 px-4 rounded-lg font-semibold text-sm transition duration-200 ease-in-out hover:bg-green-900"
+  className="w-full text-white py-3 px-4 rounded-lg font-semibold text-sm transition duration-200 ease-in-out hover:bg-green-900 hover:cursor-pointer"
   style={{ backgroundColor: '#53975cff' }}
                 >
 
@@ -425,7 +439,7 @@ style={{ backgroundColor: '#53975cff' }}
                 </button>
                 <button
                   onClick={handleAddOrEditAddress}
-                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-grren-700 font-medium"
+                  className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
                 >
                   {editIndex !== null ? 'Update Address' : 'Add Address'}
                 </button>
