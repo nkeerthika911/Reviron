@@ -48,7 +48,7 @@ export const AdminAddProduct = () => {
         category: categoryArray
       };
 
-      const res = await axios.post(`https://reviron-1.onrender.com/api/products/favourite/`, payload);
+      const res = await axios.post(`https://reviron-1.onrender.com/api/products/post`, payload);
       const productId = res.data.data.data._id;
 
       const formData = new FormData();
