@@ -225,7 +225,7 @@ export const Payment = ({ locationState, onBack }) => {
                         borderRadius: '12px'
                       }}>
                         <img
-                          src={qrImage}
+                          src="/qrpic.jpeg"
                           alt="UPI QR Code"
                           style={{
                             width: '180px',
@@ -234,6 +234,7 @@ export const Payment = ({ locationState, onBack }) => {
                             borderRadius: '8px'
                           }}
                         />
+
                         <p style={{
                           marginTop: '1rem',
                           color: '#666',
