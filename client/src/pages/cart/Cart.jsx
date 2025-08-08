@@ -55,7 +55,7 @@ export const Cart = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/cart/delete/${userId}/${id}`);
+      await axios.delete(`https://reviron-1.onrender.com/api/cart/delete/${userId}/${id}`);
       console.log(userId, id);
     } catch (err) {
       console.error("Error removing item:", err);
